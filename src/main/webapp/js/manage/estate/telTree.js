@@ -61,14 +61,14 @@ function loadTree(id){
 	        });
 	    },
 	    onClick:function(node) {
-	    	alert(node.id);
+//	    	alert(node.id); 
 	        var node = $('#jobTreeul').tree('getSelected');
 	        if(node.id==0){
 	        	//loadUser(-1);
 	        	return null;
 	        }
-	        alert(node.id);
-	        alert(node.value);
+//	        alert(node.id);
+//	        alert(node.value);
 	        loadUser(node.id); 
 //	        var stu =$.post(path+'/manage/manageUnit/selectUnitId.do',{id: node.id},function(date){
 //	            if(date.status == 'ERROR'){
@@ -128,15 +128,24 @@ function append2(){
     	$.messager.alert('系统提示', '请选择楼栋!', 'warning');
     	return ;
     }
-    var stu = $.post(path+'/manage/manageUnit/save.do',{buildingId:node.id},function(date){
-        if(date.status == 'ERROR'){
-            $.messager.alert('系统提示', '未成功请联系管理员!', 'warning');
-        }else{
-        	$('#jobTreeul').tree('reload');
-        }
-    })
-    stu.error(ajax_error("请求未成功"));
-
+	
+//    var stu = $.post(path+'/manage/businessTelGroup/add.do',{estateId:node.id},function(date){
+//        if(date.status == 'ERROR'){
+//            $.messager.alert('系统提示', '未成功请联系管理员!', 'warning');
+//        }else{
+//        	$('#jobTreeul').tree('reload');
+//        }
+//    })
+//    stu.error(ajax_error("请求未成功"));
+	win = $('#add-window').window({
+        closed: true,
+        modal: true,
+        shadow: false,
+        cache: false,
+        href: path+'/manage/businessTelGroup/add.do?estateId='+node.id
+    });
+    $('#add-window').window('open');
+    $('#add-window').window('resize');
 
 }
 function removeit(){
@@ -189,12 +198,23 @@ function expand(){
     var node = $('#treeul').tree('getSelected');
     $('#treeul').tree('expand',node.target);
 }
-$.messager.defaults.ok='确定'
+
+function collapse2(){
+    var node = $('#jobTreeul').tree('getSelected');
+    $('#jobTreeul').tree('collapse',node.target);
+}
+function expand2(){
+    var node = $('#jobTreeul').tree('getSelected');
+    $('#jobTreeul').tree('expand',node.target);
+}
+
+
+$.messager.defaults.ok='确定';
 	var ajax_error = function (msg) {
 	    return function () {
-	        $.messager.alert('系统提示', msg, 'warning')
-	    }
-	}
+	        $.messager.alert('系统提示', msg, 'warning');
+	    };
+	};
 
 	function closeWinFn() {
 	    $('#w').window('close');
@@ -286,7 +306,7 @@ function edit2 (){
         modal: true,
         shadow: false,
         cache: false,
-        href: path+'/business/businessPosition/modify.do?id='+node.id
+        href: path+'/manage/businessTelGroup/modify.do?groupId='+node.id
     });
 	$('#edit-window').window('open');
 
@@ -331,6 +351,11 @@ function saveData2(oper, formId) {
             		text: name
             	});
                 win.window('close');
+                //TODO  reload
+                var node = $('#treeul').tree('getSelected');
+                if (node.id ==0 )
+                	return ;
+                loadTree(node.id);  
             } else {
                 $.messager.alert('错误', data.msg, 'error');
             }
@@ -354,7 +379,7 @@ function loadUser(id){
         	id:function(){
         		var node = $('#jobTreeul').tree('getSelected');
          	    if(null==node){
-         	    	return id
+         	    	return id;
          	    }
          		return node.id;
         	}
@@ -362,24 +387,18 @@ function loadUser(id){
 		resize: true,
         sortOrder: 'telId',
         idField: 'telId',
-        pageSize:30,
+//        pageSize:30,
         frozenColumns: [[
                          { field: 'telId', checkbox: true }
         		]],
         columns: [[
+//                   	  { field: 'tel', title: 'TelId', width: 150, align:'center' },
     		          { field: 'telName', title: '服务名称', width: 150, align:'center' },
     		          { field: 'tel', title: '服务电话', width: 150, align:'center' },
-//    		          { field: 'estateLongitude', title: '经度', width: 150, align:'center' },
-//    		          { field: 'estateLatitude', title: '纬度', width: 150, align:'center' },
-//    		          { field: 'isBind', title: '是否绑定业主', width: 150, align:'center' },
-//    		          { field: 'memberId', title: '业主ID', width: 150, align:'center' },
-//    		          { field: 'createTime', title: '创建时间', width: 150, align:'center' },
-//    		          { field: 'editTime', title: '编辑时间', width: 150, align:'center' },
-//    		          { field: 'editor', title: '编辑人', width: 150, align:'center' },
                 ]],
         pagination: true,
-        pageNumber: 1,
-        pageSize: 10,
+//        pageNumber: 1,
+        pageSize: 10, 
         pageList: [10,20,30,40,50],
         nowrap:false,
         striped: true,
@@ -414,7 +433,17 @@ function loadUser(id){
 		$(p).pagination({                    
 			onSelectPage: function(pageNumber, pageSize) {
 				$(this).pagination('loading');
-				var queryParams = {pageNo: pageNumber, pageSize: pageSize};
+				var queryParams = {pageNo: pageNumber, pageSize: pageSize ,
+//				var queryParams = {page: pageNumber, rows: pageSize//,
+			        	id:function(){
+			        		var node = $('#jobTreeul').tree('getSelected');
+			         	    if(null==node){
+			         	    	return id;
+			         	    }
+			         		return node.id;
+			        	}
+				};
+				
 				grid.datagrid('reload', queryParams);
 			}               
 		});            
@@ -427,7 +456,7 @@ function getSelectedArr() {
     var ids = [];
     var rows = grid.datagrid('getSelections');
     for (var i = 0; i < rows.length; i++) {
-         ids.push(rows[i].houseId);
+         ids.push(rows[i].telId);
     }
     return ids;
 }
@@ -440,12 +469,13 @@ function arr2str(arr) {
 }
 
 function add() {
+
 	win = $('#add-window').window({
         closed: true,
         modal: true,
         shadow: false,
         cache: false,
-        href: path+'/manage/manageHouse/add.do'
+        href: path+'/manage/buseinessTel/add.do?'
     });
     $('#add-window').window('open');
     $('#add-window').window('resize');
@@ -462,17 +492,17 @@ function edit() {
         return;
     }
     else{
+//    	alert(rows[0].telId);
     	win = $('#edit-window').window({
             closed: true,
             modal: true,
             shadow: false,
             cache: false,
-            href: path+'/manage/manageHouse/modify.do?id='+rows[0].houseId
-            
+            href: path+'/manage/buseinessTel/modify.do?telId='+rows[0].telId
         });
     	$('#edit-window').window('open');
         $('#modifyForm').form('clear');
-        $('#modifyForm').form('load', '<%=path %>/manage/manageHouse/edit.do?id=' + rows[0].houseId);
+        $('#modifyForm').form('load', '<%=path %>/manage/buseinessTel/edit.do?telId=' + rows[0].telId);
     }
 }
 
@@ -482,7 +512,7 @@ function del() {
         $.messager.confirm('提示信息', '您确认要删除吗?', function (data) {
             if (data) {
                 $.ajax({
-                    url: path+'/manage/manageHouse/delete.do?id=' + arr2str(arr),
+                    url: path+'/manage/buseinessTel/delete.do?id=' + arr2str(arr),
                     timeout: 1000,
                     cache: false,
                     success: function (data) {
@@ -510,11 +540,11 @@ function showAll() {
 	grid.datagrid('reload');
 }
 function saveData(oper, formId) {
-	var str=$('#'+formId).attr('action')
+	var str=$('#'+formId).attr('action');
 	if(oper=="add"){
 		var node = $('#jobTreeul').tree('getSelected');
-		$("#unitId").val(node.id)
-		str=path+"/manage/manageHouse/save.do";
+		$("#groupId").val(node.id);
+		str=path+"/manage/buseinessTel/save.do";
 	}
 	$('#'+formId).form('submit', {
         url: str,

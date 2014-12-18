@@ -63,23 +63,38 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		
 		
 	</div>
-	<div id="monitor" class="easyui-menu" style='width:120px;'>
-		<div onclick='removeit()', data-options='iconCls:"icon-remove"'>删除节点</div>
+
+    <div id="monitor" class="easyui-menu" style='width:120px;'>
+<!-- 		<div onclick='edit1()', data-options='iconCls:"icon-add"'>编辑节点</div> -->
+<!-- 		<div onclick='append()', data-options='iconCls:"icon-add"'>增加节点</div> -->
+<!-- 		<div onclick='removeit()', data-options='iconCls:"icon-remove"'>删除节点</div> -->
+<!-- 		<div class="menu-sep"></div> -->
+		<div onclick='expand()'>展开节点</div>
+		<div onclick='collapse()'>隐藏节点</div>
 	</div>
+	
+<!-- 	<div id="monitor" class="easyui-menu" style='width:120px;'> -->
+<!-- 		<div onclick='removeit()', data-options='iconCls:"icon-remove"'>删除节点</div> -->
+<!-- 	</div> -->
 	<div id="monitor2" class="easyui-menu" style='width:120px;'>
+		<div onclick='edit2()', data-options='iconCls:"icon-add"'>编辑节点</div>
+		<div onclick='append2()', data-options='iconCls:"icon-add"'>增加节点</div>
 		<div onclick='removeit2()', data-options='iconCls:"icon-remove"'>删除节点</div>
+		<div class="menu-sep"></div>
+		<div onclick='expand2()'>展开节点</div>
+		<div onclick='collapse2()'>隐藏节点</div>
 	</div>
 	<div id="add-window" title="新增窗口" style="width: 350px; height: 300px;"></div>
     <div id="edit-window" title="编辑窗口" style="width: 350px; height: 300px;"></div>
     <div id="edit-window2" title="编辑窗口" style="width: 1000px; height: 500px;"></div>
     <div id="search-window" title="查询窗口" style="width: 400px; height: 300px;">
 	<div style="padding: 20px 20px 40px 80px;">
-            <form id="searchForm" method="post" action="<%=path %>/business/businessUser/list.do">
+            <form id="searchForm" method="post" action="<%=path %>/manage/buseinessTel/list.do">
             <table>
 					<tr>
-			          <td>门号：</td>
+			          <td>名称：</td>
 			          <td>
-			          	<input name="houseNo" id="name" type="text" style="width: 150px;" value=""/>
+			          	<input name="name" id="name" type="text" style="width: 150px;" value=""/>
 			          </td>
 			        </tr>
             </table>

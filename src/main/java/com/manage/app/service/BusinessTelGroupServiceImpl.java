@@ -244,7 +244,7 @@ public class BusinessTelGroupServiceImpl implements BusinessTelGroupService {
 		root = new TreeNode("0", "0", "分组", "",0);
 		for (int i = 0; i < list.size(); i++) {      
 			TreeNode node = null;
-			node = new TreeNode(list.get(i).getEstateId().toString(), "0", list.get(i).getGroupName().toString(),"",0);   
+			node = new TreeNode(list.get(i).getGroupId().toString(), "0", list.get(i).getGroupName().toString(),"",0);   
 			root.add(node);
 		}
 		JSONArray obj = JSONArray.fromObject(root);//(root.getChildren());// 不要根   

@@ -96,6 +96,6 @@ public interface BusinessTelGroupService {
 	 */
 	public boolean delete(final Integer id) throws ServiceException;
 
-	public String treeData(String id);
+	public String treeData(String id) throws ServiceException ;
 
 }

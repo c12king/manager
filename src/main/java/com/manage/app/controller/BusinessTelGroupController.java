@@ -105,7 +105,7 @@ public class BusinessTelGroupController {
 				e.printStackTrace();
 			}
 		}catch(Exception e){
-			GSLogger.error("显示businessTelGroup列表时发生错误：/business/businessTelGroup/list", e);
+			GSLogger.error("显示businessTelGroup列表时发生错误：/manage/businessTelGroup/list", e);
 			e.printStackTrace();
 		}
 	}
@@ -121,7 +121,8 @@ public class BusinessTelGroupController {
 			GSLogger.error("进入businessTelGroup新增页时发生错误：/business/businessTelGroup/add", e);
 			e.printStackTrace();
 		}
-		ModelAndView mav = new ModelAndView("/business/businessTelGroup/add");
+		ModelAndView mav = new ModelAndView("/manage/businessTelGroup/add");
+		mav.addObject("estateId", query.getEstateId());
 		return mav;
 	}
 	
@@ -170,10 +171,10 @@ public class BusinessTelGroupController {
 		try{
 			businessTelGroup = businessTelGroupService.findById(query.getGroupId());
 		}catch(Exception e){
-			GSLogger.error("进入businessTelGroup修改页时发生错误：/business/businessTelGroup/modify", e);
+			GSLogger.error("进入businessTelGroup修改页时发生错误：/manage/businessTelGroup/modify", e);
 			e.printStackTrace();
 		}
-		ModelAndView mav = new ModelAndView("/business/businessTelGroup/modify");
+		ModelAndView mav = new ModelAndView("/manage/businessTelGroup/modify");
 		mav.addObject("businessTelGroup", businessTelGroup);
 		return mav;
 	}

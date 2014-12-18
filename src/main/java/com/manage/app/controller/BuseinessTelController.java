@@ -5,6 +5,7 @@ import java.io.IOException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,10 +38,10 @@ public class BuseinessTelController {
 	public ModelAndView enter() {		
 		try{
 		}catch(Exception e){
-			GSLogger.error("进入buseinessTel管理页时发生错误：/buseiness/buseinessTel/enter", e);
+			GSLogger.error("进入buseinessTel管理页时发生错误：/manage/buseinessTel/enter", e);
 			e.printStackTrace();
 		}
-		ModelAndView mav = new ModelAndView("/buseiness/buseinessTel/enter");
+		ModelAndView mav = new ModelAndView("/manage/buseinessTel/enter");
 		return mav;
 	}
 	
@@ -50,9 +51,14 @@ public class BuseinessTelController {
 	 */
 	@RequestMapping(value="list")
 	public void list(HttpServletRequest request, HttpServletResponse response) {
-		
 		int cpage=Integer.parseInt(request.getParameter("page"));
+		if (StringUtils.isNotBlank(request.getParameter("pageNo")))
+			cpage=Integer.parseInt(request.getParameter("pageNo"));
+		
 		int size=Integer.parseInt(request.getParameter("rows"));
+		if (StringUtils.isNotBlank(request.getParameter("pageSize")))  
+			size = Integer.parseInt(request.getParameter("pageSize"));
+		
 		String like=request.getParameter("name");
 		String id=request.getParameter("id");
 		Page page = new Page(cpage,size,like,id);
@@ -86,23 +92,26 @@ public class BuseinessTelController {
 				e.printStackTrace();
 			}
 		}catch(Exception e){
-			GSLogger.error("显示buseinessTel列表时发生错误：/buseiness/buseinessTel/list", e);
+			GSLogger.error("显示buseinessTel列表时发生错误：/manage/buseinessTel/list", e);
 			e.printStackTrace();
 		}
 	}
 	
+
+	
 	/**
-	 * 进入新增页
+	 * 进入电话号新增页
 	 * @return
 	 */
 	@RequestMapping(value="add")
 	public ModelAndView add(BuseinessTelQuery query) {		
 		try{
 		}catch(Exception e){
-			GSLogger.error("进入buseinessTel新增页时发生错误：/buseiness/buseinessTel/add", e);
+			GSLogger.error("进入buseinessTel 新增页时发生错误：/manage/buseinessTel/add", e);
 			e.printStackTrace();
 		}
-		ModelAndView mav = new ModelAndView("/buseiness/buseinessTel/add");
+		ModelAndView mav = new ModelAndView("/manage/buseinessTel/addTel");
+//		mav.addObject("groupId", query.getGroupId());
 		return mav;
 	}
 	
@@ -125,7 +134,7 @@ public class BuseinessTelController {
 			json = "{\"success\":\"true\",\"message\":\"保存成功\"}";
 		} catch(Exception e) {
 			json = "{\"success\":\"false\",\"message\":\"保存失败\"}";
-			GSLogger.error("保存buseinessTel信息时发生错误：/buseiness/buseinessTel/save", e);
+			GSLogger.error("保存buseinessTel信息时发生错误：/manage/buseinessTel/save", e);
 			e.printStackTrace();
 		}
 		response.setHeader("Cache-Control", "no-cache");
@@ -149,10 +158,10 @@ public class BuseinessTelController {
 		try{
 			buseinessTel = buseinessTelService.findById(query.getTelId());
 		}catch(Exception e){
-			GSLogger.error("进入buseinessTel修改页时发生错误：/buseiness/buseinessTel/modify", e);
+			GSLogger.error("进入buseinessTel修改页时发生错误：/manage/buseinessTel/modify", e);
 			e.printStackTrace();
 		}
-		ModelAndView mav = new ModelAndView("/buseiness/buseinessTel/modify");
+		ModelAndView mav = new ModelAndView("/manage/buseinessTel/modify");
 		mav.addObject("buseinessTel", buseinessTel);
 		return mav;
 	}

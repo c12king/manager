@@ -80,7 +80,7 @@
 		SELECT COUNT(*) AS total FROM buseiness_tel where groupId='${id}'
 	</select>
 	<select id="EstTelListData" resultMap="BuseinessTelResult" parameterType="com.utis.Page">
-		select * from buseiness_tel  where groupId='${id}'  LIMIT ${start},${end}
+		select * from buseiness_tel  where groupId='${id}' and telName like '%${link}%'  LIMIT ${start},${end}
 	</select>
 	
 	<!-- BuseinessTel保存数据 -->
