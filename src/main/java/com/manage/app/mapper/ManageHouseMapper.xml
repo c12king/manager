@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.manage.app.bean" >
+	
+	<resultMap id="ManageHouse" type="com.manage.app.bean.ManageHouse">
+			<result column="houseId" property="houseId" />
+			<result column="unitId" property="unitId" />
+			<result column="houseNo" property="houseNo" />
+			<result column="estateLongitude" property="estateLongitude" />
+			<result column="estateLatitude" property="estateLatitude" />
+			<result column="isBind" property="isBind" />
+			<result column="memberId" property="memberId" />
+			<result column="createTime" property="createTime" />
+			<result column="editTime" property="editTime" />
+			<result column="editor" property="editor" />
+	</resultMap>
+	<select id="selectManageHouse" resultMap="ManageHouse">
+		select * from manage_house 
+	</select>
+	<select id="selectManageHouseCount" resultType="int"  parameterType="com.utis.Page">
+		SELECT COUNT(*) AS total FROM manage_house where unitId='${id}' and houseNo like '%${link}%'
+	</select>
+	<select id="selectManageHouseId" resultMap="ManageHouse" parameterType="com.manage.app.bean.ManageHouse">
+				select * from manage_house where houseId='${houseId}'
+	</select>
+	<select id="ManageHouseListData" resultMap="ManageHouse" parameterType="com.utis.Page">
+		select * from manage_house  where unitId='${id}' and houseNo  like '%${link}%' LIMIT ${start},${end}
+	</select>
+	<insert id="addManageHouse" parameterType="com.manage.app.bean.ManageHouse">
+		
+		insert into manage_house(
+				unitId,
+		houseNo,
+		createTime,
+		editTime
+		) values(
+				'${unitId}',
+		'${houseNo}',
+		'${createTime}',
+		'${editTime}'
+		)
+			
+	</insert>
+	<update id="updateManageHouseId" parameterType="com.manage.app.bean.ManageHouse">
+		update manage_house set 
+		houseNo='${houseNo}',
+		editTime='${editTime}'
+		 where 
+		houseId='${houseId}'
+																			</update>
+	<delete id="deleteManageHouseId" parameterType="com.manage.app.bean.ManageHouse">
+		delete from manage_house where 
+		houseId='${houseId}'
+																			</delete>
+	
+</mapper>
+	

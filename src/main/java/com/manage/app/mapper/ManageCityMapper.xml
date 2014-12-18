@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.manage.app.bean" >
+	
+	<resultMap id="ManageCity" type="com.manage.app.bean.ManageCity">
+			<result column="cityId" property="cityId" />
+			<result column="provinceId" property="provinceId" />
+			<result column="cityName" property="cityName" />
+			<result column="cityCode" property="cityCode" />
+			<result column="createTime" property="createTime" />
+			<result column="editTime" property="editTime" />
+			<result column="editor" property="editor" />
+	</resultMap>
+	<select id="selectManageCity" resultMap="ManageCity">
+		select * from manage_city 
+	</select>
+	<select id="selectManageCityCount" resultType="int"  parameterType="com.utis.Page">
+		SELECT COUNT(*) AS total FROM manage_city where name like '%${link}%'
+	</select>
+	<select id="selectManageCityTree" resultMap="ManageCity">
+		select * from manage_city where provinceId='${provinceId}'
+	</select>
+	<select id="selectManageCityId" resultMap="ManageCity" parameterType="com.manage.app.bean.ManageCity">
+				select * from manage_city where cityId='${cityId}'
+	</select>
+	<select id="ManageCityListData" resultMap="ManageCity" parameterType="com.utis.Page">
+		select * from manage_city  where name like '%${link}%' LIMIT ${start},${end}
+	</select>
+	<insert id="addManageCity" parameterType="com.manage.app.bean.ManageCity">
+		
+		insert into manage_city(
+				provinceId,
+		cityName,
+		createTime,
+		editTime
+		) values(
+				'${provinceId}',
+		'新城市',
+		'${createTime}',
+		'${editTime}'
+		)
+			
+	</insert>
+	<update id="updateManageCityId" parameterType="com.manage.app.bean.ManageCity">
+		update manage_city set 
+		cityName='${cityName}',
+		editTime='${editTime}'
+		 where 
+		cityId='${cityId}'
+													</update>
+	<delete id="deleteManageCityId" parameterType="com.manage.app.bean.ManageCity">
+		delete from manage_city where 
+		cityId='${cityId}'
+													</delete>
+	
+</mapper>
+	

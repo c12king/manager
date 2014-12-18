@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.manage.app.ManageFunction.bean" >
+	
+	<resultMap id="ManageFunction" type="com.manage.app.bean.ManageFunction">
+			<result column="functionId" property="functionId" />
+			<result column="menuId" property="menuId" />
+			<result column="functionName" property="functionName" />
+			<result column="functionDesc" property="functionDesc" />
+			<result column="functionCode" property="functionCode" />
+			<result column="createTime" property="createTime" />
+			<result column="editTime" property="editTime" />
+			<result column="editor" property="editor" />
+			<result column="menuName" property="menuName" />
+			<result column="name" property="name" />
+	</resultMap>
+	<select id="selectManageFunction" resultMap="ManageFunction">
+		select * from manage_function ORDER BY editTime DESC
+	</select>
+	
+	<select id="findFunctionByMneuId"  resultMap="ManageFunction" parameterType="java.lang.Integer">
+		select functionId,functionName,menuId from manage_function where menuId = #{id}
+	</select>
+	
+	<select id="findByFunctionId"  resultMap="ManageFunction" parameterType="java.lang.Integer">
+		select m.menuId,m.name,f.functionName,f.functionId,f.functionCode from manage_function f,business_menu m where f.menuId=m.menuId and f.functionId = #{id}
+	</select>
+	
+	<select id="selectManageFunctionCount" resultType="int"  parameterType="com.utis.Page">
+		SELECT COUNT(*) AS total FROM manage_function where functionName like '%${link}%'
+	</select>
+	<select id="selectManageFunctionId" resultMap="ManageFunction" parameterType="com.manage.app.bean.ManageFunction">
+				select * from manage_function where functionId='${functionId}'
+	</select>
+	<select id="ManageFunctionListData" resultMap="ManageFunction" parameterType="com.utis.Page">
+		SELECT m.*,b.name AS menuName FROM manage_function m,business_menu b  WHERE m.menuId=b.menuId and functionName like '%${link}%' 
+		<trim  suffixOverrides="," >
+			<if test="id != null">
+				and b.menuId='${id}' 
+			</if>
+	   </trim>
+	   	ORDER BY editTime,b.menuId  DESC
+	    LIMIT ${start},${end}
+	</select>
+	<insert id="addManageFunction" parameterType="com.manage.app.bean.ManageFunction">
+		
+		insert into manage_function(
+				menuId,
+		functionName,
+		functionDesc,
+		functionCode,
+		createTime,
+		editTime,
+		editor
+		) values(
+				'${menuId}',
+		'${functionName}',
+		'${functionDesc}',
+		'${functionCode}',
+		'${createTime}',
+		'${editTime}',
+		'${editor}'
+		)
+			
+	</insert>
+	<update id="updateManageFunctionId" parameterType="com.manage.app.bean.ManageFunction">
+		update manage_function set 
+				menuId='${menuId}',
+		functionName='${functionName}',
+		functionDesc='${functionDesc}',
+		functionCode='${functionCode}',
+		editTime='${editTime}',
+		editor='${editor}'
+		 where 
+		functionId='${functionId}'
+															</update>
+	<delete id="deleteManageFunctionId" parameterType="com.manage.app.bean.ManageFunction">
+		delete from manage_function where 
+		functionId='${functionId}'
+															</delete>
+	
+</mapper>
+	

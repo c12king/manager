@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.manage.app.dao.ManageModuleDao" >
+	<!-- 返回结构集 -->
+	<resultMap id="ManageModuleResult" type="ManageModule">
+			<result column="moduleId" property="moduleId" />
+			<result column="moduleName" property="moduleName" />
+			<result column="moduleDesc" property="moduleDesc" />
+			<result column="moduleIcon" property="moduleIcon" />
+			<result column="moduleUrl" property="moduleUrl" />
+			<result column="createTime" property="createTime" />
+			<result column="editTime" property="editTime" />
+			<result column="editor" property="editor" />
+			<result column="moduleCode" property="moduleCode" />
+	</resultMap>
+	
+	<!-- 所有字段 -->
+	<sql id="Base_Column_List" >
+			moduleId,
+			moduleName,
+			moduleDesc,
+			moduleIcon,
+			moduleUrl,
+			createTime,
+			editTime,
+			moduleCode,
+			editor
+	</sql>
+	
+	<!-- 所有字段查询条件 -->
+	<sql id="Base_Where_Clause">
+		<where>
+			<trim  suffixOverrides="," >
+					<if test="moduleId != null and moduleId != ''" >
+				   		and moduleId = #{moduleId}
+					</if>
+					<if test="moduleName != null and moduleName != ''" >
+				   		and moduleName = #{moduleName}
+					</if>
+					<if test="moduleDesc != null and moduleDesc != ''" >
+				   		and moduleDesc = #{moduleDesc}
+					</if>
+					<if test="moduleIcon != null and moduleIcon != ''" >
+				   		and moduleIcon = #{moduleIcon}
+					</if>
+					<if test="moduleUrl != null and moduleUrl != ''" >
+				   		and moduleUrl = #{moduleUrl}
+					</if>
+					<if test="createTime != null and createTime != ''" >
+				   		and createTime = #{createTime}
+					</if>
+					<if test="editTime != null and editTime != ''" >
+				   		and editTime = #{editTime}
+					</if>
+					<if test="editor != null and editor != ''" >
+				   		and editor = #{editor}
+					</if>
+			</trim>
+		</where>
+	</sql>
+	
+	<!-- 根据id查询 ManageModule -->
+	<select id="findById"  resultMap="ManageModuleResult" parameterType="java.lang.Integer">
+		select <include refid="Base_Column_List" /> from manage_module where moduleId = #{id}
+	</select>
+	
+	<select id="findOrgTypeAll"  resultMap="ManageModuleResult" parameterType="java.lang.Integer">
+	
+		select moduleId,moduleName,moduleCode from manage_module where moduleCode in (
+			'community','property','station','operation'
+		)
+	</select>
+	<select id="findOrgTypeId"  resultMap="ManageModuleResult" parameterType="java.lang.Integer">
+	
+		select moduleId,moduleName,moduleCode from manage_module where moduleCode in (
+			#{type}
+		)
+	</select>
+	
+	<!-- 无条件查询所有ManageModule -->
+	<select id="findAll" resultMap="ManageModuleResult">
+		select <include refid="Base_Column_List" /> from manage_module 
+	</select>
+	
+	<!-- 按Map对象条件查询所有ManageModule -->
+	<select id="findByMap" resultMap="ManageModuleResult" parameterType="java.util.Map">
+		select <include refid="Base_Column_List" /> from manage_module <include refid="Base_Where_Clause" />
+	</select>
+	
+	<!-- 按VO对象条件查询所有ManageModule -->
+	<select id="findByExample" resultMap="ManageModuleResult" parameterType="com.manage.app.vo.ManageModuleQuery">
+		select <include refid="Base_Column_List" /> from manage_module <include refid="Base_Where_Clause" />
+	</select>
+	
+	<!-- ManageModule根据搜索条件，搜索分页数据 -->
+	<select id="findAllPage" resultMap="ManageModuleResult" parameterType="Object">
+		select <include refid="Base_Column_List" /> from manage_module  
+		<include refid="Base_Where_Clause" />
+		<if test="pager.orderCondition != null and pager.orderCondition != ''" >
+      	${pager.orderCondition}
+	    </if>
+	    <if test="pager.mysqlQueryCondition != null and pager.mysqlQueryCondition != ''" >
+	    ${pager.mysqlQueryCondition}
+	    </if>
+	</select>
+	
+	<!-- ManageModule列表总数-->
+	<select id="selectCount" resultType="java.lang.Integer"  parameterType="Object">
+		select count(1) from manage_module 
+		<include refid="Base_Where_Clause" />
+	</select>
+	
+	<!-- ManageModule保存数据 -->
+	<insert id="save" parameterType="ManageModule">
+		<selectKey resultType="java.lang.Integer" order="AFTER" keyProperty="moduleId">
+			SELECT LAST_INSERT_ID()
+  		</selectKey>
+		insert into manage_module(
+		
+		moduleName,
+		moduleDesc,
+		moduleIcon,
+		moduleUrl,
+		createTime,
+		editTime,
+		editor
+		) values(
+				#{moduleName},
+		#{moduleDesc},
+		#{moduleIcon},
+		#{moduleUrl},
+		#{createTime},
+		#{editTime},
+		#{editor}
+		)
+	</insert>
+	
+	<!-- ManageModule修改数据 -->
+	<update id="update" parameterType="ManageModule">
+		update manage_module 
+		<set>
+			<if test="moduleName != null and moduleName != ''" >
+			moduleName=#{moduleName},
+			</if>
+			<if test="moduleDesc != null and moduleDesc != ''" >
+			moduleDesc=#{moduleDesc},
+			</if>
+			<if test="moduleIcon != null and moduleIcon != ''" >
+			moduleIcon=#{moduleIcon},
+			</if>
+			<if test="moduleUrl != null and moduleUrl != ''" >
+			moduleUrl=#{moduleUrl},
+			</if>
+			<if test="createTime != null and createTime != ''" >
+			createTime=#{createTime},
+			</if>
+			<if test="editTime != null and editTime != ''" >
+			editTime=#{editTime},
+			</if>
+			<if test="editor != null and editor != ''" >
+			editor=#{editor}
+			</if>
+		</set> 
+		where 
+		moduleId=#{moduleId}
+		
+		
+		
+		
+		
+		
+		
+	</update>
+	
+	<!-- ManageModule删除数据 -->
+	<delete id="delete" parameterType="java.lang.Integer">
+		delete from manage_module where 
+		moduleId=#{moduleId}
+															</delete>
+	
+</mapper>
+	

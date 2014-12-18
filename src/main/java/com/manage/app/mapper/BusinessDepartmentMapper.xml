@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.manage.app.bean" >
+	
+	<resultMap id="BusinessDepartment" type="com.manage.app.bean.BusinessDepartment">
+			<result column="depId" property="depId" />
+			<result column="depName" property="depName" />
+			<result column="depDesc" property="depDesc" />
+			<result column="createTime" property="createTime" />
+			<result column="editTime" property="editTime" />
+			<result column="editor" property="editor" />
+			<result column="orgType" property="orgType" />
+			<result column="orgId" property="orgId" />
+			<result column="orgName" property="orgName" />
+	</resultMap>
+	<select id="selectBusinessDepartment" resultMap="BusinessDepartment">
+		select * from business_department 
+	</select>
+	<select id="selectBusinessDepartmentCount" resultType="int"  parameterType="com.utis.Page">
+		SELECT COUNT(*) AS total FROM business_department where name like '%${link}%'
+	</select>
+	<select id="selectBusinessDepartmentTree" resultMap="BusinessDepartment">
+		select * from business_department  where orgId=#{orgId} and orgType=#{orgType}
+	</select>
+	<select id="selectBusinessDepartmentId" resultMap="BusinessDepartment" parameterType="com.manage.app.bean.BusinessDepartment">
+				select * from business_department where depId='${depId}'
+	</select>
+	<select id="BusinessDepartmentListData" resultMap="BusinessDepartment" parameterType="com.utis.Page">
+		select * from business_department  where name like '%${link}%' LIMIT ${start},${end}
+	</select>
+	<insert id="addBusinessDepartment" parameterType="com.manage.app.bean.BusinessDepartment">
+		
+		insert into business_department(
+				depName,
+		createTime,
+		editTime,
+		orgType,
+		orgId,
+		orgName
+		) values(
+				'新部门',
+		'${createTime}',
+		'${editTime}',
+		'${orgType}',
+		'${orgId}',
+		'${orgName}'
+		)
+			
+	</insert>
+	<update id="updateBusinessDepartmentId" parameterType="com.manage.app.bean.BusinessDepartment">
+		update business_department set 
+				depName='${depName}',
+		depDesc='${depDesc}',
+		editTime='${editTime}'
+		 where 
+		depId='${depId}'
+	</update>
+	<delete id="deleteBusinessDepartmentId" parameterType="com.manage.app.bean.BusinessDepartment">
+		delete from business_department where 
+		depId='${depId}'
+	</delete>
+	
+</mapper>
+	

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.manage.app.bean" >
+	
+	<resultMap id="ManageCounty" type="com.manage.app.bean.ManageCounty">
+			<result column="countyId" property="countyId" />
+			<result column="cityId" property="cityId" />
+			<result column="countyName" property="countyName" />
+			<result column="countyCode" property="countyCode" />
+			<result column="createTime" property="createTime" />
+			<result column="editTime" property="editTime" />
+			<result column="editor" property="editor" />
+	</resultMap>
+	<select id="selectManageCounty" resultMap="ManageCounty">
+		select * from manage_county 
+	</select>
+	<select id="selectManageCountyTree" resultMap="ManageCounty">
+		select * from manage_county where cityId='${cityId}'
+	</select>
+	<select id="selectManageCountyCount" resultType="int"  parameterType="com.utis.Page">
+		SELECT COUNT(*) AS total FROM manage_county where name like '%${link}%'
+	</select>
+	<select id="selectManageCountyId" resultMap="ManageCounty" parameterType="com.manage.app.bean.ManageCounty">
+				select * from manage_county where countyId='${countyId}'
+	</select>
+	<select id="ManageCountyListData" resultMap="ManageCounty" parameterType="com.utis.Page">
+		select * from manage_county  where name like '%${link}%' LIMIT ${start},${end}
+	</select>
+	<insert id="addManageCounty" parameterType="com.manage.app.bean.ManageCounty">
+		
+		insert into manage_county(
+				cityId,
+		countyName,
+		createTime,
+		editTime
+		) values(
+				'${cityId}',
+		'新区域',
+		'${createTime}',
+		'${editTime}'
+		)
+			
+	</insert>
+	<update id="updateManageCountyId" parameterType="com.manage.app.bean.ManageCounty">
+		update manage_county set 
+		countyName='${countyName}',
+		editTime='${editTime}'
+		 where 
+		countyId='${countyId}'
+													</update>
+	<delete id="deleteManageCountyId" parameterType="com.manage.app.bean.ManageCounty">
+		delete from manage_county where 
+		countyId='${countyId}'
+													</delete>
+	
+</mapper>
+	

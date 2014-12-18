@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.manage.app.bean" >
+	
+	<resultMap id="ManageEstate" type="com.manage.app.bean.ManageEstate">
+			<result column="estateId" property="estateId" />
+			<result column="estateName" property="estateName" />
+			<result column="estateDesc" property="estateDesc" />
+			<result column="estateAddress" property="estateAddress" />
+			<result column="estateMap" property="estateMap" />
+			<result column="estateLongitude" property="estateLongitude" />
+			<result column="estateLatitude" property="estateLatitude" />
+			<result column="estateCarMap" property="estateCarMap" />
+			<result column="estateType" property="estateType" />
+			<result column="createTime" property="createTime" />
+			<result column="editTime" property="editTime" />
+			<result column="editor" property="editor" />
+			<result column="stationId" property="stationId" />
+			<result column="proId" property="proId" />
+			<result column="comId" property="comId" />
+			<result column="countyId" property="countyId" />
+	</resultMap>
+	<select id="selectManageEstate" resultMap="ManageEstate">
+		select * from manage_estate 
+	</select>
+	<select id="ManageEstateListFindAll" resultMap="ManageEstate">
+		select * from manage_estate 
+	</select>
+	<select id="selectManageEstateCount" resultType="int"  parameterType="com.utis.Page">
+		SELECT COUNT(*) AS total FROM manage_estate where estateName like '%${link}%'
+	</select>
+	<select id="selectManageEstateId" resultMap="ManageEstate" parameterType="com.manage.app.bean.ManageEstate">
+		select e.estateId,e.estateName,e.estateDesc,e.estateAddress,e.estateMap,e.estateLongitude,e.estateLatitude,e.estateCarMap,e.estateType,e.stationId,e.proId,e.comId,o.countyId from manage_estate e,business_community c,manage_org o where  e.comId = c.comId and c.orgId=o.orgId and  e.estateId='${estateId}'
+	</select>
+	<select id="selectSingleManageById" resultMap="ManageEstate" parameterType="java.lang.Integer">
+		select e.estateId,e.estateName,e.estateDesc,e.estateAddress,e.estateMap,e.estateLongitude,e.estateLatitude,e.estateCarMap,e.estateType,e.stationId,e.proId,e.comId from manage_estate e where e.estateId=#{estateId}
+	</select>
+	<select id="ManageEstateListData" resultMap="ManageEstate" parameterType="com.utis.Page">
+		select * from manage_estate  where estateName like '%${link}%' LIMIT ${start},${end}
+	</select>
+	<insert id="addManageEstate" parameterType="com.manage.app.bean.ManageEstate">
+		
+		insert into manage_estate(
+		estateName,
+		estateDesc,
+		estateAddress,
+		estateMap,
+		estateLongitude,
+		estateLatitude,
+		estateCarMap,
+		estateType,
+		createTime,
+		stationId,
+		proId,
+		comId,
+		editTime
+		) values(
+		'${estateName}',
+		'${estateDesc}',
+		'${estateAddress}',
+		'${estateMap}',
+		'${estateLongitude}',
+		'${estateLatitude}',
+		'${estateCarMap}',
+		'${estateType}',
+		'${createTime}',
+		'${stationId}',
+		'${proId}',
+		'${comId}',
+		'${editTime}'
+		)
+			
+	</insert>
+	<update id="updateManageEstateId" parameterType="com.manage.app.bean.ManageEstate">
+		update manage_estate set 
+		estateName='${estateName}',
+		estateDesc='${estateDesc}',
+		estateAddress='${estateAddress}',
+		estateMap='${estateMap}',
+		estateLongitude='${estateLongitude}',
+		estateLatitude='${estateLatitude}',
+		estateCarMap='${estateCarMap}',
+		estateType='${estateType}',
+		stationId='${stationId}',
+		proId='${proId}',
+		comId='${comId}',
+		editTime='${editTime}'
+		 where 
+		estateId='${estateId}'
+																													</update>
+	<delete id="deleteManageEstateId" parameterType="com.manage.app.bean.ManageEstate">
+		delete from manage_estate where 
+		estateId='${estateId}'
+																													</delete>
+	<select id="selectManageEstateByComId" resultMap="ManageEstate" parameterType="java.lang.Integer">
+		select e.estateId,e.estateName,e.estateDesc,e.estateAddress,e.estateMap,e.estateLongitude,e.estateLatitude,e.estateCarMap,e.estateType,e.stationId,e.proId,e.comId from manage_estate e where e.comId=#{comId}
+	</select>
+</mapper>
+	

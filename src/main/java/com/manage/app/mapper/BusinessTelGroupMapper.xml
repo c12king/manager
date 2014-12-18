@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.manage.app.dao.BusinessTelGroupDao" >
+	<!-- 返回结构集 -->
+	<resultMap id="BusinessTelGroupResult" type="BusinessTelGroup">
+			<result column="groupId" property="groupId" />
+			<result column="cityId" property="cityId" />
+			<result column="comId" property="comId" />
+			<result column="estateId" property="estateId" />
+			<result column="groupName" property="groupName" />
+			<result column="memo" property="memo" />
+	</resultMap>
+	
+	<!-- 所有字段 -->
+	<sql id="Base_Column_List" >
+			groupId,
+			cityId,
+			comId,
+			estateId,
+			groupName,
+			memo
+	</sql>
+	
+	<!-- 所有字段查询条件 -->
+	<sql id="Base_Where_Clause">
+		<where>
+			<trim  suffixOverrides="," >
+					<if test="groupId != null and groupId != ''" >
+				   		and groupId = #{groupId}
+					</if>
+					<if test="cityId != null and cityId != ''" >
+				   		and cityId = #{cityId}
+					</if>
+					<if test="comId != null and comId != ''" >
+				   		and comId = #{comId}
+					</if>
+					<if test="estateId != null and estateId != ''" >
+				   		and estateId = #{estateId}
+					</if>
+					<if test="groupName != null and groupName != ''" >
+				   		and groupName = #{groupName}
+					</if>
+					<if test="memo != null and memo != ''" >
+				   		and memo = #{memo}
+					</if>
+			</trim>
+		</where>
+	</sql>
+	
+	<!-- 根据id查询 BusinessTelGroup -->
+	<select id="findById"  resultMap="BusinessTelGroupResult" parameterType="java.lang.Integer">
+		select <include refid="Base_Column_List" /> from business_tel_group where groupId = #{id}
+	</select>
+	
+	<!-- 无条件查询所有BusinessTelGroup -->
+	<select id="findAll" resultMap="BusinessTelGroupResult">
+		select <include refid="Base_Column_List" /> from business_tel_group 
+	</select>
+	
+	<!-- 按Map对象条件查询所有BusinessTelGroup -->
+	<select id="findByMap" resultMap="BusinessTelGroupResult" parameterType="java.util.Map">
+		select <include refid="Base_Column_List" /> from business_tel_group <include refid="Base_Where_Clause" />
+	</select>
+	
+	<!-- 按VO对象条件查询所有BusinessTelGroup -->
+	<select id="findByExample" resultMap="BusinessTelGroupResult" parameterType="com.manage.app.vo.BusinessTelGroupQuery">
+		select <include refid="Base_Column_List" /> from business_tel_group <include refid="Base_Where_Clause" />
+	</select>
+	
+	<!-- BusinessTelGroup根据搜索条件，搜索分页数据 -->
+	<select id="findAllPage" resultMap="BusinessTelGroupResult" parameterType="Object">
+		select <include refid="Base_Column_List" /> from business_tel_group  
+		<include refid="Base_Where_Clause" />
+		<if test="pager.orderCondition != null and pager.orderCondition != ''" >
+      	${pager.orderCondition}
+	    </if>
+	    <if test="pager.mysqlQueryCondition != null and pager.mysqlQueryCondition != ''" >
+	    ${pager.mysqlQueryCondition}
+	    </if>
+	</select>
+	
+	<!-- BusinessTelGroup列表总数-->
+	<select id="selectCount" resultType="java.lang.Integer"  parameterType="Object">
+		select count(1) from business_tel_group 
+		<include refid="Base_Where_Clause" />
+	</select>
+	
+	
+	<!-- BusinessTelGroup保存数据 -->
+	<insert id="save" parameterType="BusinessTelGroup">
+		<selectKey resultType="java.lang.Integer" order="AFTER" keyProperty="groupId">
+			SELECT LAST_INSERT_ID()
+  		</selectKey>
+		insert into business_tel_group(
+		
+		cityId,
+		comId,
+		estateId,
+		groupName,
+		memo
+		) values(
+				#{cityId},
+		#{comId},
+		#{estateId},
+		#{groupName},
+		#{memo}
+		)
+	</insert>
+	
+	<!-- BusinessTelGroup修改数据 -->
+	<update id="update" parameterType="BusinessTelGroup">
+		update business_tel_group 
+		<set>
+			<if test="cityId != null and cityId != ''" >
+			cityId=#{cityId},
+			</if>
+			<if test="comId != null and comId != ''" >
+			comId=#{comId},
+			</if>
+			<if test="estateId != null and estateId != ''" >
+			estateId=#{estateId},
+			</if>
+			<if test="groupName != null and groupName != ''" >
+			groupName=#{groupName},
+			</if>
+			<if test="memo != null and memo != ''" >
+			memo=#{memo}
+			</if>
+		</set> 
+		where 
+		groupId=#{groupId}
+		
+		
+		
+		
+		
+	</update>
+	
+	<!-- BusinessTelGroup删除数据 -->
+	<delete id="delete" parameterType="java.lang.Integer">
+		delete from business_tel_group where 
+		groupId=#{groupId}
+											</delete>
+	
+</mapper>
+	

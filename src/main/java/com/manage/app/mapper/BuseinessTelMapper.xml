@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.manage.app.dao.BuseinessTelDao" >
+	<!-- 返回结构集 -->
+	<resultMap id="BuseinessTelResult" type="BuseinessTel">
+			<result column="telId" property="telId" />
+			<result column="groupId" property="groupId" />
+			<result column="tel" property="tel" />
+			<result column="telName" property="telName" />
+	</resultMap>
+	
+	<!-- 所有字段 -->
+	<sql id="Base_Column_List" >
+			telId,
+			groupId,
+			tel,
+			telName
+	</sql>
+	
+	<!-- 所有字段查询条件 -->
+	<sql id="Base_Where_Clause">
+		<where>
+			<trim  suffixOverrides="," >
+					<if test="telId != null and telId != ''" >
+				   		and telId = #{telId}
+					</if>
+					<if test="groupId != null and groupId != ''" >
+				   		and groupId = #{groupId}
+					</if>
+					<if test="tel != null and tel != ''" >
+				   		and tel = #{tel}
+					</if>
+					<if test="telName != null and telName != ''" >
+				   		and telName = #{telName}
+					</if>
+			</trim>
+		</where>
+	</sql>
+	
+	<!-- 根据id查询 BuseinessTel -->
+	<select id="findById"  resultMap="BuseinessTelResult" parameterType="java.lang.Integer">
+		select <include refid="Base_Column_List" /> from buseiness_tel where telId = #{id}
+	</select>
+	
+	<!-- 无条件查询所有BuseinessTel -->
+	<select id="findAll" resultMap="BuseinessTelResult">
+		select <include refid="Base_Column_List" /> from buseiness_tel 
+	</select>
+	
+	<!-- 按Map对象条件查询所有BuseinessTel -->
+	<select id="findByMap" resultMap="BuseinessTelResult" parameterType="java.util.Map">
+		select <include refid="Base_Column_List" /> from buseiness_tel <include refid="Base_Where_Clause" />
+	</select>
+	
+	<!-- 按VO对象条件查询所有BuseinessTel -->
+	<select id="findByExample" resultMap="BuseinessTelResult" parameterType="com.manage.app.vo.BuseinessTelQuery">
+		select <include refid="Base_Column_List" /> from buseiness_tel <include refid="Base_Where_Clause" />
+	</select>
+	
+	<!-- BuseinessTel根据搜索条件，搜索分页数据 -->
+	<select id="findAllPage" resultMap="BuseinessTelResult" parameterType="Object">
+		select <include refid="Base_Column_List" /> from buseiness_tel  
+		<include refid="Base_Where_Clause" />
+		<if test="pager.orderCondition != null and pager.orderCondition != ''" >
+      	${pager.orderCondition}
+	    </if>
+	    <if test="pager.mysqlQueryCondition != null and pager.mysqlQueryCondition != ''" >
+	    ${pager.mysqlQueryCondition}
+	    </if>
+	</select>
+	
+	<!-- BuseinessTel列表总数-->
+	<select id="selectCount" resultType="java.lang.Integer"  parameterType="Object">
+		select count(1) from buseiness_tel 
+		<include refid="Base_Where_Clause" />
+	</select>
+	
+	<select id="selectEstTelCount" resultType="int"  parameterType="com.utis.Page">
+		SELECT COUNT(*) AS total FROM buseiness_tel where groupId='${id}'
+	</select>
+	<select id="EstTelListData" resultMap="BuseinessTelResult" parameterType="com.utis.Page">
+		select * from buseiness_tel  where groupId='${id}'  LIMIT ${start},${end}
+	</select>
+	
+	<!-- BuseinessTel保存数据 -->
+	<insert id="save" parameterType="BuseinessTel">
+		<selectKey resultType="java.lang.Integer" order="AFTER" keyProperty="telId">
+			SELECT LAST_INSERT_ID()
+  		</selectKey>
+		insert into buseiness_tel(
+		
+		groupId,
+		tel,
+		telName
+		) values(
+				#{groupId},
+		#{tel},
+		#{telName}
+		)
+	</insert>
+	
+	<!-- BuseinessTel修改数据 -->
+	<update id="update" parameterType="BuseinessTel">
+		update buseiness_tel 
+		<set>
+			<if test="groupId != null and groupId != ''" >
+			groupId=#{groupId},
+			</if>
+			<if test="tel != null and tel != ''" >
+			tel=#{tel},
+			</if>
+			<if test="telName != null and telName != ''" >
+			telName=#{telName}
+			</if>
+		</set> 
+		where 
+		telId=#{telId}
+		
+		
+		
+	</update>
+	
+	<!-- BuseinessTel删除数据 -->
+	<delete id="delete" parameterType="java.lang.Integer">
+		delete from buseiness_tel where 
+		telId=#{telId}
+							</delete>
+	
+</mapper>
+	

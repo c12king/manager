@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:util="http://www.springframework.org/schema/util" xmlns:p="http://www.springframework.org/schema/p"
+	 xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+  http://www.springframework.org/schema/beans/spring-beans-3.0.xsd   
+  http://www.springframework.org/schema/tx   
+  http://www.springframework.org/schema/tx/spring-tx-3.0.xsd   
+  http://www.springframework.org/schema/context   http://www.springframework.org/schema/context/spring-context-3.0.xsd  
+  http://www.springframework.org/schema/util    http://www.springframework.org/schema/util/spring-util-3.0.xsd  
+  http://www.springframework.org/schema/mvc      
+     http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd 
+ ">
+    <!-- 数据库资源文件-->
+  	
+	<!-- 使用annotation 自动注册bean,并保证@Required,@Autowired的属性被注入-->
+	 <context:property-placeholder location="classpath:resources/mysql.properties"/>
+	 <!-- dbcp 配置结束-->
+	 	<!-- destroy-method定义销毁Bean方法，这里调用close()方法来销毁Bean -->
+	 <bean id="dataSource"
+        class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
+        <property name="driverClass">
+           <value>${jdbc.driverClassName}</value>  
+        </property>
+        <property name="jdbcUrl">
+          <value>${jdbc.url}</value> 
+        </property>
+        <property name="user">
+            <value>${jdbc.userName}</value>
+        </property>
+        <property name="password">
+            <value>${jdbc.password}</value> 
+        </property>
+	</bean>
+	
+	
+	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+	  <property name="dataSource" ref="dataSource" />
+	</bean>
+	
+  <bean id="sqlMapClient" class="org.mybatis.spring.SqlSessionFactoryBean"> 
+     <property name="configLocation" value="classpath:SqlMapConfig.xml" />
+     <property name="dataSource" ref="dataSource" />
+     
+  </bean> 
+  <!-- 获取事物 -->
+	
+     <bean id="SqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate"> 
+        <constructor-arg index="0" ref="sqlMapClient" /> 
+    </bean>
+
+	<!-- spring 使用annotation -->
+ 
+  	<!--在主容器中（applicationContext.xml），将Controller的注解排除掉 -->
+	<tx:annotation-driven transaction-manager="transactionManager"     />
+	<context:component-scan base-package="com.manage.app.*,com.utis">
+		<context:exclude-filter type="annotation"
+			expression="org.springframework.stereotype.Controller" />
+	</context:component-scan>
+
+<!--	<bean id="handlerMapping"-->
+<!--		class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">-->
+<!--		<property name="interceptors">-->
+<!--			<list>-->
+<!--				<ref bean="controllerInterceptor" />-->
+<!--			</list>-->
+<!--		</property>-->
+<!--		<property name="mappings">-->
+<!--			<props>-->
+<!--				<prop key="/power/*">PowerAction</prop>-->
+<!--				<prop key="/log/*">Applyaction</prop>-->
+<!--				<prop key="*manager/*">PowerAction</prop>-->
+<!--			</props>-->
+<!--		</property>-->
+<!--	</bean>-->
+<!---->
+<!--	<bean id="controllerInterceptor" class="com.utis.ControllerInterceptor" />-->
+<!--	<bean id="PowerAction" class="com.manage.app.login.action.PowerAction" />-->
+<!--	<bean id="Applyaction" class="com.manage.app.login.action.Applyaction" />-->
+<!--	-->
+	<mvc:interceptors>  
+<!--         多个拦截器,顺序执行   -->
+        <mvc:interceptor>  
+           <mvc:mapping path="/power/*" />
+           <mvc:mapping path="*" />
+           <mvc:mapping path="/localhost/*" /><!-- 如果不配置或/*,将拦截所有的Controller   
+           --><bean class="com.utis.ControllerInterceptor"></bean>  
+        </mvc:interceptor>  
+        <mvc:interceptor>  
+           <mvc:mapping path="*.html" />
+           <mvc:mapping path="*.jsp" />
+      <bean class="com.utis.ControllerInterceptor"></bean>  
+        </mvc:interceptor>  
+    </mvc:interceptors>  
+	
+	<!--         上传图片   -->
+	<bean id="multipartResolver"  
+        class="org.springframework.web.multipart.commons.CommonsMultipartResolver">  
+        <property name="maxUploadSize">  
+            <value>2048576</value>  
+        </property>  
+    </bean>  
+	</beans>
+

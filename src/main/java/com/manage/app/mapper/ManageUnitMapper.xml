@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.app.bean" >
+	
+	<resultMap id="ManageUnit" type="com.manage.app.bean.ManageUnit">
+			<result column="unitId" property="unitId" />
+			<result column="buildingId" property="buildingId" />
+			<result column="unitName" property="unitName" />
+			<result column="estateLongitude" property="estateLongitude" />
+			<result column="estateLatitude" property="estateLatitude" />
+			<result column="createTime" property="createTime" />
+			<result column="editTime" property="editTime" />
+			<result column="editor" property="editor" />
+			<result column="unitMap" property="unitMap" />
+	</resultMap>
+	<select id="selectManageUnit" resultMap="ManageUnit">
+		select * from manage_unit 
+	</select>
+	<select id="selectManageUnitTree" resultMap="ManageUnit">
+		select * from manage_unit where buildingId='${buildingId}'
+	</select>
+	<select id="selectManageUnitCount" resultType="int"  parameterType="com.utis.Page">
+		SELECT COUNT(*) AS total FROM manage_unit where name like '%${link}%'
+	</select>
+	<select id="selectManageUnitId" resultMap="ManageUnit" parameterType="com.manage.app.bean.ManageUnit">
+				select * from manage_unit where unitId='${unitId}'
+	</select>
+	<select id="ManageUnitListData" resultMap="ManageUnit" parameterType="com.utis.Page">
+		select * from manage_unit  where name like '%${link}%' LIMIT ${start},${end}
+	</select>
+	
+	
+	<insert id="addManageUnit" parameterType="com.manage.app.bean.ManageUnit">
+		
+		insert into manage_unit(
+				buildingId,
+		unitName,
+		createTime,
+		editTime
+		) values(
+				'${buildingId}',
+		'新单元',
+		'${createTime}',
+		'${editTime}'
+		)
+			
+	</insert>
+	<update id="updateManageUnitId" parameterType="com.manage.app.bean.ManageUnit">
+		update manage_unit set 
+		unitName='${unitName}',
+		editTime='${editTime}',
+		estateLongitude='${estateLongitude}',
+		estateLatitude='${estateLatitude}',
+		unitMap='${unitMap}'
+		 where 
+		unitId='${unitId}'
+																	</update>
+	<delete id="deleteManageUnitId" parameterType="com.manage.app.bean.ManageUnit">
+		delete from manage_unit where 
+		unitId='${unitId}'
+																	</delete>
+	
+</mapper>
+	

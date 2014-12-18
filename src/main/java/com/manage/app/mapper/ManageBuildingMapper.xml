@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.manage.app.bean" >
+	
+	<resultMap id="ManageBuilding" type="com.manage.app.bean.ManageBuilding">
+			<result column="buildingId" property="buildingId" />
+			<result column="estateId" property="estateId" />
+			<result column="buildingName" property="buildingName" />
+			<result column="buildingDesc" property="buildingDesc" />
+			<result column="buildingFloor" property="buildingFloor" />
+			<result column="estateLongitude" property="estateLongitude" />
+			<result column="estateLatitude" property="estateLatitude" />
+			<result column="createTime" property="createTime" />
+			<result column="editTime" property="editTime" />
+			<result column="editor" property="editor" />
+			<result column="buildingMap" property="buildingMap" />
+	</resultMap>
+	<select id="selectManageBuilding" resultMap="ManageBuilding">
+		select * from manage_building 
+	</select>
+	<select id="selectManageBuildingTree" resultMap="ManageBuilding">
+		select * from manage_building where estateId='${estateId}'
+	</select>
+	<select id="selectManageBuildingCount" resultType="int"  parameterType="com.utis.Page">
+		SELECT COUNT(*) AS total FROM manage_building where name like '%${link}%'
+	</select>
+	<select id="selectManageBuildingId" resultMap="ManageBuilding" parameterType="com.manage.app.bean.ManageBuilding">
+				select * from manage_building where buildingId='${buildingId}'
+	</select>
+	<select id="ManageBuildingListData" resultMap="ManageBuilding" parameterType="com.utis.Page">
+		select * from manage_building  where name like '%${link}%' LIMIT ${start},${end}
+	</select>
+	<insert id="addManageBuilding" parameterType="com.manage.app.bean.ManageBuilding">
+		
+		insert into manage_building(
+				estateId,
+		createTime,
+		editTime,
+		buildingName
+		) values(
+				'${estateId}',
+		'${createTime}',
+		'${editTime}',
+		'新楼栋'	
+		)
+			
+	</insert>
+	<update id="updateManageBuildingId" parameterType="com.manage.app.bean.ManageBuilding">
+		update manage_building set 
+		buildingName='${buildingName}',
+		buildingDesc='${buildingDesc}',
+		editTime='${editTime}',
+		buildingMap='${buildingMap}'
+		 where 
+		buildingId='${buildingId}'
+																					</update>
+	<delete id="deleteManageBuildingId" parameterType="com.manage.app.bean.ManageBuilding">
+		delete from manage_building where 
+		buildingId='${buildingId}'
+																					</delete>
+	
+	<!-- 按Map对象条件查询所有ManageBuilding -->
+	<select id="manage_building_findByMap" resultMap="com.manage.app.bean.ManageBuilding" parameterType="java.util.Map">
+		select * from manage_building 
+		<where>
+			<trim  suffixOverrides="," >
+					<if test="buildingId != null and buildingId != ''" >
+				   		and buildingId = #{buildingId}
+					</if>
+					<if test="estateId != null and estateId != ''" >
+				   		and estateId = #{estateId}
+					</if>
+					<if test="buildingName != null and buildingName != ''" >
+				   		and buildingName = #{buildingName}
+					</if>
+					<if test="buildingDesc != null and buildingDesc != ''" >
+				   		and buildingDesc = #{buildingDesc}
+					</if>
+					<if test="buildingFloor != null and buildingFloor != ''" >
+				   		and buildingFloor = #{buildingFloor}
+					</if>
+					<if test="estateLongitude != null and estateLongitude != ''" >
+				   		and estateLongitude = #{estateLongitude}
+					</if>
+					<if test="estateLatitude != null and estateLatitude != ''" >
+				   		and estateLatitude = #{estateLatitude}
+					</if>
+					<if test="createTime != null and createTime != ''" >
+				   		and createTime = #{createTime}
+					</if>
+					<if test="editTime != null and editTime != ''" >
+				   		and editTime = #{editTime}
+					</if>
+					<if test="editor != null and editor != ''" >
+				   		and editor = #{editor}
+					</if>
+					<if test="buildingMap != null and buildingMap != ''" >
+				   		and buildingMap = #{buildingMap}
+					</if>
+			</trim>
+		</where>
+	</select>
+	
+</mapper>
+	

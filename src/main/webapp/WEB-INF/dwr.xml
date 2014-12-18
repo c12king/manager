@@ -1,0 +1,17 @@
+<!DOCTYPE dwr PUBLIC "-//GetAhead Limited//DTD Direct Web Remoting 2.0//EN"
+    "http://getahead.org/dwr/dwr30.dtd">
+<dwr>
+ <allow>
+    
+<!--  create 标签中指定javascript中可以访问的java类，-->
+<!--  并定义DWR应当如何获得要进行远程的类的实例。creator="new"属性指定java类实例的生成方式，new意味着DWR应当调用类的默认构造函数来获得实例，-->
+<!--  其他的还有spring方式，通过与IOC容器Spring进行集成来获得实例等等。javascript=" testClass "属性指定javascript代码访问对象时使用的名称。-->
+    
+ <create creator="new" javascript="test">
+	<param name="class">com.chat.Test</param>
+</create>
+    
+<!-- <convert converter="bean" match=""com.dwr.TestBean">-->
+    
+ </allow>
+</dwr>

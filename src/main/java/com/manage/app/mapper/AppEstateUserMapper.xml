@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.manage.app.bean" >
+	
+	<resultMap id="AppEstateUser" type="com.manage.app.bean.AppEstateUser">
+			<result column="estMemId" property="estMemId" />
+			<result column="estateId" property="estateId" />
+			<result column="userId" property="userId" />
+			<result column="buildingId" property="buildingId" />
+			<result column="unitId" property="unitId" />
+			<result column="houseId" property="houseId" />
+			<result column="estateName" property="estateName" />
+			<result column="buildingName" property="buildingName" />
+			<result column="unitName" property="unitName" />
+			<result column="houseNo" property="houseNo" />
+			<result column="memberType" property="memberType" />
+			<result column="createTime" property="createTime" />
+			<result column="editTime" property="editTime" />
+			<result column="editor" property="editor" />
+	</resultMap>
+	<select id="selectAppEstateUser" resultMap="AppEstateUser">
+		select * from app_estate_user 
+	</select>
+	<select id="selectAppEstateUserCount" resultType="int"  parameterType="com.utis.Page">
+		SELECT COUNT(*) AS total FROM app_estate_user where userId='${id}'
+	</select>
+	<select id="selectAppEstateUserId" resultMap="AppEstateUser" parameterType="com.manage.app.bean.AppEstateUser">
+				select * from app_estate_user where userId='${userId}'
+	</select>
+	<select id="AppEstateUserListData" resultMap="AppEstateUser" parameterType="com.utis.Page">
+		select * from app_estate_user  where userId='${id}' LIMIT ${start},${end}
+	</select>
+	<insert id="addAppEstateUser" parameterType="com.manage.app.bean.AppEstateUser">
+		
+		insert into app_estate_user(
+				estateId,
+		userId,
+		buildingId,
+		unitId,
+		houseId,
+		estateName,
+		buildingName,
+		unitName,
+		houseNo,
+		memberType,
+		createTime,
+		editTime,
+		editor,
+		) values(
+				'${estateId}',
+		'${userId}',
+		'${buildingId}',
+		'${unitId}',
+		'${houseId}',
+		'${estateName}',
+		'${buildingName}',
+		'${unitName}',
+		'${houseNo}',
+		'${memberType}',
+		'${createTime}',
+		'${editTime}',
+		'${editor}',
+		)
+			
+	</insert>
+	<update id="updateAppEstateUserId" parameterType="com.manage.app.bean.AppEstateUser">
+		update app_estate_user set 
+				estateId='${estateId}',
+		userId='${userId}',
+		buildingId='${buildingId}',
+		unitId='${unitId}',
+		houseId='${houseId}',
+		estateName='${estateName}',
+		buildingName='${buildingName}',
+		unitName='${unitName}',
+		houseNo='${houseNo}',
+		memberType='${memberType}',
+		createTime='${createTime}',
+		editTime='${editTime}',
+		editor='${editor}'
+		 where 
+		estMemId='${estMemId}'
+																											</update>
+	<delete id="deleteAppEstateUserId" parameterType="com.manage.app.bean.AppEstateUser">
+		delete from app_estate_user where 
+		estMemId='${estMemId}'
+																											</delete>
+	
+</mapper>
+	

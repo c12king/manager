@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.manage.app.bean" >
+	
+	<resultMap id="ManagePositionUser" type="com.manage.app.bean.ManagePositionUser">
+			<result column="posUserId" property="posUserId" />
+			<result column="userId" property="userId" />
+			<result column="positionId" property="positionId" />
+			<result column="positionName" property="positionName" />
+			<result column="userName" property="userName" />
+			<result column="userState" property="userState" />
+			<result column="isCharge" property="isCharge" />
+			<result column="createTime" property="createTime" />
+			<result column="editTime" property="editTime" />
+			<result column="editor" property="editor" />
+			<result column="orgName" property="orgName" />
+	</resultMap>
+	<select id="selectManagePositionUserCount" resultType="int"  parameterType="com.utis.Page">
+		SELECT COUNT(*) AS total FROM manage_position_user where name like '%${link}%'
+	</select>
+	<select id="selectManagePositionUserId" resultMap="ManagePositionUser" parameterType="com.manage.app.bean.ManagePositionUser">
+				select * from manage_position_user where posUserID='${posUserID}'
+	</select>
+	<select id="selectManagePositionUser" resultMap="ManagePositionUser" parameterType="com.manage.app.bean.BusinessUser">
+				SELECT u.userId,o.orgName,p.positionName,p.positionId FROM manage_position_user u,manage_position p,manage_org o WHERE u.positionId=p.positionId AND p.orgId=o.orgId AND userId='${userId}'
+	</select>
+	<select id="ManagePositionUserListData" resultMap="ManagePositionUser" parameterType="com.utis.Page">
+		select * from manage_position_user  where name like '%${link}%' LIMIT ${start},${end}
+	</select>
+	<insert id="addManagePositionUser" parameterType="com.manage.app.bean.ManagePositionUser">
+		
+		insert into manage_position_user(
+				userId,
+		positionId,
+		positionName,
+		userName,
+		createTime,
+		editTime,
+		isCharge
+		) values(
+				'${userId}',
+		'${positionId}',
+		'${positionName}',
+		'${userName}',
+		'${createTime}',
+		'${editTime}',
+		'1'
+		)
+		<selectKey resultType="int" keyProperty="posUserId" order="AFTER">    
+     		SELECT LAST_INSERT_ID()     
+		</selectKey> 	
+	</insert>
+	<update id="updateManagePositionUserId" parameterType="com.manage.app.bean.ManagePositionUser">
+		update manage_position_user set 
+				userId='${userId}',
+		positionId='${positionId}',
+		positionName='${positionName}',
+		userName='${userName}',
+		userState='${userState}',
+		isCharge='${isCharge}',
+		createTime='${createTime}',
+		editTime='${editTime}',
+		editor='${editor}'
+		 where 
+		posUserID='${posUserID}'
+																			</update>
+	<update id="updateNoIsCharge" parameterType="com.manage.app.bean.ManagePositionUser">
+		update manage_position_user set 
+		editTime='${editTime}',
+		isCharge='1'
+		where 
+		positionId='${positionId}'
+	</update>																	
+	<update id="updateIsCharge" parameterType="com.manage.app.bean.ManagePositionUser">
+		update manage_position_user set 
+		editTime='${editTime}',
+		isCharge='0'
+		where 
+		userId='${userId}' and positionId='${positionId}'
+	</update>
+	<delete id="deleteManagePositionUserId" parameterType="com.manage.app.bean.ManagePositionUser">
+		delete from manage_position_user where 
+		posUserID='${posUserID}'
+																			</delete>
+	<delete id="deleteManagePositionUserAll" parameterType="com.manage.app.bean.ManagePositionUser">
+		delete from manage_position_user where 
+		userId='${userId}'
+																			</delete>
+</mapper>
+	

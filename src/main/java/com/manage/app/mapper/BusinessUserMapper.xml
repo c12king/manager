@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.manage.app.bean" >
+	
+	<resultMap id="BusinessUser" type="com.manage.app.bean.BusinessUser">
+			<result column="userId" property="userId" />
+			<result column="userName" property="userName" />
+			<result column="userTel" property="userTel" />
+			<result column="userPassword" property="userPassword" />
+			<result column="userCode" property="userCode" />
+			<result column="lastLoginTime" property="lastLoginTime" />
+			<result column="userEmail" property="userEmail" />
+			<result column="userPhoto" property="userPhoto" />
+			<result column="userBrief" property="userBrief" />
+			<result column="userService" property="userService" />
+			<result column="createTime" property="createTime" />
+			<result column="editTime" property="editTime" />
+			<result column="editor" property="editor" />
+			<result column="isCharge" property="isCharge" />
+			<result column="positionId" property="positionId" />
+			<result column="posName" property="posName" />
+			<result column="modules" property="modules" />
+			<result column="fullPosName" property="fullPosName" />
+			<result column="orgType" property="orgType" />
+	</resultMap>
+	<select id="selectBusinessUser" resultMap="BusinessUser">
+		select * from business_user ORDER BY editTime DESC
+	</select>
+	<select id="selectBusinessUserCount" resultType="int"  parameterType="com.utis.Page">
+		<trim  suffixOverrides="," >
+			<if test="id != null">
+				SELECT COUNT(*) AS total FROM business_user where positionId='${id}'
+			</if>
+			<if test="id == null">
+				SELECT COUNT(*) AS total FROM business_user where userName like '%${link}%' 
+			</if>
+	   </trim>
+	</select>
+	<select id="selectBusinessUserId" resultMap="BusinessUser" parameterType="com.manage.app.bean.BusinessUser">
+				SELECT u.userId,u.positionId,u.userName,u.userTel,u.userPassword,u.userEmail,u.userPhoto,u.userBrief,u.userService,u.posName,u.isCharge,p.orgName,p.depName,p.positionName,u.orgType ,CONCAT(p.orgName,"-",p.depName,"-",p.positionName)  AS fullPosName FROM business_user u,business_position p WHERE u.positionId=p.positionId and userId='${userId}'
+	</select>
+	<select id="BusinessUserListData" resultMap="BusinessUser" parameterType="com.utis.Page">
+		<trim  suffixOverrides="," >
+			<if test="id != null">
+				SELECT u.userId,u.positionId,u.userName,u.userTel,u.userPassword,u.userEmail,u.userPhoto,u.userBrief,u.userService,u.isCharge,p.orgName,p.depName,p.positionName,CONCAT(p.orgName,"-",p.depName,"-",p.positionName)   AS posName,u.createTime,u.editTime,u.editor,u.orgType FROM business_user u,business_position p WHERE u.positionId=p.positionId and  p.positionId='${id}' ORDER BY u.editTime DESC LIMIT ${start},${end}
+			</if>
+			<if test="id == null">
+				SELECT u.userId,u.positionId,u.userName,u.userTel,u.userPassword,u.userEmail,u.userPhoto,u.userBrief,u.userService,u.isCharge,p.orgName,p.depName,p.positionName,CONCAT(p.orgName,"-",p.depName,"-",p.positionName)   AS posName,u.createTime,u.editTime,u.editor,u.orgType FROM business_user u,business_position p WHERE u.positionId=p.positionId and userName like '%${link}%' ORDER BY u.editTime DESC LIMIT ${start},${end}
+			</if>
+	   </trim>
+	</select>
+	<insert id="addBusinessUser" parameterType="com.manage.app.bean.BusinessUser">
+		
+		insert into business_user(
+				userName,
+		userTel,
+		userPassword,
+		userEmail,
+		userPhoto,
+		userBrief,
+		userService,
+		createTime,
+		editTime,
+		modules,
+		<if test="positionId != null">
+		positionId,
+		posName,
+		orgType,
+		</if>
+		isCharge
+		) values(
+				'${userName}',
+		'${userTel}',
+		'${userPassword}',
+		'${userEmail}',
+		'${userPhoto}',
+		'${userBrief}',
+		'${userService}',
+		'${createTime}',
+		'${editTime}',
+		'${modules}',
+		<if test="positionId != null">
+		'${positionId}',
+		'${posName}',
+		'${orgType}',
+		</if>
+		'1'
+		)
+		<selectKey resultType="int" keyProperty="userId" order="AFTER">    
+     		SELECT LAST_INSERT_ID()     
+		</selectKey> 	
+	</insert>
+	<update id="updateBusinessUserId" parameterType="com.manage.app.bean.BusinessUser">
+		update business_user set 
+				userName='${userName}',
+		userTel='${userTel}',
+		userPassword='${userPassword}',
+		userEmail='${userEmail}',
+		userPhoto='${userPhoto}',
+		userBrief='${userBrief}',
+		userService='${userService}',
+		modules='${modules}',
+		<if test="positionId != null">
+		positionId='${positionId}',
+		posName='${posName}',
+		orgType='${orgType}',
+		</if>
+		editTime='${editTime}'
+		 where 
+		userId='${userId}'
+																									</update>
+	<update id="updateBusinessUserNoIsCharge" parameterType="com.manage.app.bean.BusinessUser">
+		update business_user set 
+		editTime='${editTime}',
+		isCharge='1'
+		where 
+		positionId='${positionId}'
+	</update>																	
+	<update id="updateBusinessUserIsCharge" parameterType="com.manage.app.bean.BusinessUser">
+		update business_user set 
+		editTime='${editTime}',
+		isCharge='0'
+		where 
+		userId='${userId}' and positionId='${positionId}'
+	</update>
+	<update id="updateBusinessPosition" parameterType="com.manage.app.bean.BusinessUser">
+		update business_user set 
+		editTime='${editTime}',
+		positionId='${positionId}',
+		posName='${posName}'
+		where 
+		userId='${userId}'
+	</update>	
+	<delete id="deleteBusinessUserId" parameterType="com.manage.app.bean.BusinessUser">
+		delete from business_user where 
+		userId='${userId}'
+																									</delete>
+	
+</mapper>
+	

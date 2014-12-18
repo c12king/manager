@@ -1,0 +1,265 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.manage.app.dao.BusinessPropertyDao" >
+	<!-- 返回结构集 -->
+	<resultMap id="BusinessPropertyResult" type="BusinessProperty">
+			<result column="proId" property="proId" />
+			<result column="orgId" property="orgId" />
+			<result column="proName" property="proName" />
+			<result column="proBrief" property="proBrief" />
+			<result column="proService" property="proService" />
+			<result column="proTel" property="proTel" />
+			<result column="proEmail" property="proEmail" />
+			<result column="proWeixin" property="proWeixin" />
+			<result column="proIcon" property="proIcon" />
+			<result column="proLongitude" property="proLongitude" />
+			<result column="proLatitude" property="proLatitude" />
+			<result column="crateTime" property="crateTime" />
+			<result column="editTime" property="editTime" />
+			<result column="editor" property="editor" />
+			<result column="orgName" property="orgName" />
+			<result column="proCode" property="proCode" />
+	</resultMap>
+	
+	<!-- 所有字段 -->
+	<sql id="Base_Column_List" >
+			proId,
+			orgId,
+			proName,
+			proBrief,
+			proService,
+			proTel,
+			proEmail,
+			proWeixin,
+			proIcon,
+			proLongitude,
+			proLatitude,
+			crateTime,
+			editTime,
+			editor
+	</sql>
+	
+	<!-- 所有字段查询条件 -->
+	<sql id="Base_Where_Clause">
+		<where>
+			<trim  suffixOverrides="," >
+					<if test="proId != null and proId != ''" >
+				   		and proId = #{proId}
+					</if>
+					<if test="orgId != null and orgId != ''" >
+				   		and orgId = #{orgId}
+					</if>
+					<if test="proName != null and proName != ''" >
+				   		and proName = #{proName}
+					</if>
+					<if test="proBrief != null and proBrief != ''" >
+				   		and proBrief = #{proBrief}
+					</if>
+					<if test="proService != null and proService != ''" >
+				   		and proService = #{proService}
+					</if>
+					<if test="proTel != null and proTel != ''" >
+				   		and proTel = #{proTel}
+					</if>
+					<if test="proEmail != null and proEmail != ''" >
+				   		and proEmail = #{proEmail}
+					</if>
+					<if test="proWeixin != null and proWeixin != ''" >
+				   		and proWeixin = #{proWeixin}
+					</if>
+					<if test="proIcon != null and proIcon != ''" >
+				   		and proIcon = #{proIcon}
+					</if>
+					<if test="proLongitude != null and proLongitude != ''" >
+				   		and proLongitude = #{proLongitude}
+					</if>
+					<if test="proLatitude != null and proLatitude != ''" >
+				   		and proLatitude = #{proLatitude}
+					</if>
+					<if test="crateTime != null and crateTime != ''" >
+				   		and crateTime = #{crateTime}
+					</if>
+					<if test="editTime != null and editTime != ''" >
+				   		and editTime = #{editTime}
+					</if>
+					<if test="editor != null and editor != ''" >
+				   		and editor = #{editor}
+					</if>
+			</trim>
+		</where>
+	</sql>
+	
+	<!-- 根据id查询 BusinessProperty -->
+	<select id="findById"  resultMap="BusinessPropertyResult" parameterType="java.lang.Integer">
+		select <include refid="Base_Column_List" /> from business_property where proId = #{id}
+	</select>
+	
+	<!-- 根据区域id查询 BusinessProperty -->
+	<select id="getComboboxData"  resultMap="BusinessPropertyResult" parameterType="java.lang.Integer">
+		select p.proId,p.proName from business_property p,manage_org o where o.orgId=p.orgId and countyId = #{id}
+	</select>
+	
+	<select id="findByIdOrgName"  resultMap="BusinessPropertyResult" parameterType="java.lang.Integer">
+		select 
+		p.proId,
+		p.orgId,
+		p.proName,
+		p.proBrief,
+		p.proService,
+		p.proTel,
+		p.proEmail,
+		p.proWeixin,
+		p.proIcon,
+		p.proLongitude,
+		p.proLatitude,
+		orgName
+		from business_property p,manage_org o where o.orgId=p.orgId  and proId = #{id}
+	</select>
+	
+	<select id="getBusinessPropertyOrgId"  resultMap="BusinessPropertyResult" parameterType="java.lang.Integer">
+		select 
+		proId,
+		proName
+		from business_property where  orgId = #{id}
+	</select>
+	
+	<!-- 无条件查询所有BusinessProperty -->
+	<select id="findAll" resultMap="BusinessPropertyResult">
+		select <include refid="Base_Column_List" /> from business_property 
+	</select>
+	
+	<!-- 按Map对象条件查询所有BusinessProperty -->
+	<select id="findByMap" resultMap="BusinessPropertyResult" parameterType="java.util.Map">
+		select <include refid="Base_Column_List" /> from business_property <include refid="Base_Where_Clause" />
+	</select>
+	
+	<!-- 按VO对象条件查询所有BusinessProperty -->
+	<select id="findByExample" resultMap="BusinessPropertyResult" parameterType="com.manage.app.vo.BusinessPropertyQuery">
+		select <include refid="Base_Column_List" /> from business_property <include refid="Base_Where_Clause" />
+	</select>
+	
+	<!-- BusinessProperty根据搜索条件，搜索分页数据 -->
+	<select id="findAllPage" resultMap="BusinessPropertyResult" parameterType="Object">
+		select <include refid="Base_Column_List" /> from business_property  
+		<include refid="Base_Where_Clause" />
+		<if test="pager.orderCondition != null and pager.orderCondition != ''" >
+      	${pager.orderCondition}
+	    </if>
+	    <if test="pager.mysqlQueryCondition != null and pager.mysqlQueryCondition != ''" >
+	    ${pager.mysqlQueryCondition}
+	    </if>
+	</select>
+	
+	<!-- BusinessProperty列表总数-->
+	<select id="selectCount" resultType="java.lang.Integer"  parameterType="Object">
+		select count(1) from business_property 
+		<include refid="Base_Where_Clause" />
+	</select>
+	
+	<!-- BusinessProperty保存数据 -->
+	<insert id="save" parameterType="BusinessProperty">
+		<selectKey resultType="java.lang.Integer" order="AFTER" keyProperty="proId">
+			SELECT LAST_INSERT_ID()
+  		</selectKey>
+		insert into business_property(
+		
+		orgId,
+		proName,
+		proBrief,
+		proService,
+		proTel,
+		proEmail,
+		proWeixin,
+		proIcon,
+		proLongitude,
+		proLatitude,
+		crateTime,
+		proCode,
+		editTime
+		) values(
+				 #{orgId} ,
+		 #{proName} ,
+		 #{proBrief} ,
+		 #{proService} ,
+		 #{proTel} ,
+		 #{proEmail} ,
+		 #{proWeixin} ,
+		 #{proIcon} ,
+		 #{proLongitude} ,
+		 #{proLatitude} ,
+		 #{crateTime} ,
+		 '2',
+		 #{editTime} 
+		)
+	</insert>
+	
+	<!-- BusinessProperty修改数据 -->
+	<update id="update" parameterType="BusinessProperty">
+		update business_property 
+		<set>
+			<if test="orgId != null and orgId != ''" >
+			orgId=#{orgId},
+			</if>
+			<if test="proName != null and proName != ''" >
+			proName=#{proName},
+			</if>
+			<if test="proBrief != null and proBrief != ''" >
+			proBrief=#{proBrief},
+			</if>
+			<if test="proService != null and proService != ''" >
+			proService=#{proService},
+			</if>
+			<if test="proTel != null and proTel != ''" >
+			proTel=#{proTel},
+			</if>
+			<if test="proEmail != null and proEmail != ''" >
+			proEmail=#{proEmail},
+			</if>
+			<if test="proWeixin != null and proWeixin != ''" >
+			proWeixin=#{proWeixin},
+			</if>
+			<if test="proIcon != null and proIcon != ''" >
+			proIcon=#{proIcon},
+			</if>
+			<if test="proLongitude != null and proLongitude != ''" >
+			proLongitude=#{proLongitude},
+			</if>
+			<if test="proLatitude != null and proLatitude != ''" >
+			proLatitude=#{proLatitude},
+			</if>
+			<if test="crateTime != null and crateTime != ''" >
+			crateTime=#{crateTime},
+			</if>
+			<if test="editTime != null and editTime != ''" >
+			editTime=#{editTime},
+			</if>
+			<if test="editor != null and editor != ''" >
+			editor=#{editor}
+			</if>
+		</set> 
+		where 
+		proId=#{proId}
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+	</update>
+	
+	<!-- BusinessProperty删除数据 -->
+	<delete id="delete" parameterType="java.lang.Integer">
+		delete from business_property where 
+		proId=#{proId}
+																											</delete>
+	
+</mapper>
+	

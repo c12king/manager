@@ -1,0 +1,263 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.manage.app.dao.BusinessCommunityDao" >
+	<!-- 返回结构集 -->
+	<resultMap id="BusinessCommunityResult" type="BusinessCommunity">
+			<result column="comId" property="comId" />
+			<result column="orgId" property="orgId" />
+			<result column="comName" property="comName" />
+			<result column="comBrief" property="comBrief" />
+			<result column="comService" property="comService" />
+			<result column="comTel" property="comTel" />
+			<result column="comEmail" property="comEmail" />
+			<result column="comWeixin" property="comWeixin" />
+			<result column="comIcon" property="comIcon" />
+			<result column="comLongitude" property="comLongitude" />
+			<result column="comLatitude" property="comLatitude" />
+			<result column="createTime" property="createTime" />
+			<result column="editTime" property="editTime" />
+			<result column="editor" property="editor" />
+			<result column="orgName" property="orgName" />
+			<result column="comCode" property="comCode" />
+	</resultMap>
+	
+	<!-- 所有字段 -->
+	<sql id="Base_Column_List" >
+			comId,
+			orgId,
+			comName,
+			comBrief,
+			comService,
+			comTel,
+			comEmail,
+			comWeixin,
+			comIcon,
+			comLongitude,
+			comLatitude,
+			createTime,
+			editTime,
+			editor
+	</sql>
+	
+	<!-- 所有字段查询条件 -->
+	<sql id="Base_Where_Clause">
+		<where>
+			<trim  suffixOverrides="," >
+					<if test="comId != null and comId != ''" >
+				   		and comId = #{comId}
+					</if>
+					<if test="orgId != null and orgId != ''" >
+				   		and orgId = #{orgId}
+					</if>
+					<if test="comName != null and comName != ''" >
+				   		and comName = #{comName}
+					</if>
+					<if test="comBrief != null and comBrief != ''" >
+				   		and comBrief = #{comBrief}
+					</if>
+					<if test="comService != null and comService != ''" >
+				   		and comService = #{comService}
+					</if>
+					<if test="comTel != null and comTel != ''" >
+				   		and comTel = #{comTel}
+					</if>
+					<if test="comEmail != null and comEmail != ''" >
+				   		and comEmail = #{comEmail}
+					</if>
+					<if test="comWeixin != null and comWeixin != ''" >
+				   		and comWeixin = #{comWeixin}
+					</if>
+					<if test="comIcon != null and comIcon != ''" >
+				   		and comIcon = #{comIcon}
+					</if>
+					<if test="comLongitude != null and comLongitude != ''" >
+				   		and comLongitude = #{comLongitude}
+					</if>
+					<if test="comLatitude != null and comLatitude != ''" >
+				   		and comLatitude = #{comLatitude}
+					</if>
+					<if test="createTime != null and createTime != ''" >
+				   		and createTime = #{createTime}
+					</if>
+					<if test="editTime != null and editTime != ''" >
+				   		and editTime = #{editTime}
+					</if>
+					<if test="editor != null and editor != ''" >
+				   		and editor = #{editor}
+					</if>
+			</trim>
+		</where>
+	</sql>
+	
+	<!-- 根据id查询 BusinessCommunity -->
+	<select id="findById"  resultMap="BusinessCommunityResult" parameterType="java.lang.Integer">
+		select <include refid="Base_Column_List" /> from business_community where comId = #{id}
+	</select>
+	
+	<!-- 根据区域id查询 BusinessCommunity -->
+	<select id="getComboboxData"  resultMap="BusinessCommunityResult" parameterType="java.lang.Integer">
+		select c.comId,c.comName from business_community c,manage_org o where o.orgId=c.orgId and countyId = #{id}
+	</select>
+	
+	<select id="findByIdOrgName"  resultMap="BusinessCommunityResult" parameterType="java.lang.Integer">
+		select  c.comId,
+			c.orgId,
+			c.comName,
+			c.comBrief,
+			c.comService,
+			c.comTel,
+			c.comEmail,
+			c.comWeixin,
+			c.comIcon,
+			c.comLongitude,
+			c.comLatitude,
+			orgName
+			from business_community c ,manage_org o  where o.orgId=c.orgId  and comId = #{id}
+	</select>
+	
+	<select id="getBusinessCommunityOrgId"  resultMap="BusinessCommunityResult" parameterType="java.lang.Integer">
+		select  comId,
+			comName
+			from business_community where  orgId = #{id}
+	</select>
+	
+	<!-- 无条件查询所有BusinessCommunity -->
+	<select id="findAll" resultMap="BusinessCommunityResult">
+		select <include refid="Base_Column_List" /> from business_community 
+	</select>
+	
+	<!-- 按Map对象条件查询所有BusinessCommunity -->
+	<select id="findByMap" resultMap="BusinessCommunityResult" parameterType="java.util.Map">
+		select <include refid="Base_Column_List" /> from business_community <include refid="Base_Where_Clause" />
+	</select>
+	
+	<!-- 按VO对象条件查询所有BusinessCommunity -->
+	<select id="findByExample" resultMap="BusinessCommunityResult" parameterType="com.manage.app.vo.BusinessCommunityQuery">
+		select <include refid="Base_Column_List" /> from business_community <include refid="Base_Where_Clause" />
+	</select>
+	
+	<!-- BusinessCommunity根据搜索条件，搜索分页数据 -->
+	<select id="findAllPage" resultMap="BusinessCommunityResult" parameterType="Object">
+		select <include refid="Base_Column_List" /> from business_community  
+		<include refid="Base_Where_Clause" />
+		<if test="pager.orderCondition != null and pager.orderCondition != ''" >
+      	${pager.orderCondition}
+	    </if>
+	    <if test="pager.mysqlQueryCondition != null and pager.mysqlQueryCondition != ''" >
+	    ${pager.mysqlQueryCondition}
+	    </if>
+	</select>
+	
+	<!-- BusinessCommunity列表总数-->
+	<select id="selectCount" resultType="java.lang.Integer"  parameterType="Object">
+		select count(1) from business_community 
+		<include refid="Base_Where_Clause" />
+	</select>
+	
+	<!-- BusinessCommunity保存数据 -->
+	<insert id="save" parameterType="BusinessCommunity">
+		<selectKey resultType="java.lang.Integer" order="AFTER" keyProperty="comId">
+			SELECT LAST_INSERT_ID()
+  		</selectKey>
+		insert into business_community(
+		
+		orgId,
+		comName,
+		comBrief,
+		comService,
+		comTel,
+		comEmail,
+		comWeixin,
+		comIcon,
+		comLongitude,
+		comLatitude,
+		createTime,
+		comCode,
+		editTime
+		) values(
+				#{orgId},
+		#{comName},
+		#{comBrief},
+		#{comService},
+		#{comTel},
+		#{comEmail},
+		#{comWeixin},
+		#{comIcon},
+		#{comLongitude},
+		#{comLatitude},
+		#{createTime},
+		'1',
+		#{editTime}
+		)
+	</insert>
+	
+	<!-- BusinessCommunity修改数据 -->
+	<update id="update" parameterType="BusinessCommunity">
+				update business_community 
+		<set>
+			<if test="orgId != null and orgId != ''" >
+			orgId=#{orgId},
+			</if>
+			<if test="comName != null and comName != ''" >
+			comName=#{comName},
+			</if>
+			<if test="comBrief != null and comBrief != ''" >
+			comBrief=#{comBrief},
+			</if>
+			<if test="comService != null and comService != ''" >
+			comService=#{comService},
+			</if>
+			<if test="comTel != null and comTel != ''" >
+			comTel=#{comTel},
+			</if>
+			<if test="comEmail != null and comEmail != ''" >
+			comEmail=#{comEmail},
+			</if>
+			<if test="comWeixin != null and comWeixin != ''" >
+			comWeixin=#{comWeixin},
+			</if>
+			<if test="comIcon != null and comIcon != ''" >
+			comIcon=#{comIcon},
+			</if>
+			<if test="comLongitude != null and comLongitude != ''" >
+			comLongitude=#{comLongitude},
+			</if>
+			<if test="comLatitude != null and comLatitude != ''" >
+			comLatitude=#{comLatitude},
+			</if>
+			<if test="createTime != null and createTime != ''" >
+			createTime=#{createTime},
+			</if>
+			<if test="editTime != null and editTime != ''" >
+			editTime=#{editTime},
+			</if>
+			<if test="editor != null and editor != ''" >
+			editor=#{editor}
+			</if>
+		</set> 
+		where 
+		comId=#{comId}
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+	</update>
+	
+	<!-- BusinessCommunity删除数据 -->
+	<delete id="delete" parameterType="java.lang.Integer">
+		delete from business_community where 
+		comId=#{comId}
+																											</delete>
+	
+</mapper>
+	

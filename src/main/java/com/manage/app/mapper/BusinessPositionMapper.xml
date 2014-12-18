@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.manage.app.bean" >
+	
+	<resultMap id="BusinessPosition" type="com.manage.app.bean.BusinessPosition">
+			<result column="positionId" property="positionId" />
+			<result column="orgId" property="orgId" />
+			<result column="orgName" property="orgName" />
+			<result column="parentId" property="parentId" />
+			<result column="parentName" property="parentName" />
+			<result column="positionCode" property="positionCode" />
+			<result column="positionState" property="positionState" />
+			<result column="createTime" property="createTime" />
+			<result column="editTime" property="editTime" />
+			<result column="editor" property="editor" />
+			<result column="ord" property="ord" />
+			<result column="leaf" property="leaf" />
+			<result column="depId" property="depId" />
+			<result column="depName" property="depName" />
+			<result column="orgType" property="orgType" />
+	</resultMap>
+	<select id="selectBusinessPosition" resultMap="BusinessPosition">
+		select * from business_position ORDER BY editTime DESC 
+	</select>
+	<select id="selectBusinessPositionCount" resultType="int"  parameterType="com.utis.Page">
+		SELECT COUNT(*) AS total FROM business_position where  parentId = '${positionId}'
+	</select>
+	<select id="selectBusinessPositionId" resultMap="BusinessPosition" parameterType="com.manage.app.bean.BusinessPosition">
+				select * from business_position where positionId='${positionId}'
+	</select>
+	<select id="BusinessPositionListData" resultMap="BusinessPosition" parameterType="com.utis.Page">
+		select * from business_position  where name like '%${link}%' ORDER BY editTime DESC LIMIT ${start},${end}  
+	</select>
+	<insert id="addBusinessPosition" parameterType="com.manage.app.bean.BusinessPosition">
+		
+		insert into business_position(
+		orgId,
+		orgName,
+		positionName,
+		parentId,
+		parentName,
+		depId,
+		depName,
+		createTime,
+		editTime,
+		orgType,
+		leaf
+		) values(
+		'${orgId}',
+		'${orgName}',
+		'新节点',
+		'${parentId}',
+		'${parentName}',
+		'${depId}',
+		'${depName}',
+		'${createTime}',
+		'${editTime}',
+		'${orgType}',
+		'0'
+		)
+		<selectKey resultType="int" keyProperty="positionId" order="AFTER">    
+     		SELECT LAST_INSERT_ID()     
+		</selectKey> 	
+	</insert>
+	<update id="updateBusinessPositionLeaf" parameterType="com.manage.app.bean.BusinessPosition">
+		update business_position set leaf=1 where positionId='${parentId}'
+	</update>
+	<update id="updateBusinessPositionId" parameterType="com.manage.app.bean.BusinessPosition">
+		update business_position set 
+		positionName='${positionName}',
+		editTime='${editTime}',
+		ord='${ord}'
+		 where 
+		positionId='${positionId}'
+																							</update>
+	<delete id="deleteBusinessPositionId" parameterType="com.manage.app.bean.BusinessPosition">
+		delete from business_position where 
+		positionId='${positionId}'
+																							</delete>
+	<select id="selectPositionTree" resultMap="BusinessPosition">
+		SELECT positionId,positionName,parentId,leaf  FROM business_position where
+		<trim  suffixOverrides="," >
+			<if test="depId != null">
+				 depId='${depId}' and
+			</if>
+	   </trim>
+		  parentId = '${positionId}' ORDER BY ORD,editTime DESC 
+	</select>
+</mapper>
+	

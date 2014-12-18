@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.manage.app.dao.ManageUserFunctionDao" >
+	<!-- 返回结构集 -->
+	<resultMap id="ManageUserFunctionResult" type="ManageUserFunction">
+			<result column="userAuthId" property="userAuthId" />
+			<result column="functionId" property="functionId" />
+			<result column="userId" property="userId" />
+			<result column="functionName" property="functionName" />
+			<result column="menuId" property="menuId" />
+			<result column="createTime" property="createTime" />
+			<result column="editTime" property="editTime" />
+			<result column="editor" property="editor" />
+			<result column="moduleCode" property="moduleCode" />
+			<result column="functionCode" property="functionCode" />
+	</resultMap>
+	
+	<!-- 所有字段 -->
+	<sql id="Base_Column_List" >
+			userAuthId,
+			functionId,
+			userId,
+			functionName,
+			menuId,
+			createTime,
+			editTime,
+			editor,
+			moduleCode,
+			functionCode
+	</sql>
+	
+	<!-- 所有字段查询条件 -->
+	<sql id="Base_Where_Clause">
+		<where>
+			<trim  suffixOverrides="," >
+					<if test="userAuthId != null and userAuthId != ''" >
+				   		and userAuthId = #{userAuthId}
+					</if>
+					<if test="functionId != null and functionId != ''" >
+				   		and functionId = #{functionId}
+					</if>
+					<if test="userId != null and userId != ''" >
+				   		and userId = #{userId}
+					</if>
+					<if test="functionName != null and functionName != ''" >
+				   		and functionName = #{functionName}
+					</if>
+					<if test="menuId != null and menuId != ''" >
+				   		and menuId = #{menuId}
+					</if>
+					<if test="createTime != null and createTime != ''" >
+				   		and createTime = #{createTime}
+					</if>
+					<if test="editTime != null and editTime != ''" >
+				   		and editTime = #{editTime}
+					</if>
+					<if test="editor != null and editor != ''" >
+				   		and editor = #{editor}
+					</if>
+					<if test="moduleCode != null and moduleCode != ''" >
+				   		and moduleCode = #{moduleCode}
+					</if>
+					<if test="functionCode != null and functionCode != ''" >
+				   		and functionCode = #{functionCode}
+					</if>
+					
+			</trim>
+		</where>
+	</sql>
+	
+	<!-- 根据id查询 ManageUserFunction -->
+	<select id="findById"  resultMap="ManageUserFunctionResult" parameterType="java.lang.Integer">
+		select <include refid="Base_Column_List" /> from manage_user_function where userAuthId = #{id}
+	</select>
+	
+	<!-- 根据id查询 ManageUserFunction -->
+	<select id="findByUserIdModule"  resultMap="ManageUserFunctionResult" parameterType="ManageUserFunction">
+		select functionId from manage_user_function where moduleCode = #{moduleCode} and userId = #{userId}
+	</select>
+	
+	<!-- 无条件查询所有ManageUserFunction -->
+	<select id="findAll" resultMap="ManageUserFunctionResult">
+		select <include refid="Base_Column_List" /> from manage_user_function 
+	</select>
+	
+	<!-- 按Map对象条件查询所有ManageUserFunction -->
+	<select id="findByMap" resultMap="ManageUserFunctionResult" parameterType="java.util.Map">
+		select <include refid="Base_Column_List" /> from manage_user_function <include refid="Base_Where_Clause" />
+	</select>
+	
+	<!-- 按VO对象条件查询所有ManageUserFunction -->
+	<select id="findByExample" resultMap="ManageUserFunctionResult" parameterType="com.manage.app.vo.ManageUserFunctionQuery">
+		select <include refid="Base_Column_List" /> from manage_user_function <include refid="Base_Where_Clause" />
+	</select>
+	
+	<!-- ManageUserFunction根据搜索条件，搜索分页数据 -->
+	<select id="findAllPage" resultMap="ManageUserFunctionResult" parameterType="Object">
+		select <include refid="Base_Column_List" /> from manage_user_function  
+		<include refid="Base_Where_Clause" />
+		<if test="pager.orderCondition != null and pager.orderCondition != ''" >
+      	#{pager.orderCondition}
+	    </if>
+	    <if test="pager.mysqlQueryCondition != null and pager.mysqlQueryCondition != ''" >
+	    #{pager.mysqlQueryCondition}
+	    </if>
+	</select>
+	
+	<!-- ManageUserFunction列表总数-->
+	<select id="selectCount" resultType="java.lang.Integer"  parameterType="Object">
+		select count(1) from manage_user_function 
+		<include refid="Base_Where_Clause" />
+	</select>
+	
+	<!-- ManageUserFunction保存数据 -->
+	<insert id="save" parameterType="ManageUserFunction">
+		<selectKey resultType="java.lang.Integer" order="AFTER" keyProperty="userAuthId">
+			SELECT LAST_INSERT_ID()
+  		</selectKey>
+		insert into manage_user_function(
+		
+		functionId,
+		userId,
+		functionName,
+		menuId,
+		moduleCode,
+		functionCode
+		) values(
+				#{functionId},
+		#{userId},
+		#{functionName},
+		#{menuId},
+		#{moduleCode},
+		#{functionCode}
+		)
+	</insert>
+	
+	<!-- ManageUserFunction修改数据 -->
+	<update id="update" parameterType="ManageUserFunction">
+		update manage_user_function 
+		<set>
+			<if test="functionId != null and functionId != ''" >
+			functionId=#{functionId},
+			</if>
+			<if test="userId != null and userId != ''" >
+			userId=#{userId},
+			</if>
+			<if test="functionName != null and functionName != ''" >
+			functionName=#{functionName},
+			</if>
+			<if test="menuId != null and menuId != ''" >
+			menuId=#{menuId},
+			</if>
+			<if test="createTime != null and createTime != ''" >
+			createTime=#{createTime},
+			</if>
+			<if test="editTime != null and editTime != ''" >
+			editTime=#{editTime},
+			</if>
+			<if test="editor != null and editor != ''" >
+			editor=#{editor},
+			</if>
+			<if test="moduleCode != null and moduleCode != ''" >
+			moduleCode=#{moduleCode}
+			</if>
+			<if test="functionCode != null and functionCode != ''" >
+			functionCode=#{functionCode}
+			</if>
+			
+		</set> 
+		where 
+		userAuthId=#{userAuthId}
+		
+		
+		
+		
+		
+		
+		
+		
+	</update>
+	
+	<!-- ManageUserFunction删除数据 -->
+	<delete id="delete" parameterType="java.lang.Integer">
+		delete from manage_user_function where 
+		userId=#{id}
+																	</delete>
+	
+</mapper>
+	

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+ 	<typeAliases>
+ 		<!-- business -->
+		<typeAlias alias="businessMenu" type="com.manage.app.bean.BusinessMenu"/>
+		<typeAlias alias="BusinessCommunity" type="com.manage.app.bean.BusinessCommunity"/>
+		<typeAlias alias="BusinessProperty" type="com.manage.app.bean.BusinessProperty"/>
+		<typeAlias alias="BusinessStation" type="com.manage.app.bean.BusinessStation"/>
+		<typeAlias alias="ManageModule" type="com.manage.app.bean.ManageModule"/>
+		<typeAlias alias="BusinessPosition" type="com.manage.app.bean.BusinessPosition"/>
+		<typeAlias alias="ManageModulemenu" type="com.manage.app.bean.ManageModulemenu"/>
+		<typeAlias alias="ManageUserFunction" type="com.manage.app.bean.ManageUserFunction"/>
+		<typeAlias alias="BusinessUserResource" type="com.manage.app.bean.BusinessUserResource"/>
+		<typeAlias alias="ResultBean" type="com.manage.app.common.ResultBean"/>
+		<typeAlias alias="ManageAdmin" type="com.manage.app.bean.ManageAdmin"/>
+		<typeAlias alias="BusinessTelGroup" type="com.manage.app.bean.BusinessTelGroup"/>
+		<typeAlias alias="BuseinessTel" type="com.manage.app.bean.BuseinessTel"/>
+		<!-- manage -->
+	</typeAliases>
+	<!-- 这里交给sqlSessionFactory 的 mapperLocations属性去得到所有配置信息 -->
+	
+	<mappers>
+	    <mapper resource="com/manage/app/mapper/BusinessMenuMapper.xml" />
+	    <mapper resource="com/manage/app/mapper/ManageFunctionMapper.xml" />
+		<mapper resource="com/manage/app/mapper/ManageOrgMapper.xml" />
+		<mapper resource="com/manage/app/mapper/BusinessPositionMapper.xml" />
+		<mapper resource="com/manage/app/mapper/BusinessUserMapper.xml" />
+		<mapper resource="com/manage/app/mapper/ManagePositionUserMapper.xml" />
+		<mapper resource="com/manage/app/mapper/ManageEstateMapper.xml" />
+		<mapper resource="com/manage/app/mapper/ManageBuildingMapper.xml" />
+		<mapper resource="com/manage/app/mapper/ManageUnitMapper.xml" />
+		<mapper resource="com/manage/app/mapper/ManageHouseMapper.xml" />
+		<mapper resource="com/manage/app/mapper/ManageProviceMapper.xml" />
+		<mapper resource="com/manage/app/mapper/ManageCityMapper.xml" />
+		<mapper resource="com/manage/app/mapper/ManageCountyMapper.xml" />
+		<mapper resource="com/manage/app/mapper/AppUserMapper.xml" />
+		<mapper resource="com/manage/app/mapper/AppEstateUserMapper.xml" />
+		<mapper resource="com/manage/app/mapper/BusinessDepartmentMapper.xml" />
+		<mapper resource="com/manage/app/mapper/BusinessCommunityMapper.xml" />
+		<mapper resource="com/manage/app/mapper/BusinessPropertyMapper.xml" />
+		<mapper resource="com/manage/app/mapper/BusinessStationMapper.xml" />
+		<mapper resource="com/manage/app/mapper/ManageModuleMapper.xml" />
+		<mapper resource="com/manage/app/mapper/ManageModulemenuMapper.xml" />
+		<mapper resource="com/manage/app/mapper/ManageUserFunctionMapper.xml" />
+		<mapper resource="com/manage/app/mapper/BusinessUserResourceMapper.xml" />
+		<mapper resource="com/manage/app/mapper/StatisMapper.xml" />
+		<mapper resource="com/manage/app/mapper/ManageAdminMapper.xml" />
+		<mapper resource="com/manage/app/mapper/BusinessTelGroupMapper.xml" />
+		<mapper resource="com/manage/app/mapper/BuseinessTelMapper.xml" />
+
+	</mappers>
+</configuration>

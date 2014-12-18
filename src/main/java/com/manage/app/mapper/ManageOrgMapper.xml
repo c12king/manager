@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.manage.app.bean">
+	
+	<resultMap id="ManageOrg" type="com.manage.app.bean.ManageOrg">
+			<result column="orgId" property="orgId" />
+			<result column="orgName" property="orgName" />
+			<result column="orgDesc" property="orgDesc" />
+			<result column="parentId" property="parentId" />
+			<result column="orgCode" property="orgCode" />
+			<result column="orgState" property="orgState" />
+			<result column="orgTypeCode" property="orgTypeCode" />
+			<result column="orgLongitude" property="orgLongitude" />
+			<result column="orgLatitude" property="orgLatitude" />
+			<result column="orgIcon" property="orgIcon" />
+			<result column="orgTel" property="orgTel" />
+			<result column="orgEmail" property="orgEmail" />
+			<result column="orgWeixin" property="orgWeixin" />
+			<result column="orgSubType" property="orgSubType" />
+			<result column="createTime" property="createTime" />
+			<result column="editTime" property="editTime" />
+			<result column="editor" property="editor" />
+			<result column="leaf" property="leaf" />
+			<result column="ord" property="ord" />
+			<result column="countyId" property="countyId" />
+	</resultMap>
+	<select id="selectManageOrg" resultMap="ManageOrg">
+		select * from manage_org ORDER BY editTime DESC
+	</select>
+	<select id="selectManageOrgCount" resultType="int"  parameterType="com.utis.Page">
+		SELECT COUNT(*) AS total FROM manage_org where parentId = '${orgId}'
+	</select>
+	<select id="selectManageOrgId" resultMap="ManageOrg" parameterType="com.manage.app.bean.ManageOrg">
+				select * from manage_org where orgId='${orgId}'
+	</select>
+	<select id="getManageOrgComboboxData" resultMap="ManageOrg" parameterType="com.manage.app.bean.ManageOrg">
+				select orgId,orgName from manage_org 
+	</select>
+	<select id="ManageOrgListData" resultMap="ManageOrg" parameterType="com.utis.Page">
+		select * from manage_org  where name like '%${link}%' ORDER BY editTime DESC LIMIT ${start},${end}
+	</select>
+	<insert id="addManageOrg" parameterType="com.manage.app.bean.ManageOrg">
+		
+		insert into manage_org(
+				orgName,
+		parentId,
+		createTime,
+		editTime,
+		orgCode,
+		leaf
+		) values(
+				'新节点',
+		'${parentId}',
+		'${createTime}',
+		'${editTime}',
+		'0',
+		'0'
+		)
+		<selectKey resultType="int" keyProperty="orgId" order="AFTER">    
+     		SELECT LAST_INSERT_ID()     
+		</selectKey> 	
+	</insert>
+	<update id="updateManageOrgLeaf" parameterType="com.manage.app.bean.ManageOrg">
+		update manage_org set leaf=1 where orgId='${parentId}'
+	</update>
+	<update id="updateManageOrgId" parameterType="com.manage.app.bean.ManageOrg">
+		update manage_org set 
+				orgName='${orgName}',
+		orgDesc='${orgDesc}',
+		orgState='${orgState}',
+		orgTel='${orgTel}',
+		orgEmail='${orgEmail}',
+		orgWeixin='${orgWeixin}',
+		editTime='${editTime}',
+		countyId='${countyId}',
+		ord='${ord}'
+		 where 
+		orgId='${orgId}'
+																																					</update>
+	<delete id="deleteManageOrgId" parameterType="com.manage.app.bean.ManageOrg">
+		delete from manage_org where 
+		orgId='${orgId}'
+	</delete>
+	<select id="selectOrgTree" resultMap="ManageOrg">
+		SELECT orgId,orgName,parentId,leaf  FROM manage_org where  parentId = '${orgId}' ORDER BY ORD,editTime DESC
+	</select>
+	
+</mapper>
+	

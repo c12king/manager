@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.manage.app.bean" >
+	
+	<resultMap id="ManageProvice" type="com.manage.app.bean.ManageProvice">
+			<result column="proviceId" property="proviceId" />
+			<result column="provinceName" property="provinceName" />
+			<result column="provinceCode" property="provinceCode" />
+			<result column="createTime" property="createTime" />
+			<result column="editTime" property="editTime" />
+			<result column="editor" property="editor" />
+	</resultMap>
+	<select id="selectManageProvice" resultMap="ManageProvice">
+		select * from manage_provice 
+	</select>
+	<select id="selectManageProviceCount" resultType="int"  parameterType="com.utis.Page">
+		SELECT COUNT(*) AS total FROM manage_provice where name like '%${link}%'
+	</select>
+	<select id="selectManageProviceTree" resultMap="ManageProvice">
+		select * from manage_provice
+	</select>
+	<select id="selectManageProviceId" resultMap="ManageProvice" parameterType="com.manage.app.bean.ManageProvice">
+				select * from manage_provice where proviceId='${proviceId}'
+	</select>
+	<select id="ManageProviceListData" resultMap="ManageProvice" parameterType="com.utis.Page">
+		select * from manage_provice  where name like '%${link}%' LIMIT ${start},${end}
+	</select>
+	<insert id="addManageProvice" parameterType="com.manage.app.bean.ManageProvice">
+		
+		insert into manage_provice(
+				provinceName,
+		createTime,
+		editTime
+		) values(
+				'新省份',
+		'${createTime}',
+		'${editTime}'
+		)
+			
+	</insert>
+	<update id="updateManageProviceId" parameterType="com.manage.app.bean.ManageProvice">
+		update manage_provice set 
+		provinceName='${provinceName}',
+		editTime='${editTime}'
+		 where 
+		proviceId='${proviceId}'
+											</update>
+	<delete id="deleteManageProviceId" parameterType="com.manage.app.bean.ManageProvice">
+		delete from manage_provice where 
+		proviceId='${proviceId}'
+											</delete>
+	
+</mapper>
+	

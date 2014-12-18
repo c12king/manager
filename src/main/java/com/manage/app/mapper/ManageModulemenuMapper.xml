@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.manage.app.dao.ManageModulemenuDao" >
+	<!-- 返回结构集 -->
+	<resultMap id="ManageModulemenuResult" type="ManageModulemenu">
+			<result column="moduleMenuId" property="moduleMenuId" />
+			<result column="moduleId" property="moduleId" />
+			<result column="menuId" property="menuId" />
+			<result column="name" property="name" />
+	</resultMap>
+	
+	<!-- 所有字段 -->
+	<sql id="Base_Column_List" >
+			moduleMenuId,
+			moduleId,
+			menuId
+	</sql>
+	
+	<!-- 所有字段查询条件 -->
+	<sql id="Base_Where_Clause">
+		<where>
+			<trim  suffixOverrides="," >
+					<if test="moduleMenuId != null and moduleMenuId != ''" >
+				   		and moduleMenuId = #{moduleMenuId}
+					</if>
+					<if test="moduleId != null and moduleId != ''" >
+				   		and moduleId = #{moduleId}
+					</if>
+					<if test="menuId != null and menuId != ''" >
+				   		and menuId = #{menuId}
+					</if>
+			</trim>
+		</where>
+	</sql>
+	
+	<!-- 根据id查询 ManageModulemenu -->
+	<select id="findById"  resultMap="ManageModulemenuResult" parameterType="java.lang.Integer">
+		select <include refid="Base_Column_List" /> from manage_modulemenu where moduleId = #{id}
+	</select>
+	<!-- 根据id查询 模版id查询所有菜单 -->
+	<select id="findByIdModuleId"  resultMap="ManageModulemenuResult" parameterType="java.lang.Integer">
+		select mo.moduleId,mo.menuId,me.name from manage_modulemenu mo,business_menu me where  me.menuId=mo.menuId and moduleId = #{id}
+	</select>
+	
+	<!-- 无条件查询所有ManageModulemenu -->
+	<select id="findAll" resultMap="ManageModulemenuResult">
+		select <include refid="Base_Column_List" /> from manage_modulemenu 
+	</select>
+	
+	<!-- 按Map对象条件查询所有ManageModulemenu -->
+	<select id="findByMap" resultMap="ManageModulemenuResult" parameterType="java.util.Map">
+		select <include refid="Base_Column_List" /> from manage_modulemenu <include refid="Base_Where_Clause" />
+	</select>
+	
+	<!-- 按VO对象条件查询所有ManageModulemenu -->
+	<select id="findByExample" resultMap="ManageModulemenuResult" parameterType="com.manage.app.vo.ManageModulemenuQuery">
+		select <include refid="Base_Column_List" /> from manage_modulemenu <include refid="Base_Where_Clause" />
+	</select>
+	
+	<!-- ManageModulemenu根据搜索条件，搜索分页数据 -->
+	<select id="findAllPage" resultMap="ManageModulemenuResult" parameterType="Object">
+		select <include refid="Base_Column_List" /> from manage_modulemenu  
+		<include refid="Base_Where_Clause" />
+		<if test="pager.orderCondition != null and pager.orderCondition != ''" >
+      	#{pager.orderCondition}
+	    </if>
+	    <if test="pager.mysqlQueryCondition != null and pager.mysqlQueryCondition != ''" >
+	    #{pager.mysqlQueryCondition}
+	    </if>
+	</select>
+	
+	<!-- ManageModulemenu列表总数-->
+	<select id="selectCount" resultType="java.lang.Integer"  parameterType="Object">
+		select count(1) from manage_modulemenu 
+		<include refid="Base_Where_Clause" />
+	</select>
+	
+	<!-- ManageModulemenu保存数据 -->
+	<insert id="save" parameterType="ManageModulemenu">
+		<selectKey resultType="java.lang.Integer" order="AFTER" keyProperty="moduleMenuId">
+			SELECT LAST_INSERT_ID()
+  		</selectKey>
+		insert into manage_modulemenu(
+		
+		moduleId,
+		menuId
+		) values(
+				#{moduleId},
+		#{menuId}
+		)
+	</insert>
+	
+	<!-- ManageModulemenu修改数据 -->
+	<update id="update" parameterType="ManageModulemenu">
+		update manage_modulemenu 
+		<set>
+			<if test="moduleId != null and moduleId != ''" >
+			moduleId=#{moduleId},
+			</if>
+			<if test="menuId != null and menuId != ''" >
+			menuId=#{menuId}
+			</if>
+		</set> 
+		where 
+		moduleMenuId=#{moduleMenuId}
+		
+		
+	</update>
+	
+	<!-- ManageModulemenu删除数据 -->
+	<delete id="delete" parameterType="java.lang.Integer">
+		delete from manage_modulemenu where 
+		moduleId=#{id}
+					</delete>
+	
+</mapper>
+	

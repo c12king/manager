@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.manage.app.bean" >
+	
+	<resultMap id="AppUser" type="com.manage.app.bean.AppUser">
+			<result column="userId" property="userId" />
+			<result column="realname" property="realname" />
+			<result column="nickname" property="nickname" />
+			<result column="password" property="password" />
+			<result column="tel" property="tel" />
+			<result column="sex" property="sex" />
+			<result column="birthday" property="birthday" />
+			<result column="type" property="type" />
+			<result column="state" property="state" />
+			<result column="random" property="random" />
+			<result column="registTime" property="registTime" />
+			<result column="verifyTime" property="verifyTime" />
+			<result column="verifier" property="verifier" />
+			<result column="portrait" property="portrait" />
+			<result column="idCard" property="idCard" />
+			<result column="estateId" property="estateId" />
+			<result column="createTime" property="createTime" />
+			<result column="editTime" property="editTime" />
+			<result column="editor" property="editor" />
+	</resultMap>
+	<select id="selectAppUser" resultMap="AppUser">
+		select * from app_user 
+	</select>
+	<select id="selectAppUserCount" resultType="int"  parameterType="com.utis.Page">
+		SELECT COUNT(*) AS total FROM app_user where realname like '%${link}%'
+	</select>
+	<select id="selectAppUserId" resultMap="AppUser" parameterType="com.manage.app.bean.AppUser">
+				select * from app_user where userId='${userId}'
+	</select>
+	<select id="AppUserListData" resultMap="AppUser" parameterType="com.utis.Page">
+		select * from app_user  where realname like '%${link}%' LIMIT ${start},${end}
+	</select>
+	<insert id="addAppUser" parameterType="com.manage.app.bean.AppUser">
+		
+		insert into app_user(
+				realname,
+		nickname,
+		password,
+		tel,
+		sex,
+		type,
+		registTime,
+		portrait,
+		idCard,
+		createTime,
+		editTime
+		) values(
+				'${realname}',
+		'${nickname}',
+		'${password}',
+		'${tel}',
+		'${sex}',
+		'${type}',
+		'${registTime}',
+		'${portrait}',
+		'${idCard}',
+		'${createTime}',
+		'${editTime}'
+		)
+			
+	</insert>
+	<update id="updateAppUserId" parameterType="com.manage.app.bean.AppUser">
+		update app_user set 
+				realname='${realname}',
+		nickname='${nickname}',
+		password='${password}',
+		tel='${tel}',
+		sex='${sex}',
+		type='${type}',
+		portrait='${portrait}',
+		idCard='${idCard}',
+		editTime='${editTime}'
+		 where 
+		userId='${userId}'
+																																					</update>
+	<delete id="deleteAppUserId" parameterType="com.manage.app.bean.AppUser">
+		delete from app_user where 
+		userId='${userId}'
+																																					</delete>
+	
+</mapper>
+	

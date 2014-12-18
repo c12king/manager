@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.manage.app.dao.StatisDao" >
+<!-- 返回结构集 -->
+    <resultMap id="ResultBeanResult" type="ResultBean">
+        <result column="timeField" property="timeField" />
+        <result column="timeValue" property="timeValue" />
+    </resultMap>
+
+	<!--按sql统计数量-->
+    <select id="statisBySql" parameterType="java.lang.String" resultType="ResultBean">
+        ${_parameter}
+    </select>
+    
+    <!--按sql统计数量-->
+    <select id="countBySql" parameterType="java.lang.String" resultType="Integer">
+        ${_parameter}
+    </select>
+	
+</mapper>
+	

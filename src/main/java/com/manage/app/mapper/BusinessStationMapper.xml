@@ -1,0 +1,268 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.manage.app.dao.BusinessStationDao" >
+	<!-- 返回结构集 -->
+	<resultMap id="BusinessStationResult" type="BusinessStation">
+			<result column="stationId" property="stationId" />
+			<result column="orgId" property="orgId" />
+			<result column="staName" property="staName" />
+			<result column="staBrief" property="staBrief" />
+			<result column="staService" property="staService" />
+			<result column="staTel" property="staTel" />
+			<result column="staEmail" property="staEmail" />
+			<result column="staWeixin" property="staWeixin" />
+			<result column="staIcon" property="staIcon" />
+			<result column="staLongitude" property="staLongitude" />
+			<result column="staLatitude" property="staLatitude" />
+			<result column="crateTime" property="crateTime" />
+			<result column="editTime" property="editTime" />
+			<result column="editor" property="editor" />
+			<result column="orgName" property="orgName" />
+			<result column="staCode" property="staCode" />
+	</resultMap>
+	
+	<!-- 所有字段 -->
+	<sql id="Base_Column_List" >
+			stationId,
+			orgId,
+			staName,
+			staBrief,
+			staService,
+			staTel,
+			staEmail,
+			staWeixin,
+			staIcon,
+			staLongitude,
+			staLatitude,
+			crateTime,
+			editTime,
+			editor
+	</sql>
+	
+	<!-- 所有字段查询条件 -->
+	<sql id="Base_Where_Clause">
+		<where>
+			<trim  suffixOverrides="," >
+					<if test="stationId != null" >
+				   		and stationId = #{stationId}
+					</if>
+					<if test="orgId != null" >
+				   		and orgId = #{orgId}
+					</if>
+					<if test="staName != null and staName != ''" >
+				   		and staName = #{staName}
+					</if>
+					<if test="staBrief != null and staBrief != ''" >
+				   		and staBrief = #{staBrief}
+					</if>
+					<if test="staService != null and staService != ''" >
+				   		and staService = #{staService}
+					</if>
+					<if test="staTel != null and staTel != ''" >
+				   		and staTel = #{staTel}
+					</if>
+					<if test="staEmail != null and staEmail != ''" >
+				   		and staEmail = #{staEmail}
+					</if>
+					<if test="staWeixin != null and staWeixin != ''" >
+				   		and staWeixin = #{staWeixin}
+					</if>
+					<if test="staIcon != null and staIcon != ''" >
+				   		and staIcon = #{staIcon}
+					</if>
+					<if test="staLongitude != null and staLongitude != ''" >
+				   		and staLongitude = #{staLongitude}
+					</if>
+					<if test="staLatitude != null and staLatitude != ''" >
+				   		and staLatitude = #{staLatitude}
+					</if>
+					<if test="crateTime != null and crateTime != ''" >
+				   		and crateTime = #{crateTime}
+					</if>
+					<if test="editTime != null and editTime != ''" >
+				   		and editTime = #{editTime}
+					</if>
+					<if test="editor != null and editor != ''" >
+				   		and editor = #{editor}
+					</if>
+			</trim>
+		</where>
+	</sql>
+	
+	<!-- 根据id查询 BusinessStation -->
+	<select id="findById"  resultMap="BusinessStationResult" parameterType="java.lang.Integer">
+		select <include refid="Base_Column_List" /> from business_station where stationId = #{id}
+	</select>
+	
+	<!-- 根据区域id查询 BusinessStation -->
+	<select id="getComboboxData"  resultMap="BusinessStationResult" parameterType="java.lang.Integer">
+		select s.stationId,s.staName from business_station s,manage_org o where o.orgId=s.orgId and countyId = #{id}
+	</select>
+	
+	<select id="findByIdOrgName"  resultMap="BusinessStationResult" parameterType="java.lang.Integer">
+		select 
+		s.stationId,
+		s.orgId,
+		s.staName,
+		s.staBrief,
+		s.staService,
+		s.staTel,
+		s.staEmail,
+		s.staWeixin,
+		s.staIcon,
+		s.staLongitude,
+		s.staLatitude,
+		s.crateTime,
+		s.editTime,
+		orgName
+		from business_station s,manage_org o where o.orgId=s.orgId  and stationId = #{id}
+	</select>
+	
+	<select id="getBusinessStationOrgId"  resultMap="BusinessStationResult" parameterType="java.lang.Integer">
+		select 
+		stationId,
+		staName
+		from business_station where orgId = #{id}
+	</select>
+	
+	
+	<!-- 无条件查询所有BusinessStation -->
+	<select id="findAll" resultMap="BusinessStationResult">
+		select <include refid="Base_Column_List" /> from business_station 
+	</select>
+	
+	<!-- 按Map对象条件查询所有BusinessStation -->
+	<select id="findByMap" resultMap="BusinessStationResult" parameterType="java.util.Map">
+		select <include refid="Base_Column_List" /> from business_station <include refid="Base_Where_Clause" />
+	</select>
+	
+	<!-- 按VO对象条件查询所有BusinessStation -->
+	<select id="findByExample" resultMap="BusinessStationResult" parameterType="com.manage.app.vo.BusinessStationQuery">
+		select <include refid="Base_Column_List" /> from business_station <include refid="Base_Where_Clause" />
+	</select>
+	
+	<!-- BusinessStation根据搜索条件，搜索分页数据 -->
+	<select id="findAllPage" resultMap="BusinessStationResult" parameterType="Object">
+		select <include refid="Base_Column_List" /> from business_station  
+		<include refid="Base_Where_Clause" />
+		<if test="pager.orderCondition != null and pager.orderCondition != ''" >
+      	${pager.orderCondition}
+	    </if>
+	    <if test="pager.mysqlQueryCondition != null and pager.mysqlQueryCondition != ''" >
+	    ${pager.mysqlQueryCondition}
+	    </if>
+	</select>
+	
+	<!-- BusinessStation列表总数-->
+	<select id="selectCount" resultType="java.lang.Integer"  parameterType="Object">
+		select count(1) from business_station 
+		<include refid="Base_Where_Clause" />
+	</select>
+	
+	<!-- BusinessStation保存数据 -->
+	<insert id="save" parameterType="BusinessStation">
+		<selectKey resultType="java.lang.Integer" order="AFTER" keyProperty="stationId">
+			SELECT LAST_INSERT_ID()
+  		</selectKey>
+		insert into business_station(
+		
+		orgId,
+		staName,
+		staBrief,
+		staService,
+		staTel,
+		staEmail,
+		staWeixin,
+		staIcon,
+		staLongitude,
+		staLatitude,
+		crateTime,
+		staCode,
+		editTime
+		) values(
+				#{orgId},
+		#{staName},
+		#{staBrief},
+		#{staService},
+		#{staTel},
+		#{staEmail},
+		#{staWeixin},
+		#{staIcon},
+		#{staLongitude},
+		#{staLatitude},
+		#{crateTime},
+		'3',
+		#{editTime}
+		)
+	</insert>
+	
+	<!-- BusinessStation修改数据 -->
+	<update id="update" parameterType="BusinessStation">
+		update business_station 
+		<set>
+			<if test="orgId != null and orgId != ''" >
+			orgId=#{orgId},
+			</if>
+			<if test="staName != null and staName != ''" >
+			staName=#{staName},
+			</if>
+			<if test="staBrief != null and staBrief != ''" >
+			staBrief=#{staBrief},
+			</if>
+			<if test="staService != null and staService != ''" >
+			staService=#{staService},
+			</if>
+			<if test="staTel != null and staTel != ''" >
+			staTel=#{staTel},
+			</if>
+			<if test="staEmail != null and staEmail != ''" >
+			staEmail=#{staEmail},
+			</if>
+			<if test="staWeixin != null and staWeixin != ''" >
+			staWeixin=#{staWeixin},
+			</if>
+			<if test="staIcon != null and staIcon != ''" >
+			staIcon=#{staIcon},
+			</if>
+			<if test="staLongitude != null and staLongitude != ''" >
+			staLongitude=#{staLongitude},
+			</if>
+			<if test="staLatitude != null and staLatitude != ''" >
+			staLatitude=#{staLatitude},
+			</if>
+			<if test="crateTime != null and crateTime != ''" >
+			crateTime=#{crateTime},
+			</if>
+			<if test="editTime != null and editTime != ''" >
+			editTime=#{editTime},
+			</if>
+			<if test="editor != null and editor != ''" >
+			editor=#{editor}
+			</if>
+		</set> 
+		where 
+		stationId=#{stationId}
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+	</update>
+	
+	<!-- BusinessStation删除数据 -->
+	<delete id="delete" parameterType="java.lang.Integer">
+		delete from business_station where 
+		stationId=#{stationId}
+																											</delete>
+	
+</mapper>
+	

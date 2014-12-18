@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.manage.app.dao.BusinessMenuDao" >
+	<resultMap id="BusinessMenuResult" type="businessMenu">
+		<result column="menuId" property="menuId" />
+		<result column="name" property="name" />
+		<result column="url" property="url" />
+		<result column="createTime" property="createTime" />
+		<result column="modifyTime" property="modifyTime" />
+		<result column="editor" property="editor" />
+		<result column="parentId" property="parentId" />
+		<result column="ord" property="ord" />		
+		<result column="leaf" property="leaf" />
+		<result column="unSelectedIcon" property="unSelectedIcon" />	
+		<result column="selectedIcon" property="selectedIcon" />	
+	</resultMap>
+	<select id="selectTree" resultMap="BusinessMenuResult">
+		SELECT menuId,NAME,url,parentId,leaf  FROM business_menu where  parentId = '${menuId}' ORDER BY ORD,modifyTime DESC 
+	</select>
+	<select id="BusinessMenuFindFarentById"  resultMap="BusinessMenuResult" parameterType="java.lang.Integer">
+		select menuId,NAME from business_menu where parentId = #{id}
+	</select>
+	<select id="selectMenuId" resultMap="BusinessMenuResult" parameterType="businessMenu">
+		SELECT menuId,NAME,url,parentId,ord,unSelectedIcon,selectedIcon,code  FROM business_menu where menuId = '${menuId}' ORDER BY modifyTime DESC 
+	</select>
+	<insert id="addMenu" parameterType="businessMenu">
+		insert into business_menu(parentId,leaf,name) values('${parentId}','0','新节点')
+		<selectKey resultType="int" keyProperty="menuId" order="AFTER">    
+     		SELECT LAST_INSERT_ID()     
+		</selectKey> 
+	</insert>
+	<update id="updateMenu" parameterType="businessMenu">
+		update business_menu set name='${name}',ord='${ord}',url='${url}',selectedIcon='${selectedIcon}',unSelectedIcon='${unSelectedIcon}',code='${code}' where menuId='${menuId}'
+	</update>
+	<update id="updateMenuLeaf" parameterType="businessMenu">
+		update business_menu set leaf=1 where menuId='${parentId}'
+	</update>
+	<delete id="deleteMenu" parameterType="businessMenu">
+		delete from business_menu where menuId='${menuId}'
+	</delete>
+	<select id="selectMenuCount" resultType="int"  parameterType="businessMenu">
+		SELECT COUNT(*) AS total FROM business_menu where parentId = '${menuId}'
+	</select>
+	<select id="selectMenuComboboxData" resultType="int" >
+		SELECT menuId,NAME  FROM business_menu where  parentId = 0
+	</select>
+</mapper>
+	

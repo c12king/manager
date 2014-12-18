@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.manage.app.dao.BusinessUserResourceDao" >
+	<!-- 返回结构集 -->
+	<resultMap id="BusinessUserResourceResult" type="BusinessUserResource">
+			<result column="usreId" property="usreId" />
+			<result column="userId" property="userId" />
+			<result column="estateId" property="estateId" />
+			<result column="buildingId" property="buildingId" />
+			<result column="unitId" property="unitId" />
+			<result column="estateName" property="estateName" />
+			<result column="buildingName" property="buildingName" />
+			<result column="comId" property="comId" />
+			<result column="createTime" property="createTime" />
+			<result column="editTime" property="editTime" />
+			<result column="editor" property="editor" />
+	</resultMap>
+	
+	<!-- 所有字段 -->
+	<sql id="Base_Column_List" >
+			usreId,
+			userId,
+			estateId,
+			buildingId,
+			unitId,
+			estateName,
+			buildingName,
+			comId,
+			createTime,
+			editTime,
+			editor
+	</sql>
+	
+	<!-- 所有字段查询条件 -->
+	<sql id="Base_Where_Clause">
+		<where>
+			<trim  suffixOverrides="," >
+					<if test="usreId != null and usreId != ''" >
+				   		and usreId = #{usreId}
+					</if>
+					<if test="userId != null and userId != ''" >
+				   		and userId = #{userId}
+					</if>
+					<if test="estateId != null and estateId != ''" >
+				   		and estateId = #{estateId}
+					</if>
+					<if test="buildingId != null and buildingId != ''" >
+				   		and buildingId = #{buildingId}
+					</if>
+					<if test="unitId != null and unitId != ''" >
+				   		and unitId = #{unitId}
+					</if>
+					<if test="estateName != null and estateName != ''" >
+				   		and estateName = #{estateName}
+					</if>
+					<if test="buildingName != null and buildingName != ''" >
+				   		and buildingName = #{buildingName}
+					</if>
+					<if test="comId != null and comId != ''" >
+				   		and comId = #{comId}
+					</if>
+					<if test="createTime != null and createTime != ''" >
+				   		and createTime = #{createTime}
+					</if>
+					<if test="editTime != null and editTime != ''" >
+				   		and editTime = #{editTime}
+					</if>
+					<if test="editor != null and editor != ''" >
+				   		and editor = #{editor}
+					</if>
+			</trim>
+		</where>
+	</sql>
+	
+	<!-- 根据id查询 BusinessUserResource -->
+	<select id="findById"  resultMap="BusinessUserResourceResult" parameterType="java.lang.Integer">
+		select <include refid="Base_Column_List" /> from business_user_resource where usreId = #{id}
+	</select>
+	
+	<!-- 无条件查询所有BusinessUserResource -->
+	<select id="findAll" resultMap="BusinessUserResourceResult">
+		select <include refid="Base_Column_List" /> from business_user_resource 
+	</select>
+	
+	<!-- 按Map对象条件查询所有BusinessUserResource -->
+	<select id="findByMap" resultMap="BusinessUserResourceResult" parameterType="java.util.Map">
+		select <include refid="Base_Column_List" /> from business_user_resource <include refid="Base_Where_Clause" />
+	</select>
+	
+	<!-- 按VO对象条件查询所有BusinessUserResource -->
+	<select id="findByExample" resultMap="BusinessUserResourceResult" parameterType="com.manage.app.vo.BusinessUserResourceQuery">
+		select <include refid="Base_Column_List" /> from business_user_resource <include refid="Base_Where_Clause" />
+	</select>
+	
+	<!-- BusinessUserResource根据搜索条件，搜索分页数据 -->
+	<select id="findAllPage" resultMap="BusinessUserResourceResult" parameterType="Object">
+		select <include refid="Base_Column_List" /> from business_user_resource  
+		<include refid="Base_Where_Clause" />
+		<if test="pager.orderCondition != null and pager.orderCondition != ''" >
+      	#{pager.orderCondition}
+	    </if>
+	    <if test="pager.mysqlQueryCondition != null and pager.mysqlQueryCondition != ''" >
+	    #{pager.mysqlQueryCondition}
+	    </if>
+	</select>
+	
+	<!-- BusinessUserResource列表总数-->
+	<select id="selectCount" resultType="java.lang.Integer"  parameterType="Object">
+		select count(1) from business_user_resource 
+		<include refid="Base_Where_Clause" />
+	</select>
+	
+	<!-- BusinessUserResource保存数据 -->
+	<insert id="save" parameterType="BusinessUserResource">
+		<selectKey resultType="java.lang.Integer" order="AFTER" keyProperty="usreId">
+			SELECT LAST_INSERT_ID()
+  		</selectKey>
+		insert into business_user_resource(
+		
+		userId,
+		estateId,
+		buildingId,
+		unitId,
+		estateName,
+		buildingName,
+		unitName,
+		createTime,
+		editTime,
+		editor,
+		comId
+		) values(
+				#{userId},
+		#{estateId},
+		#{buildingId},
+		#{unitId},
+		#{estateName},
+		#{buildingName},
+		#{unitName},
+		#{createTime},
+		#{editTime},
+		#{editor},
+		#{comId}
+		)
+	</insert>
+	
+	<!-- BusinessUserResource修改数据 -->
+	<update id="update" parameterType="BusinessUserResource">
+		update business_user_resource 
+		<set>
+			<if test="userId != null and userId != ''" >
+			userId=#{userId},
+			</if>
+			<if test="estateId != null and estateId != ''" >
+			estateId=#{estateId},
+			</if>
+			<if test="buildingId != null and buildingId != ''" >
+			buildingId=#{buildingId},
+			</if>
+			<if test="unitId != null and unitId != ''" >
+			unitId=#{unitId},
+			</if>
+			<if test="estateName != null and estateName != ''" >
+			estateName=#{estateName},
+			</if>
+			<if test="buildingName != null and buildingName != ''" >
+			buildingName=#{buildingName},
+			</if>
+			<if test="comId != null and comId != ''" >
+			comId=#{comId},
+			</if>
+			<if test="createTime != null and createTime != ''" >
+			createTime=#{createTime},
+			</if>
+			<if test="editTime != null and editTime != ''" >
+			editTime=#{editTime},
+			</if>
+			<if test="editor != null and editor != ''" >
+			editor=#{editor}
+			</if>
+		</set> 
+		where 
+		usreId=#{usreId}
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+	</update>
+	
+	<!-- BusinessUserResource删除数据 -->
+	<delete id="delete" parameterType="java.lang.Integer">
+		delete from business_user_resource where 
+		userId=#{id}
+																					</delete>
+	
+</mapper>
+	
