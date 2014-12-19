@@ -232,7 +232,10 @@ public class BusinessTelGroupServiceImpl implements BusinessTelGroupService {
 	public String treeData(String id) throws ServiceException {
 		// TODO Auto-generated method stub
 		Map<String, Object> con = new HashMap<String, Object>();
-		con.put("estateId", id);
+		if (id.endsWith("_com"))
+			con.put("comId", id.replaceAll("_com", ""));
+		else
+			con.put("estateId", id);
 		List<BusinessTelGroup> list = null;
 		try {
 			list = businessTelGroupDao.findByMap(con);

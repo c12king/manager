@@ -9,6 +9,7 @@ import java.util.Map;
 
 
 
+
 import org.ietf.jgss.GSSException;
 
 import com.manage.app.vo.BaseBean;
@@ -114,4 +115,10 @@ public interface BusinessCommunityService {
 	 */
 	public String getComboboxData(final Integer countyId) throws ServiceException;
 
+	/**
+	 * 查询所有社区 树数据
+	 * @return
+	 * @throws GSSException
+	 */
+	public String treeData() throws GSSException;
 }

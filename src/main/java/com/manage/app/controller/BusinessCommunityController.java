@@ -85,7 +85,39 @@ public class BusinessCommunityController {
 		return mav;
 	}
 	
-	
+	/**
+	 * 进入社区电话编辑维护页面
+	 * 2014年12月19日10:16:37
+	 * @return
+	 */
+	@RequestMapping(value="manageComTel")
+	public ModelAndView manageComTel() {		
+		try{
+		}catch(Exception e){
+			GSLogger.error("进入manageComTel管理页时发生错误", e);
+			e.printStackTrace();
+		}
+		ModelAndView mav = new ModelAndView("manage/businessCommunity/manageComTel");
+		return mav;
+	}
+	/**
+	 * 获取菜单树形展示 小区 json 数据
+	 * @param request
+	 * @param response
+	 * @param modelMap
+	 * @return
+	 */
+	@RequestMapping(value="treeData",produces="text/plain;charset=utf-8")
+	public void treeData(HttpServletRequest request,HttpServletResponse response,ModelMap modelMap) throws Exception{
+		String json= businessCommunityService.treeData() ;    //manageBuildingService.treeData(manageBuilding);
+//		businessCommunityService.findAll(); 
+		response.setContentType("text/plain;charset=utf-8");
+		try {
+			response.getWriter().print(json);
+		} catch (IOException e) {
+			e.printStackTrace();  
+		}
+	}
 	
 	/**
 	 * 列示或者查询所有数据

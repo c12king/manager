@@ -6,7 +6,7 @@ var ajax_error = function (msg) {
 };
 $(function(){
 	$('#treeul').tree({
-	    url:path+'/manage/manageEstate/treeData.do?id='+estateId,
+	    url:path+'/manage/businessCommunity/treeData.do?id='+estateId,
 	    method: 'post',
 	    animate: true,
 	    onContextMenu: function(e,node){
@@ -49,7 +49,7 @@ var orgName;//被选中的组织机构名称
 function loadTree(id){
 	orgId=id;
 	$('#jobTreeul').tree({
-	    url:path+'/manage/businessTelGroup/treeData.do?id='+id,   
+	    url:path+'/manage/businessTelGroup/treeData.do?type=com&id='+id+'_com',   
 	    method: 'post',
 	    animate: true,
 	    onContextMenu: function(e,node){
@@ -129,6 +129,7 @@ function append2(){
     	return ;
     }
 	
+//    alert(node.id);
 //    var stu = $.post(path+'/manage/businessTelGroup/add.do',{estateId:node.id},function(date){
 //        if(date.status == 'ERROR'){
 //            $.messager.alert('系统提示', '未成功请联系管理员!', 'warning');
@@ -142,7 +143,7 @@ function append2(){
         modal: true,
         shadow: false,
         cache: false,
-        href: path+'/manage/businessTelGroup/add.do?estateId='+node.id
+        href: path+'/manage/businessTelGroup/add.do?estateId=0&comId='+node.id
     });
     $('#add-window').window('open');
     $('#add-window').window('resize');
@@ -174,14 +175,13 @@ function removeit2(){
     if(node.id==0){
     	return null;
     }
-
     var rows = $('#grid').datagrid('getRows').length;
     if (rows != 0)
     {
     	alert("该分组下有电话号码,无法删除!");
     	return null;
     }
-    
+    	
     $.messager.confirm('系统提示', '确定要删除？', function (r) {
         if (r) {
             $.post(path+'/manage/businessTelGroup/delete.do',{id: node.id},function(date){
@@ -190,11 +190,12 @@ function removeit2(){
                 }else{
                     $('#jobTreeul').tree('remove', node.target);
                 }
-            });
+            })
+
         } else{
             return;
         }
-    });
+    })
 }
 function collapse(){
     var node = $('#treeul').tree('getSelected');
@@ -340,7 +341,7 @@ function saveData1(oper, formId) {
         }
     });
 }
-function saveData2(oper, formId) { 
+function saveData2(oper, formId) {
 	$('#'+formId).form('submit', {
         url: $('#'+formId).attr('action'),
         onSubmit:function(){  
@@ -373,7 +374,7 @@ function closeWindow() {
 }
 function loadUser(id){
 	grid = $('#grid').datagrid({
-        title: '小区电话管理',
+        title: '社区电话管理',
         iconCls: 'icon-save',
         url: path+'/manage/buseinessTel/list.do',   
         fit: true,
@@ -522,13 +523,13 @@ function edit() {
 
 function del() {
     var currPageRows = grid.datagrid('getRows').length;
-//  alert(currPageRows);
-  if (currPageRows == 0)
-  {
-  	alert("请选择一条记录进行操作!");
-  	return null;
-  }
-  
+//    alert(currPageRows);
+    if (currPageRows == 0)
+    {
+    	alert("请选择一条记录进行操作!");
+    	return null;
+    }
+	
     var arr = getSelectedArr();
     if (arr.length>0) {
         $.messager.confirm('提示信息', '您确认要删除吗?', function (data) {
@@ -579,7 +580,6 @@ function saveData(oper, formId) {
                 grid.datagrid('reload');
                 win.window('close');
                 $('#'+formId).form('clear');
-                loadTree(-1);
             } else {
                 $.messager.alert('错误', data.msg, 'error');
             }
@@ -637,7 +637,7 @@ function Preview(id){
 	if(url==""){
 		return ;
 	}
-    var title="图片预览";
+    var title="图片预览"
     var obj ={
         title:title,
         url:url

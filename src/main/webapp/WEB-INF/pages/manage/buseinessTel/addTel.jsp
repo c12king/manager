@@ -35,13 +35,15 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					<tr>
 			          <td>名称：</td>
 			          <td>
-			          	<input name="telName" id="telName" type="text" style="width: 150px;" value="" class="easyui-validatebox" required="true" missingMessage="请输入名称" validType="reName"/>
+			          	<input name="telName" id="telName" type="text" style="width: 150px;" value="" class="easyui-validatebox" required="true" missingMessage="请输入名称" />
+<!-- 			          	validType="reName"/> -->
 			          </td>
 			        </tr>
 			        <tr>
 			          <td>电话：</td>
 			          <td>
-			          	<input name="tel" id="tel" type="text" style="width: 150px;" value="${groupId}" class="easyui-validatebox" required="true" missingMessage="请输入电话号码" validType="reName"/>
+			          	<input name="tel" id="tel" type="text" style="width: 150px;" value="${groupId}" class="easyui-validatebox" required="true" missingMessage="请输入电话号码" />
+<!-- 			          	 validType="reName"/> -->
 			          </td>
 			        </tr>
             </table>

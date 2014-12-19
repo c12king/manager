@@ -150,7 +150,7 @@ $(function(){
 			        <tr>
 			          <td>社区ID：</td>
 			          <td>
-			          	<input name="comId" id="comId" type="text" style="width: 150px;" value="0" class="easyui-validatebox"  readonly/>
+			          	<input name="comId" id="comId" type="text" style="width: 150px;" value="${comId}" class="easyui-validatebox"  readonly/>
 			          </td>
 			        </tr>
 			        <tr>
@@ -177,7 +177,7 @@ $(function(){
             </form>
         </div>
         <div style="text-align: center; padding: 5px;">
-            <a href="javascript:void(0)" onclick="saveData('addxxx', 'addForm')" id="btn-save" class="easyui-linkbutton" data-options='iconCls:"icon-ok"'>保存</a>
+            <a href="javascript:void(0)" onclick="saveData2('addxxx', 'addForm')" id="btn-save" class="easyui-linkbutton" data-options='iconCls:"icon-ok"'>保存</a>
             <a href="javascript:void(0)" onclick="closeWindow()" id="btn-cancel" class="easyui-linkbutton" data-options='iconCls:"icon-cancel"'>取消</a>
         </div>
 </body>

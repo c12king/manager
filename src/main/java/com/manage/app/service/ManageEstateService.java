@@ -69,6 +69,11 @@ public interface ManageEstateService {
 	 */
 	public List selectManageEstateByComId(Integer comId) throws GSSException;
 
+	/**
+	 * 查询所有小区 树数据
+	 * @return
+	 * @throws GSSException
+	 */
 	public String treeData() throws GSSException;
 	
 	

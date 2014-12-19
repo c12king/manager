@@ -10,6 +10,8 @@ public class Test {
 		Map paramMap = new HashMap();
 		MD5 md5 = new MD5(); 
 		System.out.println(md5.getMD5ofStr("admin"));
+		System.out.println(md5.getMD5ofStr("111111"));
+		System.out.println(md5.getMD5ofStr("111111"));
       //  System.out.println(md5.getMD5ofStr(query.getAdminPassword())
 
 	}

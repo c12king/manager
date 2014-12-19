@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import net.sf.json.JSONArray;
+
 import org.ietf.jgss.GSSException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,7 +19,9 @@ import com.manage.framework.exception.DaoException;
 import com.manage.app.vo.BusinessCommunityQuery;
 import com.manage.app.bean.BusinessCommunity;
 import com.manage.app.bean.ManageCounty;
+import com.manage.app.bean.ManageEstate;
 import com.manage.app.dao.BusinessCommunityDao;
+import com.utis.TreeNode;
 
 @Service("BusinessCommunityService")
 @Transactional
@@ -254,6 +258,28 @@ public class BusinessCommunityServiceImpl implements BusinessCommunityService {
 		}
 		json += "]";
 		return json;
+	}
+	
+	@Override
+	public String treeData() throws GSSException {
+		// TODO Auto-generated method stub
+		//List<ManageBuilding> list= //manageBuildingDao.treeData(entity);
+		List<BusinessCommunity> list = null;
+		try {
+			list = businessCommunityDao.findAll();
+		} catch (DaoException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		TreeNode root=null;
+		root = new TreeNode("0", "0", "社区", "",0);
+		for (int i = 0; i < list.size(); i++) {      
+			TreeNode node = null;
+			node = new TreeNode(list.get(i).getComId().toString(), "0", list.get(i).getComName().toString(),"",0);   
+			root.add(node);
+		}
+		JSONArray obj = JSONArray.fromObject(root);//(root.getChildren());// 不要根   
+		return obj.toString();
 	}
 	
 }

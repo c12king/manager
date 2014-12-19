@@ -345,11 +345,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     </ul>
 				</div>
 				
-				<div title="新模块">
+				<div title="服务电话">
 					<ul>
                         <li>
-                            <div class="selected"><a href="javascript:aClick('小区电话', '<%=path%>/manage/manageEstate/enterEstTel.do');">小区电话</a></div>
-                            <div class="selected"><a href="javascript:aClick('社区电话', '<%=basePath %>/health/healthCountry/enter.do');">社区电话</a></div>
+<%--                        <div class="selected"><a href="javascript:aClick('小区电话', '<%=path%>/manage/manageEstate/enterEstTel.do');">小区电话</a></div> --%>
+							<div class="selected"><a href="javascript:aClick('小区电话', '<%=path %>/manage/manageEstate/manageEstTel.do');">小区电话</a></div>  
+                            <div class="selected"><a href="javascript:aClick('社区电话', '<%=path %>/manage/businessCommunity/manageComTel.do');">社区电话</a></div>
                         </li>
                     </ul>
 				</div>
