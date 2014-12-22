@@ -530,6 +530,7 @@ function del() {
   }
   
     var arr = getSelectedArr();
+//    alert(arr);
     if (arr.length>0) {
         $.messager.confirm('提示信息', '您确认要删除吗?', function (data) {
             if (data) {
@@ -579,7 +580,7 @@ function saveData(oper, formId) {
                 grid.datagrid('reload');
                 win.window('close');
                 $('#'+formId).form('clear');
-                loadTree(-1);
+                //loadTree(-1);
             } else {
                 $.messager.alert('错误', data.msg, 'error');
             }

@@ -106,26 +106,26 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 取消</a>
         </div>
     </div>
-	<div id="unitImage-uploadWindow" class="easyui-window" title="图片上传" modal="true" resizable="false" collapsible="false" minimizable="false" maximizable="false" closed="true" style="width:520px;height:100px;padding:5px;background: #fafafa;">  
-        <div class="easyui-layout  with iframe" fit="true">  
-            <div region="center" border="false" style="padding:10px;background:#fff;border:1px solid #ccc;">  
-                <form action="<%=path %>/manage/loadImage/uploadFile.do" method="post" enctype="multipart/form-data" style="color: #666;" id="unitImage-tforma">  
-                   <input type="hidden" name="picPath" id="unitImage-picPath" value="111"/>  
-                      图片路径: <input type="file" name="itemPic" alt="" accept="unitImage/*" id="unitImage-itemPic">图片大小不超过2M<input  class="easyui-linkbutton" type="submit" value="上传">  
-                 </form>  
-            </div>  
-        </div>  
-    </div> 
-    <div id="buildingImage-uploadWindow" class="easyui-window" title="图片上传" modal="true" resizable="false" collapsible="false" minimizable="false" maximizable="false" closed="true" style="width:520px;height:100px;padding:5px;background: #fafafa;">  
-        <div class="easyui-layout  with iframe" fit="true">  
-            <div region="center" border="false" style="padding:10px;background:#fff;border:1px solid #ccc;">  
-                <form action="<%=path %>/manage/loadImage/uploadFile.do" method="post" enctype="multipart/form-data" style="color: #666;" id="buildingImage-tforma">  
-                   <input type="hidden" name="picPath" id="buildingImage-picPath" value="111"/>  
-                      图片路径: <input type="file" name="itemPic" alt="" accept="buildingImage/*" id="buildingImage-itemPic">图片大小不超过2M<input  class="easyui-linkbutton" type="submit" value="上传">  
-                 </form>  
-            </div>  
-        </div>  
-    </div> 
+<!-- 	<div id="unitImage-uploadWindow" class="easyui-window" title="图片上传" modal="true" resizable="false" collapsible="false" minimizable="false" maximizable="false" closed="true" style="width:520px;height:100px;padding:5px;background: #fafafa;">   -->
+<!--         <div class="easyui-layout  with iframe" fit="true">   -->
+<!--             <div region="center" border="false" style="padding:10px;background:#fff;border:1px solid #ccc;">   -->
+<%--                 <form action="<%=path %>/manage/loadImage/uploadFile.do" method="post" enctype="multipart/form-data" style="color: #666;" id="unitImage-tforma">   --%>
+<!--                    <input type="hidden" name="picPath" id="unitImage-picPath" value="111"/>   -->
+<!--                       图片路径: <input type="file" name="itemPic" alt="" accept="unitImage/*" id="unitImage-itemPic">图片大小不超过2M<input  class="easyui-linkbutton" type="submit" value="上传">   -->
+<!--                  </form>   -->
+<!--             </div>   -->
+<!--         </div>   -->
+<!--     </div>  -->
+<!--     <div id="buildingImage-uploadWindow" class="easyui-window" title="图片上传" modal="true" resizable="false" collapsible="false" minimizable="false" maximizable="false" closed="true" style="width:520px;height:100px;padding:5px;background: #fafafa;">   -->
+<!--         <div class="easyui-layout  with iframe" fit="true">   -->
+<!--             <div region="center" border="false" style="padding:10px;background:#fff;border:1px solid #ccc;">   -->
+<%--                 <form action="<%=path %>/manage/loadImage/uploadFile.do" method="post" enctype="multipart/form-data" style="color: #666;" id="buildingImage-tforma">   --%>
+<!--                    <input type="hidden" name="picPath" id="buildingImage-picPath" value="111"/>   -->
+<!--                       图片路径: <input type="file" name="itemPic" alt="" accept="buildingImage/*" id="buildingImage-itemPic">图片大小不超过2M<input  class="easyui-linkbutton" type="submit" value="上传">   -->
+<!--                  </form>   -->
+<!--             </div>   -->
+<!--         </div>   -->
+<!--     </div>  -->
 </body>
 
 </html>

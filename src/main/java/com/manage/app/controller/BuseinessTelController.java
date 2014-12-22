@@ -51,11 +51,14 @@ public class BuseinessTelController {
 	 */
 	@RequestMapping(value="list")
 	public void list(HttpServletRequest request, HttpServletResponse response) {
-		int cpage=Integer.parseInt(request.getParameter("page"));
+		int cpage = 1;
+		if (StringUtils.isNotBlank(request.getParameter("page")))
+		    cpage=Integer.parseInt(request.getParameter("page"));
 		if (StringUtils.isNotBlank(request.getParameter("pageNo")))
 			cpage=Integer.parseInt(request.getParameter("pageNo"));
-		
-		int size=Integer.parseInt(request.getParameter("rows"));
+		int size = 10;
+		if (StringUtils.isNotBlank(request.getParameter("rows")))
+			size=Integer.parseInt(request.getParameter("rows"));
 		if (StringUtils.isNotBlank(request.getParameter("pageSize")))  
 			size = Integer.parseInt(request.getParameter("pageSize"));
 		

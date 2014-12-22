@@ -355,6 +355,15 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     </ul>
 				</div>
 				
+<%-- 	<div class="selected"><a href="javascript:aClick('功能管理', '<%=path%>/manage/manageFunction/enter.do');">功能管理</a></div> --%>
+				<div title="短信管理">
+					<ul>
+                        <li>
+                            <div class="selected"><a href="javascript:aClick('短信管理', '<%=path%>/manage/manageSendMsg/enter.do');">短信管理</a></div>
+                        </li>
+                    </ul>
+				</div>
+
 			</div>
 		</div>
 		

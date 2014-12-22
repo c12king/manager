@@ -27,7 +27,7 @@ public class LoginFilter implements Filter {
 		// TODO Auto-generated method stub
 	    HttpServletRequest request = (HttpServletRequest)arg0;
 	    HttpServletResponse response = (HttpServletResponse)arg1;
-		System.err.println("URL ===> "+request.getRequestURL());
+		System.err.println("URL ===> "+request.getRequestURL()+"?"+request.getQueryString());
 //		System.err.println("URI ===> "+request.getRequestURI());
 //		System.out.println(request.getRequestURI().toString());
 //		response.sendRedirect(request.getRequestURI().toString());
