@@ -91,9 +91,22 @@
 	<!-- 短信列表查询-->	
     <select id="selectSendMsgCount" resultType="int"  parameterType="com.utis.Page">
 		select count(*) AS total from  manage_send_msg where sendTel like '%${link}%'
+	     <if test="id != null and id == 1" >
+	    	and recvCode not like '%-%'
+	    </if>
+	     <if test="id != null and id == 2" >
+	    	and recvCode like '%-%'
+	    </if>
 	</select>
 	<select id="SendMsgListData" resultType="ManageSendMsg" parameterType="com.utis.Page">
-	    select * from  manage_send_msg
+	    select * from  manage_send_msg where sendTel like '%${link}%' 
+	    <if test="id != null and id == 1" >
+	    	and recvCode not like '%-%'
+	    </if>
+	     <if test="id != null and id == 2" >
+	    	and recvCode like '%-%'
+	    </if>
+	     LIMIT ${start},${end}
 	</select>
 	
 	<!-- ManageSendMsg保存数据 -->

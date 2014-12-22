@@ -1,31 +1,27 @@
 package com.manage.app.controller;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.sql.Timestamp;
 import java.util.Date;
-import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import net.sf.json.JSONObject;
 
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
-
-import com.manage.app.vo.BaseBean;
-
-
-import com.manage.app.bean.ManageFunction;
+import com.manage.app.common.MessageChannelClient;
+//import com.community.app.module.bean.AppVerify;
+//import com.community.app.module.vo.AppVerifyQuery;
+//import com.community.framework.utils.MessageChannelClient;
+//import com.community.framework.utils.StringUtil;
 import com.manage.app.bean.ManageSendMsg;
 import com.manage.app.common.WSRetConfig;
 import com.manage.app.service.ManageSendMsgService;
@@ -125,8 +121,8 @@ public class ManageSendMsgController {
 			size = Integer.parseInt(request.getParameter("pageSize"));
 		
 		String id = null;
-		if (StringUtils.isNotBlank(request.getParameter("id")))
-			id = request.getParameter("id");
+		if (StringUtils.isNotBlank(request.getParameter("state")))
+			id = request.getParameter("state");
 		String like = null;
 		if (StringUtils.isNotBlank(request.getParameter("sendTel")))
 			like = request.getParameter("sendTel");
@@ -313,6 +309,64 @@ public class ManageSendMsgController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+	@RequestMapping(value="resend")
+	public void resend(HttpServletRequest request, HttpServletResponse response)
+	{
+		String json = "";
+	    try{
+	    	String id =  request.getParameter("telId") ;
+	    	if( StringUtils.isBlank(id) )
+	    		return;
+	    	ManageSendMsg sMsg = manageSendMsgService.findById(Integer.parseInt(id));
+			String returnMessage = returnMessageRrid(sMsg.getSendTel(), sMsg.getSendContent());
+			if(!returnMessage.contains("-")) {
+				json += "{";
+				json += "\"errorCode\":\"200\",";
+				json += "\"message\":\"发送成功\"";
+				json += "}";
+			}else
+			{
+				json = "";
+				json += "{";
+				json += "\"errorCode\":\"400\",";
+				json += "\"message\":\""+WSRetConfig.getProperty("WS_RET_CODE"+returnMessage)+"\"";
+				json += "}";
+			}
+		}catch(Exception e){
+			json = "";
+			json += "{";
+			json += "\"errorCode\":\"400\",";
+			json += "\"message\":\"发送异常\"";
+			json += "}";
+			e.printStackTrace();
+		}
+		response.setHeader("Cache-Control", "no-cache");
+		response.setCharacterEncoding("utf-8");
+		try {
+			response.getWriter().write(json);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	
+	}
+	
+	
+	public static String returnMessageRrid(String telphone, String messageContent) throws UnsupportedEncodingException{
+		String sn="SDK-BBX-010-21023";
+		String pwd="b3d1-37_";
+		MessageChannelClient client=new MessageChannelClient(sn,pwd);
+		//获取信息
+		// String result = client.mdgetSninfo();
+		// System.out.print(result);
+		//短信发送		
+		StringBuilder sb = new StringBuilder();
+		sb.append(messageContent);
+		//sb.append("您正在申请注册OK家注册用户,验证码").append(messageContent).append(",2分钟内有效。【OK家】");
+		String content=URLEncoder.encode(sb.toString(), "utf8");
+		String result_mt = client.mdsmssend(telphone, content, "", "", "", "");
+		// System.out.print(result_mt);
+		return result_mt;
 	}
 	
 }

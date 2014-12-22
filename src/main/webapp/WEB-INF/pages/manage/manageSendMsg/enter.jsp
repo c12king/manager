@@ -38,36 +38,34 @@ $(function() {
         fit: true,
         fitColumns: true,
         queryParams:{
-        	name:function(){
-        		return $("#functionName").val();
+        	sendTel:function(){
+        		return $("#sendTel").val();
         	},
-			id:function(){
-				return $("[name=menuId]").val();
+			state:function(){
+				return $("[name=state]").val();
 			}
         },
 		resize: true,
 		sortName: 'sendId',
         sortOrder: 'desc',
         idField: 'sendId',
-        pageSize:30,
-        frozenColumns: [[
-                         { field: 'sendId', checkbox: true }
-        		]],
+//         frozenColumns: [[
+//                          { field: 'sendId', checkbox: true }
+//         		]],
         columns: [[
 					{ field: 'sendTel', title: '手机号', width: 150, align:'center' },
 					{ field: 'sendContent', title: '内容', width: 150, align:'center' },
 					{ field: 'recvCode', title: '是否成功', width: 150, align:'center' },
 					{ field: 'sendTime', title: '发送时间', width: 150, align:'center' },
 					{ field: 'sendType', title: '发送类型', width: 150, align:'center' },
-					{ field: 'resend', title: '重新发送', width: 150, align:'center' },
+					{ field: 'resend', title: '重新发送', width: 150, align:'center',
+						  //添加超级链 
+                        formatter:function(value,rowData,rowIndex){
+                            //function里面的三个参数代表当前字段值，当前行数据对象，行号（行号从0开始）
+                            return "<a href='javacript:;' onclick='resend("+rowData.sendId+");'>重新发送</a>"; 
+                       }  
 					
-//     		          { field: 'functionName', title: '功能名称', width: 150, align:'center' },
-//     		          { field: 'menuName', title: '菜单名称', width: 150, align:'center' },
-//     		          { field: 'functionDesc', title: '功能描述', width: 150, align:'center' },
-//     		          { field: 'functionCode', title: '功能编码', width: 150, align:'center' },
-//     		          { field: 'createTime', title: '创建时间', width: 150, align:'center' },
-//     		          { field: 'editTime', title: '编辑时间', width: 150, align:'center' },
-//     		          { field: 'editor', title: '编辑人', width: 150, align:'center' },
+					},
                 ]],
         pagination: true,
         pageNumber: 1,
@@ -78,7 +76,8 @@ $(function() {
         loadMsg:'数据装载中......',
         rownumbers: true,
         singleSelect: true,
-        toolbar: [{
+        toolbar: [
+                /*  {
             text: '新增',
             iconCls: 'icon-add',
             handler: add
@@ -90,41 +89,58 @@ $(function() {
             text: '删除',
             iconCls: 'icon-remove',
             handler: del
-        }, '-', {
+        }, '-',*/ {
             text: '查找',
             iconCls: 'icon-search',
             handler: OpensearchWin
-        }, '-', {
+        }
+        /*, '-', {
             text: '所有',
             iconCls: 'icon-search',
             handler: showAll
-        }]
+        }*/
+        ]
     });
 
 
     $('#btn-search, #btn-search-cancel').linkbutton();
     
     $('body').layout();
-    $.ajax({
-	    type: "post",
-	    url: "<%=path %>/manage/businessMenu/getComboboxData.do",
-	    success: function(data){
-	        data=JSON.parse(data);
-	        vm ={
-	        	editable:false,
-	            valueField:'label',
-	            textField:'value',
-	            data:  data ,
-	            required: true,
-	            missingMessage:'该输入项为必填项'
-	        }
-	        $("#menu").combobox(vm);
-	    },
-	    error:function(error){
-	        $.messager.alert('系统提示', error, 'warning');
+    var data = "[{\"label\":0,\"value\":\"全部\"},{\"label\":1,\"value\":\"成功\"},{\"label\":2,\"value\":\"失败\"}]";
+//     alert(data);  
+    data=JSON.parse(data);   
+    vm ={
+		editable:false,
+	    valueField:'label',
+	    textField:'value',
+	    data:  data ,
+	    required: true,
+	    missingMessage:'该输入项为必填项'
+	};
+    $("#state").combobox(vm);
 
-	    }
-	});
+//     $.ajax({
+// 	    type: "post",
+<%-- 	    url: "<%=path %>/manage/businessMenu/getComboboxData.do", --%>
+// 	    success: function(data){
+// 	    	alert(data);
+// 	        data=JSON.parse(data);
+// 	        vm ={
+// 	        	editable:false,
+// 	            valueField:'label',
+// 	            textField:'value',
+// 	            data:  data ,
+// 	            required: true,
+// 	            missingMessage:'该输入项为必填项'
+// 	        }
+// 	        alert(data);
+// 	        $("#menu").combobox(vm);
+// 	    },
+// 	    error:function(error){
+// 	        $.messager.alert('系统提示', error, 'warning');
+
+// 	    }
+// 	});
 });
 
 function getSelectedArr() {
@@ -135,7 +151,22 @@ function getSelectedArr() {
     }
     return ids;
 }
-
+function resend(id){
+ $.ajax({
+	    type: "post",
+	    url: "<%=path %>/manage/manageSendMsg/resend.do?telId="+id,
+	    
+	    success: function(data){
+	    	data=JSON.parse(data);
+	        alert(data.message);
+	    },
+	    error:function(error){
+	    	//alert(data.message);
+// 	    	alert("发送失败！");
+			alert('系统提示', error, 'warning');
+	    }
+	});
+}
 function getSelectedID() {
     var ids = getSelectedArr();
     return ids.join(',');
@@ -284,15 +315,15 @@ function closeSearchWindow() {
             <form id="searchForm" method="post" action="<%=path %>/manage/manageFunction/list.do">
             <table>
 					<tr>
-			          <td>功能名称：</td>
+			          <td>手机号：</td>
 			          <td>
-			          	<input name="functionName" id="functionName" type="text" style="width: 150px;" value=""/>
+			          	<input name="sendTel" id="sendTel" type="text" style="width: 150px;" value=""/>
 			          </td>
 			        </tr>
 					<tr>
-			          <td>菜单：</td>
+			          <td>状态：</td>
 			          <td>
-			          	<div  type='text' id="menu" name="menuId" style='width:150px; margin-right:5px'>
+			          	<div  type='text' id="state" name="state" style='width:150px; margin-right:5px'>
 			          	</div>
 			          </td>
 			        </tr>
