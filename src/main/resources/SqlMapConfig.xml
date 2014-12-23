@@ -18,6 +18,8 @@
 		<typeAlias alias="BusinessTelGroup" type="com.manage.app.bean.BusinessTelGroup"/>
 		<typeAlias alias="BuseinessTel" type="com.manage.app.bean.BuseinessTel"/>
 		<typeAlias alias="ManageSendMsg" type="com.manage.app.bean.ManageSendMsg"/>
+		<typeAlias alias="BusinessStationService" type="com.manage.app.bean.BusinessStationService"/>
+		
 		<!-- manage -->
 	</typeAliases>
 	<!-- 这里交给sqlSessionFactory 的 mapperLocations属性去得到所有配置信息 -->
@@ -51,6 +53,7 @@
 		<mapper resource="com/manage/app/mapper/BusinessTelGroupMapper.xml" />
 		<mapper resource="com/manage/app/mapper/BuseinessTelMapper.xml" />
 		<mapper resource="com/manage/app/mapper/ManageSendMsgMapper.xml" />
+		<mapper resource="com/manage/app/mapper/BusinessStationServiceMapper.xml" />
 
 	</mappers>
 </configuration>

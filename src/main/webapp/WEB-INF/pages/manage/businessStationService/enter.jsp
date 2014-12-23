@@ -10,62 +10,51 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   <head>
     <base href="<%=basePath%>">
     
-    <title>短信管理</title>
+    <title>My JSP 'jian.jsp' starting page</title>
     <meta http-equiv="Content-Type" content="textml;charset=UTF-8"/>
 	<meta http-equiv="pragma" content="no-cache">
 	<meta http-equiv="cache-control" content="no-cache">
 	<meta http-equiv="expires" content="0">    
 	<meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
 	<meta http-equiv="description" content="This is my page">
-	<!--
-	<link rel="stylesheet" type="text/css" href="styles.css">
-	-->
 	<link rel="stylesheet" type="text/css" href="<%=path %>/css/themes/default/easyui.css">
 	<link rel="stylesheet" type="text/css" href="<%=path %>/css/themes/icon.css">
 	<script type="text/javascript" src="<%=path %>/js/jquery.min.js"></script>
 	<script type="text/javascript" src="<%=path %>/js/jquery.easyui.min.js"></script>
 	<script type="text/javascript" src="<%=path %>/js/validate.js"></script>
-
+	
 <script type="text/javascript">
 var win;
 var grid;
 $(function() {
 	
 	grid = $('#grid').datagrid({
-        title: '短信管理',
+        title: '${staName}服务管理',
         iconCls: 'icon-save',
-        url: '<%=path %>/manage/manageSendMsg/list.do',
+         url: '<%=path %>/manage/businessStationService/list.do?stationId=${stationId}',
         fit: true,
         fitColumns: true,
         queryParams:{
-        	sendTel:function(){
-        		return $("#sendTel").val();
-        	},
-			state:function(){
-				return $("[name=state]").val();
-			}
+            serviceName: function(){
+            	return $("#serviceName").val(); 
+            }
         },
 		resize: true,
-		sortName: 'sendId',
+		sortName: 'serviceId',
         sortOrder: 'desc',
-        idField: 'sendId',
-//         frozenColumns: [[
-//                          { field: 'sendId', checkbox: true }
-//         		]],
+        idField: 'serviceId',
+        pageSize:30,
+        frozenColumns: [[
+                         { field: 'serviceId', checkbox: true }
+        		]],
         columns: [[
-					{ field: 'sendTel', title: '手机号', width: 150, align:'center' },
-					{ field: 'sendContent', title: '内容', width: 150, align:'center' },
-					{ field: 'recvCode', title: '是否成功', width: 150, align:'center' },
-					{ field: 'sendTime', title: '发送时间', width: 150, align:'center' },
-					{ field: 'sendType', title: '发送类型', width: 150, align:'center' },
-					{ field: 'resend', title: '重新发送', width: 150, align:'center',
-						  //添加超级链 
-                        formatter:function(value,rowData,rowIndex){
-                            //function里面的三个参数代表当前字段值，当前行数据对象，行号（行号从0开始）
-                            return "<a href='javacript:;' onclick='resend("+rowData.sendId+");'>重新发送</a>"; 
-                       }  
-					
-					},
+					{ field: 'staName', title: '驿站名称', width: 150, align:'center' },
+					{ field: 'serviceName', title: '服务名称', width: 150, align:'center' },
+					{ field: 'content', title: '服务内容', width: 150, align:'center' },
+					{ field: 'servicePic', title: '图片路径', width: 150, align:'center' },
+					{ field: 'createTime', title: '创建时间', width: 150, align:'center' },
+					{ field: 'editTime', title: '编辑时间', width: 150, align:'center' },
+					{ field: 'editor', title: '编辑人', width: 150, align:'center' },
                 ]],
         pagination: true,
         pageNumber: 1,
@@ -76,8 +65,7 @@ $(function() {
         loadMsg:'数据装载中......',
         rownumbers: true,
         singleSelect: true,
-        toolbar: [
-                /*  {
+        toolbar: [{
             text: '新增',
             iconCls: 'icon-add',
             handler: add
@@ -89,88 +77,31 @@ $(function() {
             text: '删除',
             iconCls: 'icon-remove',
             handler: del
-        }, '-',*/ {
+        }, '-', {
             text: '查找',
             iconCls: 'icon-search',
             handler: OpensearchWin
-        }
-        /*, '-', {
+        }, '-', {
             text: '所有',
             iconCls: 'icon-search',
             handler: showAll
-        }*/
-        ]
+        }]
     });
 
 
     $('#btn-search, #btn-search-cancel').linkbutton();
-    
     $('body').layout();
-    var data = "[{\"label\":0,\"value\":\"全部\"},{\"label\":1,\"value\":\"成功\"},{\"label\":2,\"value\":\"失败\"}]";
-//     alert(data);  
-    data=JSON.parse(data);   
-    vm ={
-		editable:false,
-	    valueField:'label',
-	    textField:'value',
-	    data:  data ,
-	    required: true,
-	    missingMessage:'该输入项为必填项'
-	};
-    $("#state").combobox(vm);
-
-//     $.ajax({
-// 	    type: "post",
-<%-- 	    url: "<%=path %>/manage/businessMenu/getComboboxData.do", --%>
-// 	    success: function(data){
-// 	    	alert(data);
-// 	        data=JSON.parse(data);
-// 	        vm ={
-// 	        	editable:false,
-// 	            valueField:'label',
-// 	            textField:'value',
-// 	            data:  data ,
-// 	            required: true,
-// 	            missingMessage:'该输入项为必填项'
-// 	        }
-// 	        alert(data);
-// 	        $("#menu").combobox(vm);
-// 	    },
-// 	    error:function(error){
-// 	        $.messager.alert('系统提示', error, 'warning');
-
-// 	    }
-// 	});
 });
 
 function getSelectedArr() {
     var ids = [];
     var rows = grid.datagrid('getSelections');
     for (var i = 0; i < rows.length; i++) {
-         ids.push(rows[i].functionId);
+         ids.push(rows[i].stationId);
     }
     return ids;
 }
 
-// function resend(id){
-// 	alert("-----"); 
-// }
-
-function resend(id){
- $.ajax({
-	    type: "post",
-	    url: "<%=path %>/manage/manageSendMsg/resend.do?telId="+id,	    
-	    success: function(data){
-	    	data=JSON.parse(data);
-	        alert(data.message);
-	    },
-	    error:function(error){
-	    	//alert(data.message);
-// 	    	alert("发送失败！");
-			alert('系统提示', error, 'warning');
-	    }
-	});
-}
 function getSelectedID() {
     var ids = getSelectedArr();
     return ids.join(',');
@@ -186,7 +117,7 @@ function add() {
         modal: true,
         shadow: false,
         cache: false,
-        href: '<%=path %>/manage/manageFunction/add.do'
+        href: '<%=path %>/manage/businessStationService/add.do?stationId=${stationId}&staName=${staName}'
     });
     $('#add-window').window('open');
     $('#add-window').window('resize');
@@ -208,22 +139,20 @@ function edit() {
             modal: true,
             shadow: false,
             cache: false,
-            href: '<%=path %>/manage/manageFunction/modify.do?id='+rows[0].functionId
-            
+            href: '<%=path %>/manage/businessStationService/modify.do?serviceId='+rows[0].serviceId
         });
     	$('#edit-window').window('open');
-        $('#modifyForm').form('clear');
-        $('#modifyForm').form('load', '<%=path %>/manage/manageFunction/edit.do?id=' + rows[0].functionId);
     }
 }
 
 function del() {
     var arr = getSelectedArr();
     if (arr.length>0) {
+    	alert("======="+arr);  
         $.messager.confirm('提示信息', '您确认要删除吗?', function (data) {
             if (data) {
                 $.ajax({
-                    url: '<%=path %>/manage/manageFunction/delete.do?id=' + arr2str(arr),
+                    url: '<%=path %>/manage/businessStationService/delete.do?id=' + arr2str(arr),
                     timeout: 1000,
                     cache: false,
                     success: function (data) {
@@ -246,7 +175,7 @@ function del() {
 
 function showAll() {
 	$('#searchForm').form('clear');
-	grid.datagrid('reload');
+	grid.datagrid('reload',{});
 }
 
 function saveData(oper, formId) {
@@ -303,6 +232,85 @@ function closeSearchWindow() {
     $('#search-window').window('close');
 }
 
+function selectOrg() {
+	var win = $('#selectOrg-window').window({
+        closed: true,
+        modal: true,
+        shadow: false,
+        cache: false,
+        href: '<%=path %>/manage/manageOrg/selectOrg.do'
+    });
+    $('#selectOrg-window').window('open');
+}
+function updateOrgId(){
+	var node = $('#treeul').tree('getSelected');
+	$("#orgId").val(node.id)
+	$("#orgName").val(node.text)
+	$("#orgId1").val(node.id)
+	$("#orgName1").val(node.text)
+	$('#selectOrg-window').window('close');
+}
+init= function(uuid) {  
+    // this.identifier 是设定的全局变量，uuid是页面加载时的唯一编码  
+    this.identifier = uuid;  
+    // 图片上传  
+    var idf = this.identifier;  
+    var that = this;  
+    $('#'+idf+'-tforma').form({  
+        dataType : 'json',  
+    beforeSubmit : function(a, f, o) {  
+      $('#'+idf+'-statusPic').html('上传中...');  
+    },  
+        success : function(data) {    
+     if (typeof (data) == 'string')  
+       data = eval('(' + data + ')');  
+     $('#'+idf+'-uploadWindow').window('close');  
+     if ("success" == data.message) {  
+         $('div[identifier='+that.identifier+']').find('#picPath').val(data.path);  
+         $("#"+idf+"-path").val(data.path);  
+         $("#"+idf).val(data.path.replace( "\\", "/"))
+         $("#"+idf+"-statusPic").html( "<a target='window' href='javascript:void(0);' onclick='Preview(\""+idf+"\")'>预览</a>");  
+     } else if ("error" == data.message)  
+         $("#"+idf+"-statusPic").html("非图片数据!");  
+     else  
+         $("#"+idf+"-statusPic").html("上传数据错误!");  
+          $("#"+idf+"-itemPic").val('');  
+     },  
+     error : function(jqXHR, textStatus,errorThrown) {  
+         $('#$'+idf+'-uploadWindow').window('close'); 
+         $("#"+idf+"-statusPic").html("上传失败!");  
+         $("#"+idf+"-itemPic").val('');  
+     } });  
+    }  
+function Preview(id){
+	var url =$("#"+id).val()
+	if(url==""){
+		return ;
+	}
+    var title="图片预览"
+    var obj ={
+        title:title,
+        url:url
+    }
+    window.parent.treeOnFrame(obj);
+}
+function department_management(){
+	var rows = grid.datagrid('getSelections');
+    var num = rows.length;
+    if (num == 0) {
+        $.messager.alert('提示', '请选择一条记录进行操作!', 'info');
+        return;
+    } else if (num > 1) {
+        $.messager.alert('提示', '您选择了多条记录,只能选择一条记录进行修改!', 'info');
+        return;
+    }
+    else{
+    	 var url='<%=path %>/manage/businessStation/org.do?id='+rows[0].stationId
+         var title="部门管理"
+         window.parent.addTab(title, url);
+    }
+}
+
 </script>
 </head>
 <body class="easyui-layout" style="overflow-y: hidden;">
@@ -312,31 +320,25 @@ function closeSearchWindow() {
         <div id="grid" fit="true">
         </div>
     </div>
-    <div id="add-window" title="新增窗口" style="width: 400px; height: 500px;"></div>
-    <div id="edit-window" title="编辑窗口" style="width: 400px; height: 500px;"></div>
+    <div id="add-window" title="新增窗口" style="width: 500px; height: 500px;"></div>
+    <div id="selectOrg-window" title="选择组织结构窗口" style="width: 500px; height: 500px;"></div>
+    <div id="edit-window" title="编辑窗口" style="width: 500px; height: 500px;"></div>
     <div id="search-window" title="查询窗口" style="width: 400px; height: 500px;">
         <div style="padding: 20px 20px 40px 80px;">
-            <form id="searchForm" method="post" action="<%=path %>/manage/manageFunction/list.do">
+            <form id="searchForm" method="post" action="<%=path %>/manage/businessStationService/list.do">
             <table>
 					<tr>
-			          <td>手机号：</td>
+			          <td>服务名称：</td>
 			          <td>
-			          	<input name="sendTel" id="sendTel" type="text" style="width: 150px;" value=""/>
-			          </td>
-			        </tr>
-					<tr>
-			          <td>状态：</td>
-			          <td>
-			          	<div  type='text' id="state" name="state" style='width:150px; margin-right:5px'>
-			          	</div>
+			          	<input name="serviceName" id="serviceName" type="text" style="width: 150px;" value="${serviceName}"/>
 			          </td>
 			        </tr>
             </table>
             </form>
         </div>
         <div style="text-align: center; padding: 5px;">
-            <a href="javascript:void(0)" onclick="SearchOK()" id="btn-search" icon="icon-ok">确定</a>
-            <a href="javascript:void(0)" onclick="closeSearchWindow()" id="btn-search-cancel" icon="icon-cancel">
+            <a href="javascript:void(0)" onclick="SearchOK()" id="btn-search" class="easyui-linkbutton" data-options='iconCls:"icon-ok"'>确定</a>
+            <a href="javascript:void(0)" onclick="closeSearchWindow()" id="btn-search-cancel" class="easyui-linkbutton" data-options='iconCls:"icon-cancel"'>
                 取消</a>
         </div>
     </div>

@@ -123,7 +123,6 @@ public class ManageEstateServiceImpl implements ManageEstateService {
 		return list;
 	}
 
-	@Override
 	public String treeData() throws GSSException {
 		// TODO Auto-generated method stub
 		//List<ManageBuilding> list= //manageBuildingDao.treeData(entity);

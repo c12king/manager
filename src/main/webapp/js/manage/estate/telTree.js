@@ -530,7 +530,6 @@ function del() {
   }
   
     var arr = getSelectedArr();
-//    alert(arr);
     if (arr.length>0) {
         $.messager.confirm('提示信息', '您确认要删除吗?', function (data) {
             if (data) {

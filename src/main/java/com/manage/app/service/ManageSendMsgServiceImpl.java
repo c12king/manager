@@ -225,7 +225,6 @@ public class ManageSendMsgServiceImpl implements ManageSendMsgService {
 	}
 
 
-	@Override
 	public Page findAllPage(Page page) throws GSSException {
 		// TODO Auto-generated method stub
 		int count = manageSendMsgDao.selectSendMsgCount(page);

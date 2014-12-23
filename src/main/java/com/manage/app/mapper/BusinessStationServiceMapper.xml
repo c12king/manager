@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.manage.app.dao.BusinessStationServiceDao" >
+	<!-- 返回结构集 -->
+	<resultMap id="BusinessStationServiceResult" type="BusinessStationService">
+			<result column="serviceId" property="serviceId" />
+			<result column="stationId" property="stationId" />
+			<result column="serviceName" property="serviceName" />
+			<result column="servicePic" property="servicePic" />
+			<result column="content" property="content" />
+			<result column="createTime" property="createTime" />
+			<result column="editTime" property="editTime" />
+			<result column="editor" property="editor" />
+	</resultMap>
+	
+	<!-- 所有字段 -->
+	<sql id="Base_Column_List" >
+			serviceId,
+			stationId,
+			serviceName,
+			servicePic,
+			content,
+			createTime,
+			editTime,
+			editor
+	</sql>
+	
+	<!-- 所有字段查询条件 -->
+	<sql id="Base_Where_Clause">
+		<where>
+			<trim  suffixOverrides="," >
+					<if test="serviceId != null and serviceId != ''" >
+				   		and serviceId = #{serviceId}
+					</if>
+					<if test="stationId != null and stationId != ''" >
+				   		and stationId = #{stationId}
+					</if>
+					<if test="serviceName != null and serviceName != ''" >
+				   		and serviceName like '%${serviceName}%'
+					</if>
+					<if test="servicePic != null and servicePic != ''" >
+				   		and servicePic = #{servicePic}
+					</if>
+					<if test="content != null and content != ''" >
+				   		and content = #{content}
+					</if>
+					<if test="createTime != null and createTime != ''" >
+				   		and createTime = #{createTime}
+					</if>
+					<if test="editTime != null and editTime != ''" >
+				   		and editTime = #{editTime}
+					</if>
+					<if test="editor != null and editor != ''" >
+				   		and editor = #{editor}
+					</if>
+			</trim>
+		</where>
+	</sql>
+	
+	<!-- 根据id查询 BusinessStationService -->
+	<select id="findById"  resultMap="BusinessStationServiceResult" parameterType="java.lang.Integer">
+		select <include refid="Base_Column_List" /> from business_station_service where serviceId = #{id}
+	</select>
+	
+	<!-- 无条件查询所有BusinessStationService -->
+	<select id="findAll" resultMap="BusinessStationServiceResult">
+		select <include refid="Base_Column_List" /> from business_station_service 
+	</select>
+	
+	<!-- 按Map对象条件查询所有BusinessStationService -->
+	<select id="findByMap" resultMap="BusinessStationServiceResult" parameterType="java.util.Map">
+		select <include refid="Base_Column_List" /> from business_station_service <include refid="Base_Where_Clause" />
+	</select>
+	
+	<!-- 按VO对象条件查询所有BusinessStationService -->
+	<select id="findByExample" resultMap="BusinessStationServiceResult" parameterType="com.manage.app.vo.BusinessStationServiceQuery">
+		select <include refid="Base_Column_List" /> from business_station_service <include refid="Base_Where_Clause" />
+	</select>
+	
+	<!-- BusinessStationService根据搜索条件，搜索分页数据 -->
+	<select id="findAllPage" resultMap="BusinessStationServiceResult" parameterType="Object">
+		select <include refid="Base_Column_List" /> from business_station_service  
+		<include refid="Base_Where_Clause" />
+		<if test="pager.orderCondition != null and pager.orderCondition != ''" >
+      	${pager.orderCondition}
+	    </if>
+	    <if test="pager.mysqlQueryCondition != null and pager.mysqlQueryCondition != ''" >
+	    ${pager.mysqlQueryCondition}
+	    </if>
+	</select>
+	
+	<!-- BusinessStationService列表总数-->
+	<select id="selectCount" resultType="java.lang.Integer"  parameterType="Object">
+		select count(1) from business_station_service 
+		<include refid="Base_Where_Clause" />
+	</select>
+	
+	<!-- BusinessStationService保存数据 -->
+	<insert id="save" parameterType="BusinessStationService">
+		<selectKey resultType="java.lang.Integer" order="AFTER" keyProperty="serviceId">
+			SELECT LAST_INSERT_ID()
+  		</selectKey>
+		insert into business_station_service(
+		
+		stationId,
+		serviceName,
+		servicePic,
+		content,
+		createTime,
+		editTime,
+		editor
+		) values(
+				#{stationId},
+		#{serviceName},
+		#{servicePic},
+		#{content},
+		#{createTime},
+		#{editTime},
+		#{editor}
+		)
+	</insert>
+	
+	<!-- BusinessStationService修改数据 -->
+	<update id="update" parameterType="BusinessStationService">
+		update business_station_service 
+		<set>
+			<if test="stationId != null and stationId != ''" >
+			stationId=#{stationId},
+			</if>
+			<if test="serviceName != null and serviceName != ''" >
+			serviceName=#{serviceName},
+			</if>
+			<if test="servicePic != null and servicePic != ''" >
+			servicePic=#{servicePic},
+			</if>
+			<if test="content != null and content != ''" >
+			content=#{content},
+			</if>
+			<if test="createTime != null and createTime != ''" >
+			createTime=#{createTime},
+			</if>
+			<if test="editTime != null and editTime != ''" >
+			editTime=#{editTime},
+			</if>
+			<if test="editor != null and editor != ''" >
+			editor=#{editor}
+			</if>
+		</set> 
+		where 
+		serviceId=#{serviceId}
+		
+		
+		
+		
+		
+		
+		
+	</update>
+	
+	<!-- BusinessStationService删除数据 -->
+	<delete id="delete" parameterType="java.lang.Integer">
+		delete from business_station_service where 
+		serviceId=#{serviceId}
+															</delete>
+	
+</mapper>
+	

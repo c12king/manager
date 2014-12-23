@@ -319,7 +319,7 @@ public class ManageSendMsgController {
 	    	if( StringUtils.isBlank(id) )
 	    		return;
 	    	ManageSendMsg sMsg = manageSendMsgService.findById(Integer.parseInt(id));
-			String returnMessage = returnMessageRrid(sMsg.getSendTel(), sMsg.getSendContent());
+			String returnMessage = returnMessageRrid(sMsg.getSendTel(), URLEncoder.encode( sMsg.getSendContent(), "utf8"));
 			if(!returnMessage.contains("-")) {
 				json += "{";
 				json += "\"errorCode\":\"200\",";

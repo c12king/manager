@@ -86,6 +86,10 @@ $(function() {
             text: '部门管理',
             iconCls: 'icon-edit',
             handler: department_management
+        },'-', {
+            text: '驿站服务管理',
+            iconCls: 'icon-edit',
+            handler: stationService_management
         }, '-', {
             text: '删除',
             iconCls: 'icon-remove',
@@ -326,10 +330,25 @@ function department_management(){
     }
 }
 
+function stationService_management(){
+	var rows = grid.datagrid('getSelections');
+    var num = rows.length;
+    if (num == 0) {
+        $.messager.alert('提示', '请选择一条记录进行操作!', 'info');
+        return;
+    } else if (num > 1) {
+        $.messager.alert('提示', '您选择了多条记录,只能选择一条记录进行修改!', 'info');
+        return;
+    }
+    else{
+    	 var url='<%=path %>/manage/businessStationService/enter.do?id='+rows[0].stationId+'&staName='+rows[0].staName;
+         var title="驿站服务管理";
+         window.parent.addTab(title, url);
+    }
+}
 </script>
 </head>
 <body class="easyui-layout" style="overflow-y: hidden;">
- 
     <div region="center" style="width: 500px; height: 300px; padding: 1px; background: #eee;
         overflow-y: hidden">
         <div id="grid" fit="true">

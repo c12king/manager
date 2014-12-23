@@ -146,7 +146,6 @@ public class ManageSendMsgDaoImpl implements ManageSendMsgDao {
 		}
 	}
 
-	@Override
 	public List<ManageSendMsg> SendMsgListData(Page page) throws GSSException {
 
 		
@@ -154,7 +153,6 @@ public class ManageSendMsgDaoImpl implements ManageSendMsgDao {
 		return list;
 	}
 
-	@Override
 	public int selectSendMsgCount(Page page) throws GSSException {
 		int count = (Integer) this.sqlSessionTemplate.selectOne("selectSendMsgCount",page);
 		return count;

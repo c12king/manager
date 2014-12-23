@@ -228,7 +228,6 @@ public class BusinessTelGroupServiceImpl implements BusinessTelGroupService {
 
 
 
-	@Override
 	public String treeData(String id) throws ServiceException {
 		// TODO Auto-generated method stub
 		Map<String, Object> con = new HashMap<String, Object>();
