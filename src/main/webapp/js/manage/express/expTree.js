@@ -4,7 +4,8 @@ var ajax_error = function (msg) {
         $.messager.alert('系统提示', msg, 'warning');
     };
 };
-
+var win;
+var grid;
 $(function(){
 	initTree();
 });
@@ -326,11 +327,11 @@ function loadExpFee(id){
 		$(p).pagination({                    
 			onSelectPage: function(pageNumber, pageSize) {
 				$(this).pagination('loading');
-				alert(pageNumber); 
+//				alert(pageNumber); 
 				var queryParams = {
-						//pageNo: pageNumber, pageSize: pageSize ,
-						page: pageNumber, rows: pageSize ,
-						expressId:function(){
+						pageNo: pageNumber, pageSize: pageSize ,
+//						page: pageNumber, rows: pageSize ,
+						expressId:function(){ 
 			        		var node = $('#expTreeul').tree('getSelected');
 			         	    if(null==node){
 			         	    	return id;
@@ -409,11 +410,11 @@ function edit() {
             modal: true,
             shadow: false,
             cache: false,
-            href: path+'/manage/manageExpressFee/modify.do?telId='+rows[0].telId
+            href: path+'/manage/manageExpressFee/modify.do?feeId='+rows[0].feeId
         });
     	$('#edit-window').window('open');
         $('#modifyForm').form('clear');
-        $('#modifyForm').form('load', '<%=path %>/manage/buseinessTel/edit.do?telId=' + rows[0].telId);
+        $('#modifyForm').form('load', '<%=path %>/manage/buseinessTel/edit.do?feeId=' + rows[0].feeId); 
     }
 }
 

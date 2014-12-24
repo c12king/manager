@@ -59,7 +59,20 @@ public class ManageExpressFeeController {
 	 * @return
 	 */
 	@RequestMapping(value="list")
-	public void list(ManageExpressFeeQuery query, HttpServletResponse response) {
+	public void list(HttpServletRequest request, ManageExpressFeeQuery query, HttpServletResponse response) {
+		int cpage = 1;
+		if (StringUtils.isNotBlank(request.getParameter("page")))
+		    cpage=Integer.parseInt(request.getParameter("page"));
+		if (StringUtils.isNotBlank(request.getParameter("pageNo")))
+			cpage=Integer.parseInt(request.getParameter("pageNo"));
+		int size = 10;
+		if (StringUtils.isNotBlank(request.getParameter("rows")))
+			size=Integer.parseInt(request.getParameter("rows"));
+		if (StringUtils.isNotBlank(request.getParameter("pageSize")))  
+			size = Integer.parseInt(request.getParameter("pageSize"));
+		query.setPage(cpage);
+		query.setRows(size);
+		
 		String json = "";
 		StringBuilder result = new StringBuilder();
 		try{
@@ -123,8 +136,8 @@ public class ManageExpressFeeController {
 		String json = "";
 		try{
 		    manageExpressFee.setExpressId(query.getExpressId());
-		    manageExpressFee.setTitle(query.getTitle());
-		    manageExpressFee.setContent(query.getContent().replaceAll("\n", "").replace("\r", "")); //去掉回车 
+		    manageExpressFee.setTitle(query.getTitle().replaceAll("\n", "").replace("\r", ""));
+		    manageExpressFee.setContent(query.getContent().replaceAll("\n", "").replace("\r", "")); //去掉回车  
 		    System.out.println(query.getContent().replaceAll("\n", "").replace("\r", ""));
 		    manageExpressFee.setCreateTime(new Timestamp(new Date().getTime()));
 			manageExpressFeeService.save(manageExpressFee);
@@ -177,8 +190,8 @@ public class ManageExpressFeeController {
 		try{
 		    manageExpressFee = manageExpressFeeService.findById(query.getFeeId());
 		    manageExpressFee.setExpressId(query.getExpressId());
-		    manageExpressFee.setTitle(query.getTitle());
-		    manageExpressFee.setContent(query.getContent());
+		    manageExpressFee.setTitle(query.getTitle().replaceAll("\n", "").replace("\r", ""));
+		    manageExpressFee.setContent(query.getContent().replaceAll("\n", "").replace("\r", ""));
 		    manageExpressFee.setCreateTime(query.getCreateTime());
 			manageExpressFeeService.update(manageExpressFee);
 			

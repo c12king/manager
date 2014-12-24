@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.manage.app.dao.ManageOrgExpressDao" >
+	<!-- 返回结构集 -->
+	<resultMap id="ManageOrgExpressResult" type="ManageOrgExpress">
+			<result column="orgExpId" property="orgExpId" />
+			<result column="expressId" property="expressId" />
+			<result column="stationId" property="stationId" />
+			<result column="createTime" property="createTime" />
+			<result column="editTime" property="editTime" />
+			<result column="editor" property="editor" />
+			<result column="expState" property="expState" />
+	</resultMap>
+	
+	<!-- 所有字段 -->
+	<sql id="Base_Column_List" >
+			orgExpId,
+			expressId,
+			stationId,
+			createTime,
+			editTime,
+			editor,
+			expState
+	</sql>
+	
+	<!-- 所有字段查询条件 -->
+	<sql id="Base_Where_Clause">
+		<where>
+			<trim  suffixOverrides="," >
+					<if test="orgExpId != null and orgExpId != ''" >
+				   		and orgExpId = #{orgExpId}
+					</if>
+					<if test="expressId != null and expressId != ''" >
+				   		and expressId = #{expressId}
+					</if>
+					<if test="stationId != null and stationId != ''" >
+				   		and stationId = #{stationId}
+					</if>
+					<if test="createTime != null and createTime != ''" >
+				   		and createTime = #{createTime}
+					</if>
+					<if test="editTime != null and editTime != ''" >
+				   		and editTime = #{editTime}
+					</if>
+					<if test="editor != null and editor != ''" >
+				   		and editor = #{editor}
+					</if>
+					<if test="expState != null and expState != ''" >
+				   		and expState = #{expState}
+					</if>
+			</trim>
+		</where>
+	</sql>
+	
+	<!-- 根据id查询 ManageOrgExpress -->
+	<select id="findById"  resultMap="ManageOrgExpressResult" parameterType="java.lang.Integer">
+		select <include refid="Base_Column_List" /> from manage_org_express where orgExpId = #{id}
+	</select>
+	
+	<!-- 无条件查询所有ManageOrgExpress -->
+	<select id="findAll" resultMap="ManageOrgExpressResult">
+		select <include refid="Base_Column_List" /> from manage_org_express 
+	</select>
+	
+	<!-- 按Map对象条件查询所有ManageOrgExpress -->
+	<select id="findByMap" resultMap="ManageOrgExpressResult" parameterType="java.util.Map">
+		select <include refid="Base_Column_List" /> from manage_org_express <include refid="Base_Where_Clause" />
+	</select>
+	
+	<!-- 按VO对象条件查询所有ManageOrgExpress -->
+	<select id="findByExample" resultMap="ManageOrgExpressResult" parameterType="com.manage.app.vo.ManageOrgExpressQuery">
+		select <include refid="Base_Column_List" /> from manage_org_express <include refid="Base_Where_Clause" />
+	</select>
+	
+	<!-- ManageOrgExpress根据搜索条件，搜索分页数据 -->
+	<select id="findAllPage" resultMap="ManageOrgExpressResult" parameterType="Object">
+		select <include refid="Base_Column_List" /> from manage_org_express  
+		<include refid="Base_Where_Clause" />
+		<if test="pager.orderCondition != null and pager.orderCondition != ''" >
+      	${pager.orderCondition}
+	    </if>
+	    <if test="pager.mysqlQueryCondition != null and pager.mysqlQueryCondition != ''" >
+	    ${pager.mysqlQueryCondition}
+	    </if>
+	</select>
+	
+	<!-- ManageOrgExpress列表总数-->
+	<select id="selectCount" resultType="java.lang.Integer"  parameterType="Object">
+		select count(1) from manage_org_express 
+		<include refid="Base_Where_Clause" />
+	</select>
+	
+	<!-- ManageOrgExpress保存数据 -->
+	<insert id="save" parameterType="ManageOrgExpress">
+		<selectKey resultType="java.lang.Integer" order="AFTER" keyProperty="orgExpId">
+			SELECT LAST_INSERT_ID()
+  		</selectKey>
+		insert into manage_org_express(
+		
+		expressId,
+		stationId,
+		createTime,
+		editTime,
+		editor,
+		expState
+		) values(
+				#{expressId},
+		#{stationId},
+		#{createTime},
+		#{editTime},
+		#{editor},
+		#{expState}
+		)
+	</insert>
+	
+	<!-- ManageOrgExpress修改数据 -->
+	<update id="update" parameterType="ManageOrgExpress">
+		update manage_org_express 
+		<set>
+			<if test="expressId != null and expressId != ''" >
+			expressId=#{expressId},
+			</if>
+			<if test="stationId != null and stationId != ''" >
+			stationId=#{stationId},
+			</if>
+			<if test="createTime != null and createTime != ''" >
+			createTime=#{createTime},
+			</if>
+			<if test="editTime != null and editTime != ''" >
+			editTime=#{editTime},
+			</if>
+			<if test="editor != null and editor != ''" >
+			editor=#{editor},
+			</if>
+			<if test="expState != null and expState != ''" >
+			expState=#{expState}
+			</if>
+		</set> 
+		where 
+		orgExpId=#{orgExpId}
+		
+		
+		
+		
+		
+		
+	</update>
+	
+	<!-- ManageOrgExpress删除数据 -->
+	<delete id="delete" parameterType="java.lang.Integer">
+		delete from manage_org_express where 
+		orgExpId=#{orgExpId}
+													</delete>
+	
+</mapper>
+	

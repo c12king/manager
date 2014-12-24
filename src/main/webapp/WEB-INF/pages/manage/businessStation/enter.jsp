@@ -90,6 +90,10 @@ $(function() {
             text: '驿站服务管理',
             iconCls: 'icon-edit',
             handler: stationService_management
+        },'-', {
+            text: '驿站快递公司管理',
+            iconCls: 'icon-edit',
+            handler: stationService_management
         }, '-', {
             text: '删除',
             iconCls: 'icon-remove',
