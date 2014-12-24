@@ -42,7 +42,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	var estateId='${estateId}'
 </script>
 	<div data-options='region:"west",split:true,border:true,title:"社区列表"', style='width: 290px;'>
-		<div class="easyui-layout" data-options="fit:true">   
+		<div class="easyui-layout" data-options="fit:true" style="overflow:auto;">   
 				<ul id="treeul" class="easyui-tree">
 				</ul>
         </div> 
@@ -50,7 +50,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<div data-options='region:"center",split:true,border:true'>
 		<div class="easyui-layout" data-options="fit:true">   
             <div data-options="region:'west',title:'电话分组'" style="width:290px">
-				<div class="easyui-layout" data-options="fit:true">   
+				<div class="easyui-layout" data-options="fit:true" style="overflow:auto;">   
 		            	<ul id="jobTreeul" class="easyui-tree">
 						</ul>
 		        </div> 

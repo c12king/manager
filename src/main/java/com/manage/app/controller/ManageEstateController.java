@@ -74,7 +74,7 @@ public class ManageEstateController {
 			GSLogger.error("进入manageEstTel管理页时发生错误", e);
 			e.printStackTrace();
 		}
-		ModelAndView mav = new ModelAndView("manage/manageEstate/manageEstTel");
+		ModelAndView mav = new ModelAndView("/manage/manageEstate/manageEstTel");
 		return mav;
 	}
 	/**

@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.manage.app.dao.ManageExpressFeeDao" >
+	<!-- 返回结构集 -->
+	<resultMap id="ManageExpressFeeResult" type="ManageExpressFee">
+			<result column="feeId" property="feeId" />
+			<result column="expressId" property="expressId" />
+			<result column="title" property="title" />
+			<result column="content" property="content" />
+			<result column="createTime" property="createTime" />
+	</resultMap>
+	
+	<!-- 所有字段 -->
+	<sql id="Base_Column_List" >
+			feeId,
+			expressId,
+			title,
+			content,
+			createTime
+	</sql>
+	
+	<!-- 所有字段查询条件 -->
+	<sql id="Base_Where_Clause">
+		<where>
+			<trim  suffixOverrides="," >
+					<if test="feeId != null and feeId != ''" >
+				   		and feeId = #{feeId}
+					</if>
+					<if test="expressId != null and expressId != ''" >
+				   		and expressId = #{expressId}
+					</if>
+					<if test="title != null and title != ''" >
+				   		and title = #{title}
+					</if>
+					<if test="content != null and content != ''" >
+				   		and content = #{content}
+					</if>
+					<if test="createTime != null and createTime != ''" >
+				   		and createTime = #{createTime}
+					</if>
+			</trim>
+		</where>
+	</sql>
+	
+	<!-- 根据id查询 ManageExpressFee -->
+	<select id="findById"  resultMap="ManageExpressFeeResult" parameterType="java.lang.Integer">
+		select <include refid="Base_Column_List" /> from manage_express_fee where feeId = #{id}
+	</select>
+	
+	<!-- 无条件查询所有ManageExpressFee -->
+	<select id="findAll" resultMap="ManageExpressFeeResult">
+		select <include refid="Base_Column_List" /> from manage_express_fee 
+	</select>
+	
+	<!-- 按Map对象条件查询所有ManageExpressFee -->
+	<select id="findByMap" resultMap="ManageExpressFeeResult" parameterType="java.util.Map">
+		select <include refid="Base_Column_List" /> from manage_express_fee <include refid="Base_Where_Clause" />
+	</select>
+	
+	<!-- 按VO对象条件查询所有ManageExpressFee -->
+	<select id="findByExample" resultMap="ManageExpressFeeResult" parameterType="com.manage.app.vo.ManageExpressFeeQuery">
+		select <include refid="Base_Column_List" /> from manage_express_fee <include refid="Base_Where_Clause" />
+	</select>
+	
+	<!-- ManageExpressFee根据搜索条件，搜索分页数据 -->
+	<select id="findAllPage" resultMap="ManageExpressFeeResult" parameterType="Object">
+		select <include refid="Base_Column_List" /> from manage_express_fee  
+		<include refid="Base_Where_Clause" />
+		<if test="pager.orderCondition != null and pager.orderCondition != ''" >
+      	${pager.orderCondition}
+	    </if>
+	    <if test="pager.mysqlQueryCondition != null and pager.mysqlQueryCondition != ''" >
+	    ${pager.mysqlQueryCondition}
+	    </if>
+	</select>
+	
+	<!-- ManageExpressFee列表总数-->
+	<select id="selectCount" resultType="java.lang.Integer"  parameterType="Object">
+		select count(1) from manage_express_fee 
+		<include refid="Base_Where_Clause" />
+	</select>
+	
+	<!-- ManageExpressFee保存数据 -->
+	<insert id="save" parameterType="ManageExpressFee">
+		<selectKey resultType="java.lang.Integer" order="AFTER" keyProperty="feeId">
+			SELECT LAST_INSERT_ID()
+  		</selectKey>
+		insert into manage_express_fee(
+		
+		expressId,
+		title,
+		content,
+		createTime
+		) values(
+				#{expressId},
+		#{title},
+		#{content},
+		#{createTime}
+		)
+	</insert>
+	
+	<!-- ManageExpressFee修改数据 -->
+	<update id="update" parameterType="ManageExpressFee">
+		update manage_express_fee 
+		<set>
+			<if test="expressId != null and expressId != ''" >
+			expressId=#{expressId},
+			</if>
+			<if test="title != null and title != ''" >
+			title=#{title},
+			</if>
+			<if test="content != null and content != ''" >
+			content=#{content},
+			</if>
+			<if test="createTime != null and createTime != ''" >
+			createTime=#{createTime}
+			</if>
+		</set> 
+		where 
+		feeId=#{feeId}
+		
+		
+		
+		
+	</update>
+	
+	<!-- ManageExpressFee删除数据 -->
+	<delete id="delete" parameterType="java.lang.Integer">
+		delete from manage_express_fee where 
+		feeId=#{feeId}
+									</delete>
+	
+</mapper>
+	

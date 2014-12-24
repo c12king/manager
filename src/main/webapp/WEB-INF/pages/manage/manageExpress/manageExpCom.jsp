@@ -9,23 +9,19 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <html>
   <head>
     <base href="<%=basePath%>">
-    
-    <title>小区手机管理</title>
+    <title>快递资费管理</title>
     <meta http-equiv="Content-Type" content="textml;charset=UTF-8"/>
 	<meta http-equiv="pragma" content="no-cache">
 	<meta http-equiv="cache-control" content="no-cache">
 	<meta http-equiv="expires" content="0">    
 	<meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
 	<meta http-equiv="description" content="This is my page">
-	<!--
-	<link rel="stylesheet" type="text/css" href="styles.css">
-	-->
 	<link rel="stylesheet" type="text/css" href="<%=path %>/css/themes/default/easyui.css">
 	<link rel="stylesheet" type="text/css" href="<%=path %>/css/themes/icon.css">
 	<script type="text/javascript" src="<%=path %>/js/jquery.min.js"></script>
 	<script type="text/javascript" src="<%=path %>/js/jquery.easyui.min.js"></script>
 	<script type="text/javascript" src="<%=path %>/js/validate.js"></script>
-	<script type="text/javascript" src="<%=path %>/js/manage/estate/telTree.js"></script>
+	<script type="text/javascript" src="<%=path %>/js/manage/express/expTree.js"></script>
 	<style type="text/css">
 		#u0_img {
                 position:absolute;
@@ -41,42 +37,22 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	var path='<%=path %>'
 	var estateId='${estateId}'
 </script>
-	<div data-options='region:"west",split:true,border:true,title:"小区列表"', style='width: 290px;'>
-		<div class="easyui-layout" data-options="fit:true" style="overflow:auto;">   
-				<ul id="treeul" class="easyui-tree">
-				</ul>
-        </div> 
-	</div>
-	<div data-options='region:"center",split:true,border:true'>
+	<div data-options='region:"west",split:true,border:true'>
 		<div class="easyui-layout" data-options="fit:true">   
-            <div data-options="region:'west',title:'电话分组'" style="width:290px">
-				<div class="easyui-layout" data-options="fit:true" style="overflow:auto;">   
-		            	<ul id="jobTreeul" class="easyui-tree">
+            <div data-options="region:'west',title:'快递公司'" style="width:290px">
+				<div class="easyui-layout" data-options="fit:true" style="overflow:auto;"> 
+		            	<ul id="expTreeul" class="easyui-tree">
 						</ul>
 		        </div> 
             </div>   
-            <div data-options="region:'center',title:'服务电话'">
+            <div data-options="region:'center',title:'快递公司资费表'">
             	<div id="grid" fit="true">
         		</div>
             </div>   
         </div>   
-		
-		
-	</div>
-
-    <div id="monitor" class="easyui-menu" style='width:120px;'>
-<!-- 		<div onclick='edit1()', data-options='iconCls:"icon-add"'>编辑节点</div> -->
-<!-- 		<div onclick='append()', data-options='iconCls:"icon-add"'>增加节点</div> -->
-<!-- 		<div onclick='removeit()', data-options='iconCls:"icon-remove"'>删除节点</div> -->
-<!-- 		<div class="menu-sep"></div> -->
-		<div onclick='expand()'>展开节点</div>
-		<div onclick='collapse()'>隐藏节点</div>
 	</div>
 	
-<!-- 	<div id="monitor" class="easyui-menu" style='width:120px;'> -->
-<!-- 		<div onclick='removeit()', data-options='iconCls:"icon-remove"'>删除节点</div> -->
-<!-- 	</div> -->
-	<div id="monitor2" class="easyui-menu" style='width:120px;'>
+	<div id="monitor" class="easyui-menu" style='width:120px;'>
 		<div onclick='edit2()', data-options='iconCls:"icon-add"'>编辑节点</div>
 		<div onclick='append2()', data-options='iconCls:"icon-add"'>增加节点</div>
 		<div onclick='removeit2()', data-options='iconCls:"icon-remove"'>删除节点</div>
@@ -84,21 +60,22 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		<div onclick='expand2()'>展开节点</div>
 		<div onclick='collapse2()'>隐藏节点</div>
 	</div>
-	<div id="add-window" title="新增窗口" style="width: 350px; height: 300px;"></div>
-    <div id="edit-window" title="编辑窗口" style="width: 350px; height: 300px;"></div>
+	
+	<div id="add-window" title="新增窗口" style="width: 400px; height: 350px;"></div>
+    <div id="edit-window" title="编辑窗口" style="width: 400px; height: 350px;"></div>   
     <div id="edit-window2" title="编辑窗口" style="width: 1000px; height: 500px;"></div>
     <div id="search-window" title="查询窗口" style="width: 400px; height: 300px;">
 	<div style="padding: 20px 20px 40px 80px;">
-            <form id="searchForm" method="post" action="<%=path %>/manage/buseinessTel/list.do">
-            <table>
-					<tr>
-			          <td>名称：</td>
-			          <td>
-			          	<input name="name" id="name" type="text" style="width: 150px;" value=""/>
-			          </td>
-			        </tr>
-            </table>
-            </form>
+	    <form id="searchForm" method="post" action="<%=path %>/manage/buseinessTel/list.do">
+	            <table>
+						<tr>
+				          <td>名称：</td>
+				          <td>
+				          	<input name="name" id="name" type="text" style="width: 150px;" value=""/>
+				          </td>
+				        </tr>
+	            </table>
+	     </form>
         </div>
         <div style="text-align: center; padding: 5px;">
             <a href="javascript:void(0)" onclick="SearchOK()" id="btn-search" class="easyui-linkbutton" data-options='iconCls:"icon-ok"'>确定</a>

@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.manage.app.dao.ManageExpressDao" >
+	<!-- 返回结构集 -->
+	<resultMap id="ManageExpressResult" type="ManageExpress">
+			<result column="expressId" property="expressId" />
+			<result column="expressComppay" property="expressComppay" />
+			<result column="expressDesc" property="expressDesc" />
+			<result column="expressAddress" property="expressAddress" />
+			<result column="expressIcon" property="expressIcon" />
+			<result column="expressFee" property="expressFee" />
+			<result column="expressTel" property="expressTel" />
+			<result column="createTime" property="createTime" />
+			<result column="editTime" property="editTime" />
+			<result column="editor" property="editor" />
+			<result column="state" property="state" />
+	</resultMap>
+	
+	<!-- 所有字段 -->
+	<sql id="Base_Column_List" >
+			expressId,
+			expressComppay,
+			expressDesc,
+			expressAddress,
+			expressIcon,
+			expressFee,
+			expressTel,
+			createTime,
+			editTime,
+			editor,
+			state
+	</sql>
+	
+	<!-- 所有字段查询条件 -->
+	<sql id="Base_Where_Clause">
+		<where>
+			<trim  suffixOverrides="," >
+					<if test="expressId != null and expressId != ''" >
+				   		and expressId = #{expressId}
+					</if>
+					<if test="expressComppay != null and expressComppay != ''" >
+				   		and expressComppay = #{expressComppay}
+					</if>
+					<if test="expressDesc != null and expressDesc != ''" >
+				   		and expressDesc = #{expressDesc}
+					</if>
+					<if test="expressAddress != null and expressAddress != ''" >
+				   		and expressAddress = #{expressAddress}
+					</if>
+					<if test="expressIcon != null and expressIcon != ''" >
+				   		and expressIcon = #{expressIcon}
+					</if>
+					<if test="expressFee != null and expressFee != ''" >
+				   		and expressFee = #{expressFee}
+					</if>
+					<if test="expressTel != null and expressTel != ''" >
+				   		and expressTel = #{expressTel}
+					</if>
+					<if test="createTime != null and createTime != ''" >
+				   		and createTime = #{createTime}
+					</if>
+					<if test="editTime != null and editTime != ''" >
+				   		and editTime = #{editTime}
+					</if>
+					<if test="editor != null and editor != ''" >
+				   		and editor = #{editor}
+					</if>
+					<if test="state != null and state != ''" >
+				   		and state = #{state}
+					</if>
+			</trim>
+		</where>
+	</sql>
+	
+	<!-- 根据id查询 ManageExpress -->
+	<select id="findById"  resultMap="ManageExpressResult" parameterType="java.lang.Integer">
+		select <include refid="Base_Column_List" /> from manage_express where expressId = #{id}
+	</select>
+	
+	<!-- 无条件查询所有ManageExpress -->
+	<select id="findAll" resultMap="ManageExpressResult">
+		select <include refid="Base_Column_List" /> from manage_express 
+	</select>
+	
+	<!-- 按Map对象条件查询所有ManageExpress -->
+	<select id="findByMap" resultMap="ManageExpressResult" parameterType="java.util.Map">
+		select <include refid="Base_Column_List" /> from manage_express <include refid="Base_Where_Clause" />
+	</select>
+	
+	<!-- 按VO对象条件查询所有ManageExpress -->
+	<select id="findByExample" resultMap="ManageExpressResult" parameterType="com.manage.app.vo.ManageExpressQuery">
+		select <include refid="Base_Column_List" /> from manage_express <include refid="Base_Where_Clause" />
+	</select>
+	
+	<!-- ManageExpress根据搜索条件，搜索分页数据 -->
+	<select id="findAllPage" resultMap="ManageExpressResult" parameterType="Object">
+		select <include refid="Base_Column_List" /> from manage_express  
+		<include refid="Base_Where_Clause" />
+		<if test="pager.orderCondition != null and pager.orderCondition != ''" >
+      	${pager.orderCondition}
+	    </if>
+	    <if test="pager.mysqlQueryCondition != null and pager.mysqlQueryCondition != ''" >
+	    ${pager.mysqlQueryCondition}
+	    </if>
+	</select>
+	
+	<!-- ManageExpress列表总数-->
+	<select id="selectCount" resultType="java.lang.Integer"  parameterType="Object">
+		select count(1) from manage_express 
+		<include refid="Base_Where_Clause" />
+	</select>
+	
+	<!-- ManageExpress保存数据 -->
+	<insert id="save" parameterType="ManageExpress">
+		<selectKey resultType="java.lang.Integer" order="AFTER" keyProperty="expressId">
+			SELECT LAST_INSERT_ID()
+  		</selectKey>
+		insert into manage_express(
+		
+		expressComppay,
+		expressDesc,
+		expressAddress,
+		expressIcon,
+		expressFee,
+		expressTel,
+		createTime,
+		editTime,
+		editor,
+		state
+		) values(
+				#{expressComppay},
+		#{expressDesc},
+		#{expressAddress},
+		#{expressIcon},
+		#{expressFee},
+		#{expressTel},
+		#{createTime},
+		#{editTime},
+		#{editor},
+		#{state}
+		)
+	</insert>
+	
+	<!-- ManageExpress修改数据 -->
+	<update id="update" parameterType="ManageExpress">
+		update manage_express 
+		<set>
+			<if test="expressComppay != null and expressComppay != ''" >
+			expressComppay=#{expressComppay},
+			</if>
+			<if test="expressDesc != null and expressDesc != ''" >
+			expressDesc=#{expressDesc},
+			</if>
+			<if test="expressAddress != null and expressAddress != ''" >
+			expressAddress=#{expressAddress},
+			</if>
+			<if test="expressIcon != null and expressIcon != ''" >
+			expressIcon=#{expressIcon},
+			</if>
+			<if test="expressFee != null and expressFee != ''" >
+			expressFee=#{expressFee},
+			</if>
+			<if test="expressTel != null and expressTel != ''" >
+			expressTel=#{expressTel},
+			</if>
+			<if test="createTime != null and createTime != ''" >
+			createTime=#{createTime},
+			</if>
+			<if test="editTime != null and editTime != ''" >
+			editTime=#{editTime},
+			</if>
+			<if test="editor != null and editor != ''" >
+			editor=#{editor},
+			</if>
+			<if test="state != null and state != ''" >
+			state=#{state}
+			</if>
+		</set> 
+		where 
+		expressId=#{expressId}
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+	</update>
+	
+	<!-- ManageExpress删除数据 -->
+	<delete id="delete" parameterType="java.lang.Integer">
+		delete from manage_express where 
+		expressId=#{expressId}
+																					</delete>
+	
+</mapper>
+	

@@ -19,6 +19,8 @@
 		<typeAlias alias="BuseinessTel" type="com.manage.app.bean.BuseinessTel"/>
 		<typeAlias alias="ManageSendMsg" type="com.manage.app.bean.ManageSendMsg"/>
 		<typeAlias alias="BusinessStationService" type="com.manage.app.bean.BusinessStationService"/>
+		<typeAlias alias="ManageExpress" type="com.manage.app.bean.ManageExpress"/>
+		<typeAlias alias="ManageExpressFee" type="com.manage.app.bean.ManageExpressFee"/>
 		
 		<!-- manage -->
 	</typeAliases>
@@ -54,6 +56,8 @@
 		<mapper resource="com/manage/app/mapper/BuseinessTelMapper.xml" />
 		<mapper resource="com/manage/app/mapper/ManageSendMsgMapper.xml" />
 		<mapper resource="com/manage/app/mapper/BusinessStationServiceMapper.xml" />
-
+		<mapper resource="com/manage/app/mapper/ManageExpressMapper.xml" />
+		<mapper resource="com/manage/app/mapper/ManageExpressFeeMapper.xml" />
+		
 	</mappers>
 </configuration>
