@@ -1,11 +1,9 @@
-
 <%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
 %>
-
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
   <head>
@@ -22,11 +20,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<script type="text/javascript" src="<%=path %>/js/jquery.min.js"></script>
 	<script type="text/javascript" src="<%=path %>/js/jquery.easyui.min.js"></script>
 </head>
-<body onload="loadSelect()">
+<body>
 	<div style="padding: 20px 20px 40px 30px;">
             <form id="addForm" method="post" action="<%=path %>/manage/manageOrgExpress/save.do">
-           <input name="stationId" id="stationId" type="hidden" style="width: 150px;" value="${stationId}"  />
+           
             <table>
+            <input name="stationId" id="stationId" type="hidden" style="width: 150px;" value="${stationId}"  />
 					<tr>
 			          <td>驿站名称：</td>
 			          <td>
@@ -36,7 +35,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					<tr>
 			          <td>快递公司：</td>
 			          <td>
-			          <div  type='text' id="expressId" name="expressId" style='width:250px; margin-right:5px'>    
+			          <div  type='text' id="expressId01" name="expressId" style='width:250px; margin-right:5px'>    
 			          	</div>
 			          </td>
 			        </tr>
@@ -60,9 +59,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             <a href="javascript:void(0)" onclick="saveData('add', 'addForm')" id="btn-save" class="easyui-linkbutton" data-options='iconCls:"icon-ok"'>保存</a>
             <a href="javascript:void(0)" onclick="closeWindow()" id="btn-cancel" class="easyui-linkbutton" data-options='iconCls:"icon-cancel"'>取消</a>
         </div>
-        
 <script type="text/javascript">
 $(function(){
+	//alert("add");
 	$.ajax({
 	    type: "post",
 	    url: "<%=path %>/manage/manageExpress/getComboboxData.do",
@@ -76,16 +75,16 @@ $(function(){
 	            required: true,
 	            missingMessage:'该输入项为必填项'
 	        };
-	        $("#expressId").combobox(vm);
+	        $("#expressId01").combobox(vm);
 	    },
 	    error:function(error){
 	        $.messager.alert('系统提示', error, 'warning');
 
-	    }
+	    },
+	    async:false      
 	});
-
-})
+	
+});
 </script>
-
 </body>
 </html>

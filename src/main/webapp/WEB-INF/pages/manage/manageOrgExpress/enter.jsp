@@ -326,7 +326,7 @@ function department_management(){
             <form id="searchForm" method="post" action="<%=path %>/manage/manageOrgExpress/list.do">
             <table>
 					<tr>
-			          <td>服务名称：</td>
+			          <td>快递公司：</td>
 			          <td>
 			          	<input name="expressComppay" id="expressComppay" type="text" style="width: 150px;" value="${expressComppay}"/>
 			          </td>

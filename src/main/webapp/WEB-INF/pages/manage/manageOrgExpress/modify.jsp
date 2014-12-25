@@ -20,16 +20,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<link rel="stylesheet" type="text/css" href="<%=path %>/css/themes/icon.css">
 	<script type="text/javascript" src="<%=path %>/js/jquery.min.js"></script>
 	<script type="text/javascript" src="<%=path %>/js/jquery.easyui.min.js"></script>
-
 </head>
 <body>
 	<div style="padding: 20px 20px 40px 30px;">
         <form id="modifyForm" method="post" action="<%=path %>/manage/manageOrgExpress/update.do">
-<%--              <input type="hidden" id="expressId" name="expressId" value="${manageOrgExpress.expressId}" /> --%>
-             <input type="hidden" id="stationId" name="stationId" value="${manageOrgExpress.stationId}" />
-             <input type="hidden" id="orgExpId" name="orgExpId" value="${manageOrgExpress.orgExpId}" /> 
             <table>
-
+                  <input type="hidden" id="stationId" name="stationId" value="${manageOrgExpress.stationId}" />
+                  <input type="hidden" id="orgExpId" name="orgExpId" value="${manageOrgExpress.orgExpId}" /> 
 				<tr>
 			          <td>驿站名称：</td>
 			          <td>
@@ -39,7 +36,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					<tr>
 			          <td>快递公司：</td>
 			          <td>
-			               <div type='text' id="expressId" name="expressId" style='width:250px; margin-right:5px'></div>
+			               <div type='text' id="expressId02" name="expressId" style='width:250px; margin-right:5px'></div>
 			          </td>
 			        </tr>
 					<tr>
@@ -62,9 +59,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             <a href="javascript:void(0)" onclick="saveData('edit', 'modifyForm')" id="btn-save" class="easyui-linkbutton" data-options='iconCls:"icon-ok"'>保存</a>
             <a href="javascript:void(0)" onclick="closeWindow()" id="btn-cancel" class="easyui-linkbutton" data-options='iconCls:"icon-cancel"'>取消</a>
         </div>
- 
 <script type="text/javascript">
 $(function(){
+	//alert("modify");
 	$.ajax({
 	    type: "post",
 	    url: "<%=path %>/manage/manageExpress/getComboboxData.do",
@@ -77,7 +74,6 @@ $(function(){
                     data[i].selected=false;
                 }
             }
-	        
 	        vm ={
 	        	editable:false,
 	            valueField:'label',
@@ -86,15 +82,15 @@ $(function(){
 	            required: true,
 	            missingMessage:'该输入项为必填项'
 	        };
-	        $("#expressId").combobox(vm);
-	    },
+	        $("#expressId02").combobox(vm);
+	    }, 
 	    error:function(error){
 	        $.messager.alert('系统提示', error, 'warning');
-
-	    }
+	    },
+	    async:false          
 	});
-
-})
+});
 </script>
+
 </body>
 </html>

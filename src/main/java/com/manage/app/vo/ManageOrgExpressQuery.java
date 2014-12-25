@@ -19,6 +19,8 @@ public class ManageOrgExpressQuery extends BaseBean {
 	private java.sql.Timestamp editTime;
 	private java.lang.String editor;
 	private Integer expState;
+	private String expressComppay;
+
 
 	public ManageOrgExpressQuery(ManageOrgExpress manageOrgExpress) {
 		this.orgExpId = manageOrgExpress.getOrgExpId();
@@ -28,6 +30,7 @@ public class ManageOrgExpressQuery extends BaseBean {
 		this.editTime = manageOrgExpress.getEditTime();
 		this.editor = manageOrgExpress.getEditor();
 		this.expState = manageOrgExpress.getExpState();
+		this.expressComppay = manageOrgExpress.getExpressComppay();
 	}
 	
 	public ManageOrgExpressQuery() {
@@ -92,6 +95,15 @@ public class ManageOrgExpressQuery extends BaseBean {
 		
 	public String toString() {
 		return ToStringBuilder.reflectionToString(this,ToStringStyle.MULTI_LINE_STYLE);
+	}
+	
+	
+	public String getExpressComppay() {
+		return expressComppay;
+	}
+
+	public void setExpressComppay(String expressComppay) {
+		this.expressComppay = expressComppay;
 	}
 	
 }

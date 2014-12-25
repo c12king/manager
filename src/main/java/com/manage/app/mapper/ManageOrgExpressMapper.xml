@@ -52,6 +52,9 @@
 					<if test="expState != null and expState != ''" >
 				   		and a.expState = #{expState}
 					</if>
+					<if test="expressComppay != null and expressComppay != ''" >
+				   		and c.expressComppay like '%${expressComppay}%'
+					</if>
 			</trim>
 		</where>
 	</sql>
@@ -94,8 +97,12 @@
 	
 	<!-- ManageOrgExpress列表总数-->
 	<select id="selectCount" resultType="java.lang.Integer"  parameterType="Object">
-		select count(1) from manage_org_express a
+		select count(a.orgExpId) from  manage_org_express a left join  business_station b 
+		on a.stationId = b.stationId 
+		left join manage_express c 
+		on a.expressId = c.expressId
 		<include refid="Base_Where_Clause" />
+		
 	</select>
 	
 	<!-- ManageOrgExpress保存数据 -->
