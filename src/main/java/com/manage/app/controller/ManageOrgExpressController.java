@@ -1,6 +1,7 @@
 package com.manage.app.controller;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
@@ -10,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sf.json.JSONObject;
 
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,9 +22,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
+
 import com.manage.app.vo.BaseBean;
 
 
+import com.manage.app.bean.BusinessStation;
 import com.manage.app.bean.ManageOrgExpress;
 import com.manage.app.service.ManageOrgExpressService;
 import com.manage.app.vo.ManageOrgExpressQuery;
@@ -34,6 +38,8 @@ public class ManageOrgExpressController {
 	private static Logger GSLogger = LoggerFactory.getLogger(ManageOrgExpressController.class);
 	@Autowired
 	private ManageOrgExpressService manageOrgExpressService;
+	@Autowired
+	private com.manage.app.service.BusinessStationService businessStationServiceSer;
 	
 	private final String LIST_ACTION = "redirect:/manage/manageOrgExpress/list.do";
 	
@@ -42,13 +48,18 @@ public class ManageOrgExpressController {
 	 * @return
 	 */
 	@RequestMapping(value="enter")
-	public ModelAndView enter() {		
+	public ModelAndView enter(HttpServletRequest request) {		
 		try{
 		}catch(Exception e){
 			GSLogger.error("进入manageOrgExpress管理页时发生错误：/manage/manageOrgExpress/enter", e);
 			e.printStackTrace();
 		}
 		ModelAndView mav = new ModelAndView("/manage/manageOrgExpress/enter");
+		if (StringUtils.isNotBlank(request.getParameter("id")))
+			mav.addObject("stationId", request.getParameter("id"));
+		if (StringUtils.isNotBlank(request.getParameter("staName")))
+			mav.addObject("staName", decodeCNStr(request.getParameter("staName"))); 
+		
 		return mav;
 	}
 	
@@ -72,7 +83,9 @@ public class ManageOrgExpressController {
 			    .append("\"stationId\":\"").append(manageOrgExpress.getStationId()).append("\"").append(",")
 			    .append("\"createTime\":\"").append(manageOrgExpress.getCreateTime()).append("\"").append(",")
 			    .append("\"editTime\":\"").append(manageOrgExpress.getEditTime()).append("\"").append(",")
-			    .append("\"editor\":\"").append(manageOrgExpress.getEditor()).append("\"").append(",")
+			    .append("\"editor\":\"").append( StringUtils.trimToEmpty(manageOrgExpress.getEditor()) ).append("\"").append(",")
+			    .append("\"staName\":\"").append( StringUtils.trimToEmpty(manageOrgExpress.getStaName()) ).append("\"").append(",")
+			    .append("\"expressComppay\":\"").append( StringUtils.trimToEmpty(manageOrgExpress.getExpressComppay()) ).append("\"").append(",")
 			    .append("\"expState\":\"").append(manageOrgExpress.getExpState()).append("\"")
 				.append("}").append(",");
 			}
@@ -101,13 +114,19 @@ public class ManageOrgExpressController {
 	 * @return
 	 */
 	@RequestMapping(value="add")
-	public ModelAndView add(ManageOrgExpressQuery query) {		
+	public ModelAndView add(ManageOrgExpressQuery query) {
+		String staName = "";
 		try{
+			BusinessStation station = businessStationServiceSer.findById(query.getStationId());
+			if (station != null)
+				staName = StringUtils.trimToEmpty( station.getStaName());
 		}catch(Exception e){
 			GSLogger.error("进入manageOrgExpress新增页时发生错误：/manage/manageOrgExpress/add", e);
 			e.printStackTrace();
 		}
 		ModelAndView mav = new ModelAndView("/manage/manageOrgExpress/add");
+		mav.addObject("staName", staName);
+		mav.addObject("stationId", query.getStationId());
 		return mav;
 	}
 	
@@ -124,8 +143,8 @@ public class ManageOrgExpressController {
 		try{
 		    manageOrgExpress.setExpressId(query.getExpressId());
 		    manageOrgExpress.setStationId(query.getStationId());
-		    manageOrgExpress.setCreateTime(query.getCreateTime());
-		    manageOrgExpress.setEditTime(query.getEditTime());
+		    manageOrgExpress.setCreateTime(new Timestamp(new Date().getTime()));
+		    manageOrgExpress.setEditTime(new Timestamp(new Date().getTime()));
 		    manageOrgExpress.setEditor(query.getEditor());
 		    manageOrgExpress.setExpState(query.getExpState());
 			manageOrgExpressService.save(manageOrgExpress);
@@ -179,8 +198,8 @@ public class ManageOrgExpressController {
 		    manageOrgExpress = manageOrgExpressService.findById(query.getOrgExpId());
 		    manageOrgExpress.setExpressId(query.getExpressId());
 		    manageOrgExpress.setStationId(query.getStationId());
-		    manageOrgExpress.setCreateTime(query.getCreateTime());
-		    manageOrgExpress.setEditTime(query.getEditTime());
+		    //manageOrgExpress.setCreateTime(query.getCreateTime());
+		    manageOrgExpress.setEditTime(new Timestamp(new Date().getTime()));
 		    manageOrgExpress.setEditor(query.getEditor());
 		    manageOrgExpress.setExpState(query.getExpState());
 			manageOrgExpressService.update(manageOrgExpress);
@@ -235,5 +254,15 @@ public class ManageOrgExpressController {
 			e.printStackTrace();
 		}
 	}
+	
+	protected String decodeCNStr(String str) {
+		try {
+			return new String(str.getBytes("ISO-8859-1"), "UTF-8");
+		} catch (UnsupportedEncodingException e1) {
+			e1.printStackTrace();
+		}
+		return null;
+	}
+	
 	
 }

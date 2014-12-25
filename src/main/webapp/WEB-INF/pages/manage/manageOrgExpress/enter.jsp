@@ -17,9 +17,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<meta http-equiv="expires" content="0">    
 	<meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
 	<meta http-equiv="description" content="This is my page">
-	<!--
-	<link rel="stylesheet" type="text/css" href="styles.css">
-	-->
 	<link rel="stylesheet" type="text/css" href="<%=path %>/css/themes/default/easyui.css">
 	<link rel="stylesheet" type="text/css" href="<%=path %>/css/themes/icon.css">
 	<script type="text/javascript" src="<%=path %>/js/jquery.min.js"></script>
@@ -32,38 +29,30 @@ var grid;
 $(function() {
 	
 	grid = $('#grid').datagrid({
-        title: 'BusinessStation管理',
+        title: '${staName}快递公司管理',
         iconCls: 'icon-save',
-        url: '<%=path %>/manage/businessStation/list.do',
+         url: '<%=path %>/manage/manageOrgExpress/list.do?stationId=${stationId}',
         fit: true,
         fitColumns: true,
         queryParams:{
-        	staName:function(){
-        		console.log($("#staName").val());
-        		return $("#staName").val();
-        	}
+            expressComppay: function(){
+            	return $("#expressComppay").val(); 
+            }
         },
 		resize: true,
-		sortName: 'stationId',
+		sortName: 'orgExpId',
         sortOrder: 'desc',
-        idField: 'stationId',
+        idField: 'orgExpId',
         pageSize:30,
         frozenColumns: [[
-                         { field: 'stationId', checkbox: true }
+                         { field: 'orgExpId', checkbox: true }
         		]],
         columns: [[
-    		          { field: 'staName', title: '驿站名称', width: 150, align:'center' },
-    		          { field: 'staBrief', title: '驿站简介', width: 150, align:'center' },
-    		          //{ field: 'staService', title: '驿站服务说明', width: 150, align:'center' },
-    		          { field: 'staTel', title: '驿站电话', width: 150, align:'center' },
-    		          { field: 'staEmail', title: '驿站邮件', width: 150, align:'center' },
-    		          { field: 'staWeixin', title: '驿站微信', width: 150, align:'center' },
-    		          { field: 'staIcon', title: '驿站图标', width: 150, align:'center' },
-    		          { field: 'staLongitude', title: '驿站经度', width: 150, align:'center' },
-    		          { field: 'staLatitude', title: '驿站纬度', width: 150, align:'center' },
-    		          { field: 'crateTime', title: '创建时间', width: 150, align:'center' },
-    		          { field: 'editTime', title: '编辑时间', width: 150, align:'center' },
-    		          { field: 'editor', title: '编辑人', width: 150, align:'center' },
+					{ field: 'staName', title: '驿站名称', width: 150, align:'center' },
+					{ field: 'expressComppay', title: '快递公司', width: 150, align:'center' },
+					{ field: 'expState', title: '是否取件', width: 150, align:'center' },
+					{ field: 'editTime', title: '编辑时间', width: 150, align:'center' },
+					{ field: 'editor', title: '编辑人', width: 150, align:'center' },
                 ]],
         pagination: true,
         pageNumber: 1,
@@ -82,18 +71,6 @@ $(function() {
             text: '修改',
             iconCls: 'icon-edit',
             handler: edit
-        },'-', {
-            text: '部门管理',
-            iconCls: 'icon-edit',
-            handler: department_management
-        },'-', {
-            text: '驿站服务管理',
-            iconCls: 'icon-edit',
-            handler: stationService_management
-        },'-', {
-            text: '驿站快递公司管理',
-            iconCls: 'icon-edit',
-            handler: stationExpCom_management
         }, '-', {
             text: '删除',
             iconCls: 'icon-remove',
@@ -118,7 +95,7 @@ function getSelectedArr() {
     var ids = [];
     var rows = grid.datagrid('getSelections');
     for (var i = 0; i < rows.length; i++) {
-         ids.push(rows[i].stationId);
+         ids.push(rows[i].orgExpId);
     }
     return ids;
 }
@@ -138,7 +115,7 @@ function add() {
         modal: true,
         shadow: false,
         cache: false,
-        href: '<%=path %>/manage/businessStation/add.do'
+        href: '<%=path %>/manage/manageOrgExpress/add.do?stationId=${stationId}&staName=${staName}'
     });
     $('#add-window').window('open');
     $('#add-window').window('resize');
@@ -160,8 +137,7 @@ function edit() {
             modal: true,
             shadow: false,
             cache: false,
-            href: '<%=path %>/manage/businessStation/modify.do?stationId='+rows[0].stationId
-            
+            href: '<%=path %>/manage/manageOrgExpress/modify.do?orgExpId='+rows[0].orgExpId
         });
     	$('#edit-window').window('open');
     }
@@ -170,10 +146,11 @@ function edit() {
 function del() {
     var arr = getSelectedArr();
     if (arr.length>0) {
+//     	alert("======="+arr);  
         $.messager.confirm('提示信息', '您确认要删除吗?', function (data) {
             if (data) {
                 $.ajax({
-                    url: '<%=path %>/manage/businessStation/delete.do?id=' + arr2str(arr),
+                    url: '<%=path %>/manage/manageOrgExpress/delete.do?id=' + arr2str(arr),
                     timeout: 1000,
                     cache: false,
                     success: function (data) {
@@ -298,9 +275,7 @@ init= function(uuid) {
           $("#"+idf+"-itemPic").val('');  
      },  
      error : function(jqXHR, textStatus,errorThrown) {  
-         $('#$'+idf+'-uploadWindow').window('close');  
-         //console.log("error:"+ data.responseText);  
-         //console.log("status:" + textStatus);  
+         $('#$'+idf+'-uploadWindow').window('close'); 
          $("#"+idf+"-statusPic").html("上传失败!");  
          $("#"+idf+"-itemPic").val('');  
      } });  
@@ -334,43 +309,10 @@ function department_management(){
     }
 }
 
-function stationService_management(){
-	var rows = grid.datagrid('getSelections');
-    var num = rows.length;
-    if (num == 0) {
-        $.messager.alert('提示', '请选择一条记录进行操作!', 'info');
-        return;
-    } else if (num > 1) {
-        $.messager.alert('提示', '您选择了多条记录,只能选择一条记录进行修改!', 'info');
-        return;
-    }
-    else{
-    	 var url='<%=path %>/manage/businessStationService/enter.do?id='+rows[0].stationId+'&staName='+rows[0].staName;
-         var title="驿站服务管理";
-         window.parent.addTab(title, url);
-    }
-}
-
-function stationExpCom_management(){
-	var rows = grid.datagrid('getSelections');
-    var num = rows.length;
-    if (num == 0) {
-        $.messager.alert('提示', '请选择一条记录进行操作!', 'info');
-        return;
-    } else if (num > 1) {
-        $.messager.alert('提示', '您选择了多条记录,只能选择一条记录进行修改!', 'info');
-        return;
-    }
-    else{
-    	 var url='<%=path %>/manage/manageOrgExpress/enter.do?id='+rows[0].stationId+'&staName='+rows[0].staName;
-         var title="驿站快递公司管理";
-         window.parent.addTab(title, url);
-    }
-}
-
 </script>
 </head>
 <body class="easyui-layout" style="overflow-y: hidden;">
+ 
     <div region="center" style="width: 500px; height: 300px; padding: 1px; background: #eee;
         overflow-y: hidden">
         <div id="grid" fit="true">
@@ -381,12 +323,12 @@ function stationExpCom_management(){
     <div id="edit-window" title="编辑窗口" style="width: 500px; height: 500px;"></div>
     <div id="search-window" title="查询窗口" style="width: 400px; height: 500px;">
         <div style="padding: 20px 20px 40px 80px;">
-            <form id="searchForm" method="post" action="<%=path %>/manage/businessStation/list.do">
+            <form id="searchForm" method="post" action="<%=path %>/manage/manageOrgExpress/list.do">
             <table>
 					<tr>
-			          <td>驿站名称：</td>
+			          <td>服务名称：</td>
 			          <td>
-			          	<input name="staName" id="staName" type="text" style="width: 150px;" value=""/>
+			          	<input name="expressComppay" id="expressComppay" type="text" style="width: 150px;" value="${expressComppay}"/>
 			          </td>
 			        </tr>
             </table>

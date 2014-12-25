@@ -11,17 +11,20 @@
 			<result column="editTime" property="editTime" />
 			<result column="editor" property="editor" />
 			<result column="expState" property="expState" />
+			<result column="staName" property="staName" />
+			<result column="expressComppay" property="expressComppay" />
+			
 	</resultMap>
 	
 	<!-- 所有字段 -->
 	<sql id="Base_Column_List" >
-			orgExpId,
-			expressId,
-			stationId,
-			createTime,
-			editTime,
-			editor,
-			expState
+			a.orgExpId,
+			a.expressId,
+			a.stationId,
+			a.createTime,
+			a.editTime,
+			a.editor,
+			a.expState
 	</sql>
 	
 	<!-- 所有字段查询条件 -->
@@ -29,25 +32,25 @@
 		<where>
 			<trim  suffixOverrides="," >
 					<if test="orgExpId != null and orgExpId != ''" >
-				   		and orgExpId = #{orgExpId}
+				   		and a.orgExpId = #{orgExpId}
 					</if>
 					<if test="expressId != null and expressId != ''" >
-				   		and expressId = #{expressId}
+				   		and a.expressId = #{expressId}
 					</if>
 					<if test="stationId != null and stationId != ''" >
-				   		and stationId = #{stationId}
+				   		and a.stationId = #{stationId}
 					</if>
 					<if test="createTime != null and createTime != ''" >
-				   		and createTime = #{createTime}
+				   		and a.createTime = #{createTime}
 					</if>
 					<if test="editTime != null and editTime != ''" >
-				   		and editTime = #{editTime}
+				   		and a.editTime = #{editTime}
 					</if>
 					<if test="editor != null and editor != ''" >
-				   		and editor = #{editor}
+				   		and a.editor = #{editor}
 					</if>
 					<if test="expState != null and expState != ''" >
-				   		and expState = #{expState}
+				   		and a.expState = #{expState}
 					</if>
 			</trim>
 		</where>
@@ -55,27 +58,30 @@
 	
 	<!-- 根据id查询 ManageOrgExpress -->
 	<select id="findById"  resultMap="ManageOrgExpressResult" parameterType="java.lang.Integer">
-		select <include refid="Base_Column_List" /> from manage_org_express where orgExpId = #{id}
+		select <include refid="Base_Column_List" /> from manage_org_express a where orgExpId = #{id}
 	</select>
 	
 	<!-- 无条件查询所有ManageOrgExpress -->
 	<select id="findAll" resultMap="ManageOrgExpressResult">
-		select <include refid="Base_Column_List" /> from manage_org_express 
+		select <include refid="Base_Column_List" /> from manage_org_express a
 	</select>
 	
 	<!-- 按Map对象条件查询所有ManageOrgExpress -->
 	<select id="findByMap" resultMap="ManageOrgExpressResult" parameterType="java.util.Map">
-		select <include refid="Base_Column_List" /> from manage_org_express <include refid="Base_Where_Clause" />
+		select <include refid="Base_Column_List" /> from manage_org_express a <include refid="Base_Where_Clause" />
 	</select>
 	
 	<!-- 按VO对象条件查询所有ManageOrgExpress -->
 	<select id="findByExample" resultMap="ManageOrgExpressResult" parameterType="com.manage.app.vo.ManageOrgExpressQuery">
-		select <include refid="Base_Column_List" /> from manage_org_express <include refid="Base_Where_Clause" />
+		select <include refid="Base_Column_List" /> from manage_org_express a <include refid="Base_Where_Clause" />
 	</select>
 	
 	<!-- ManageOrgExpress根据搜索条件，搜索分页数据 -->
-	<select id="findAllPage" resultMap="ManageOrgExpressResult" parameterType="Object">
-		select <include refid="Base_Column_List" /> from manage_org_express  
+	<select id="findAllPage" resultMap="ManageOrgExpressResult" parameterType="Object"> 
+		select <include refid="Base_Column_List" /> , b.staName, c.expressComppay from  manage_org_express a left join  business_station b 
+		on a.stationId = b.stationId 
+		left join manage_express c 
+		on a.expressId = c.expressId 
 		<include refid="Base_Where_Clause" />
 		<if test="pager.orderCondition != null and pager.orderCondition != ''" >
       	${pager.orderCondition}
@@ -83,11 +89,12 @@
 	    <if test="pager.mysqlQueryCondition != null and pager.mysqlQueryCondition != ''" >
 	    ${pager.mysqlQueryCondition}
 	    </if>
+	
 	</select>
 	
 	<!-- ManageOrgExpress列表总数-->
 	<select id="selectCount" resultType="java.lang.Integer"  parameterType="Object">
-		select count(1) from manage_org_express 
+		select count(1) from manage_org_express a
 		<include refid="Base_Where_Clause" />
 	</select>
 	

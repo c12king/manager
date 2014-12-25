@@ -20,7 +20,9 @@ public class ManageOrgExpress implements java.io.Serializable{
 	private java.sql.Timestamp editTime;
 	private java.lang.String editor;
 	private Integer expState;
-
+	private String staName;
+	private String expressComppay;
+	
 	public ManageOrgExpress(){
 	}
 
@@ -89,6 +91,8 @@ public class ManageOrgExpress implements java.io.Serializable{
 			.append("EditTime",getEditTime())
 			.append("Editor",getEditor())
 			.append("ExpState",getExpState())
+			.append("staName",getExpState())
+			.append("expressComppay",getExpState())
 			.toString();
 	}
 	
@@ -105,6 +109,22 @@ public class ManageOrgExpress implements java.io.Serializable{
 		return new EqualsBuilder()
 			.append(getOrgExpId(),other.getOrgExpId())
 			.isEquals();
+	}
+
+	public String getStaName() {
+		return staName;
+	}
+
+	public void setStaName(String staName) {
+		this.staName = staName;
+	}
+
+	public String getExpressComppay() {
+		return expressComppay;
+	}
+
+	public void setExpressComppay(String expressComppay) {
+		this.expressComppay = expressComppay;
 	}
 }
 

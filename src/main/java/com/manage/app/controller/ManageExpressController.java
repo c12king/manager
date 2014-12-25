@@ -3,6 +3,7 @@ package com.manage.app.controller;
 import java.io.IOException;
 import java.sql.Timestamp;
 import java.util.Date;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.manage.app.bean.BusinessMenu;
 import com.manage.app.bean.ManageExpress;
 import com.manage.app.service.ManageExpressService;
 import com.manage.app.vo.BaseBean;
@@ -139,6 +141,38 @@ public class ManageExpressController {
 			response.getWriter().write(json);
 		}catch(Exception e){
 			GSLogger.error("显示manageExpress列表时发生错误：/manage/manageExpress/list", e);
+			e.printStackTrace();
+		}
+	}
+	
+	/**
+	 * 快递公司 下拉列表
+	 * @param query
+	 * @param response
+	 */
+	@RequestMapping(value="/getComboboxData")
+	public void getComboboxData(HttpServletRequest request,HttpServletResponse response) {
+		response.setContentType("text/plain;charset=utf-8");
+		String json = "";
+		try{
+			List<ManageExpress> expComs = manageExpressService.findAll();
+			StringBuilder result = new StringBuilder();
+			result.append("[");
+			for (ManageExpress exp :expComs )
+			{
+				result.append("{");
+				result.append("\"label\":").append(exp.getExpressId()).append(",");
+				result.append("\"value\":").append("\""+exp.getExpressComppay()+"\"");
+				result.append("},");
+			}
+			json = result.toString();
+			if(expComs.size() > 0) {
+				json = json.substring(0, json.length()-1);
+		    }
+		    json += "]";
+		    response.getWriter().print(json);
+		}catch(Exception e){
+			GSLogger.error("显示getComboboxData列表时发生错误：/manage/manageExpress/getComboboxData", e);
 			e.printStackTrace();
 		}
 	}
