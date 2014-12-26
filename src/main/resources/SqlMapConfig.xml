@@ -22,6 +22,8 @@
 		<typeAlias alias="ManageExpress" type="com.manage.app.bean.ManageExpress"/>
 		<typeAlias alias="ManageExpressFee" type="com.manage.app.bean.ManageExpressFee"/>
 		<typeAlias alias="ManageOrgExpress" type="com.manage.app.bean.ManageOrgExpress"/>
+		<typeAlias alias="ManageTag" type="com.manage.app.bean.ManageTag"/>
+		<typeAlias alias="ManageTagType" type="com.manage.app.bean.ManageTagType"/>
 		
 		<!-- manage -->
 	</typeAliases>
@@ -60,6 +62,7 @@
 		<mapper resource="com/manage/app/mapper/ManageExpressMapper.xml" />
 		<mapper resource="com/manage/app/mapper/ManageExpressFeeMapper.xml" />
 		<mapper resource="com/manage/app/mapper/ManageOrgExpressMapper.xml" />
-		
+		<mapper resource="com/manage/app/mapper/ManageTagTypeMapper.xml" />
+		<mapper resource="/com/manage/app/mapper/ManageTagMapper.xml" />
 	</mappers>
 </configuration>

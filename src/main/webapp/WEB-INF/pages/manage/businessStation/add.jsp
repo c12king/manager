@@ -34,45 +34,45 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					<tr>
 			          <td>机构：</td>
 			          <td>
-			          <input name="orgId" id="orgId1" type="hidden" style="width: 150px;" value="" class="easyui-validatebox" required="true" missingMessage="请选择驿站名称" />
-			          	<input name="orgName1" id="orgName1" type="text" style="width: 150px;" value="" class="easyui-validatebox" required="true" missingMessage="请选择驿站名称"  disabled/>
+			          <input name="orgId" id="orgId1" type="hidden" style="width: 150px;" value="" class="easyui-validatebox"/>
+			          	<input name="orgName1" id="orgName1" type="text" style="width: 150px;" value="" class="easyui-validatebox" />
 			          	<a class="easyui-linkbutton" onclick="selectOrg()">修改</a>  
 			          </td>
 			        </tr>
 					<tr>
 			          <td>驿站名称：</td>
 			          <td>
-			          	<input name="staName" id="staName" type="text" style="width: 150px;" value="" class="easyui-validatebox" required="true" missingMessage="请输入驿站名称" validType="reName"/>
+			          	<input name="staName" id="staName" type="text" style="width: 150px;" value="" class="easyui-validatebox" />
 			          </td>
 			        </tr>
 					<tr>
 			          <td>驿站简介：</td>
 			          <td>
-			          	<textarea name="staBrief"  id="staBrief" rows="5" cols="18" class="easyui-validatebox" required="true" missingMessage="请输入驿站简介" validType="reDes"></textarea>
+			          	<textarea name="staBrief"  id="staBrief" rows="5" cols="18" class="easyui-validatebox" ></textarea>
 			          </td>
 			        </tr>
 					<tr>
 			          <td>驿站服务说明：</td>
 			          <td>
-			          	<textarea name="staService"  id="staService" rows="5" cols="18" class="easyui-validatebox" required="true" missingMessage="请输入驿站服务说明" validType="reDes"></textarea>
+			          	<textarea name="staService"  id="staService" rows="5" cols="18" class="easyui-validatebox" ></textarea>
 			          </td>
 			        </tr>
 					<tr>
 			          <td>驿站电话：</td>
 			          <td>
-			          	<input name="staTel" id="staTel" type="text" style="width: 150px;" value="" class="easyui-validatebox" required="true" missingMessage="请输入驿站电话" validType="reTel"/>
+			          	<input name="staTel" id="staTel" type="text" style="width: 150px;" value="" class="easyui-validatebox" />
 			          </td>
 			        </tr>
 					<tr>
 			          <td>驿站邮件：</td>
 			          <td>
-			          	<input name="staEmail" id="staEmail" type="text" style="width: 150px;" value="" class="easyui-validatebox" required="true" missingMessage="请输入驿站邮件" data-options="validType:['reEmail','maxLength[32]']"/>
+			          	<input name="staEmail" id="staEmail" type="text" style="width: 150px;" value="" class="easyui-validatebox" />
 			          </td>
 			        </tr>
 					<tr>
 			          <td>驿站微信：</td>
 			          <td>
-			          	<input name="staWeixin" id="staWeixin" type="text" style="width: 150px;" value="" class="easyui-validatebox" required="true" missingMessage="请输入驿站微信" validType="maxLength[32]"/>
+			          	<input name="staWeixin" id="staWeixin" type="text" style="width: 150px;" value="" class="easyui-validatebox"/>
 			          </td>
 			        </tr>
 					<tr>
@@ -88,13 +88,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					<tr>
 			          <td>驿站经度：</td>
 			          <td>
-			          	<input name="staLongitude" id="staLongitude" type="text" style="width: 150px;" value="" class="easyui-validatebox" required="true" missingMessage="请输入驿站经度" validType="reSz"/>
+			          	<input name="staLongitude" id="staLongitude" type="text" style="width: 150px;" value="" class="easyui-validatebox" />
 			          </td>
 			        </tr>
 					<tr>
 			          <td>驿站纬度：</td>
 			          <td>
-			          	<input name="staLatitude" id="staLatitude" type="text" style="width: 150px;" value="" class="easyui-validatebox" required="true" missingMessage="请输入驿站纬度" validType="reSz"/>
+			          	<input name="staLatitude" id="staLatitude" type="text" style="width: 150px;" value="" class="easyui-validatebox" />
 			          </td>
 			        </tr>
             </table>

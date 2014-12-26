@@ -97,7 +97,7 @@
 	
 	<!-- 根据区域id查询 BusinessProperty -->
 	<select id="getComboboxData"  resultMap="BusinessPropertyResult" parameterType="java.lang.Integer">
-		select p.proId,p.proName from business_property p,manage_org o where o.orgId=p.orgId and countyId = #{id}
+		select p.proId,p.proName from business_property p
 	</select>
 	
 	<select id="findByIdOrgName"  resultMap="BusinessPropertyResult" parameterType="java.lang.Integer">

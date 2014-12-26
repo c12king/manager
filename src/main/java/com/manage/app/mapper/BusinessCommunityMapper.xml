@@ -97,7 +97,7 @@
 	
 	<!-- 根据区域id查询 BusinessCommunity -->
 	<select id="getComboboxData"  resultMap="BusinessCommunityResult" parameterType="java.lang.Integer">
-		select c.comId,c.comName from business_community c,manage_org o where o.orgId=c.orgId and countyId = #{id}
+		select c.comId,c.comName from business_community c
 	</select>
 	
 	<select id="findByIdOrgName"  resultMap="BusinessCommunityResult" parameterType="java.lang.Integer">

@@ -100,5 +100,6 @@ public class BaseBean {
 	public void setOrder(String order) {
 		this.order = order;
 	}
+
 	
 }

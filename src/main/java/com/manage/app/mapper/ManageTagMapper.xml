@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.manage.app.dao.ManageTagDao" >
+	<!-- 返回结构集 -->
+	<resultMap id="ManageTagResult" type="ManageTag">
+			<result column="tagId" property="tagId" />
+			<result column="title" property="title" />
+			<result column="tagDesc" property="tagDesc" />
+			<result column="tagPic" property="tagPic" />
+			<result column="typeId" property="typeId" />
+			<result column="createTime" property="createTime" />
+			<result column="editTime" property="editTime" />
+			<result column="editor" property="editor" />
+	</resultMap>
+	
+	<!-- 所有字段 -->
+	<sql id="Base_Column_List" >
+			tagId,
+			title,
+			tagDesc,
+			tagPic,
+			typeId,
+			createTime,
+			editTime,
+			editor
+	</sql>
+	
+	<!-- 所有字段查询条件 -->
+	<sql id="Base_Where_Clause">
+		<where>
+			<trim  suffixOverrides="," >
+					<if test="tagId != null and tagId != ''" >
+				   		and tagId = #{tagId}
+					</if>
+					<if test="title != null and title != ''" >
+				   		and title = #{title}
+					</if>
+					<if test="tagDesc != null and tagDesc != ''" >
+				   		and tagDesc = #{tagDesc}
+					</if>
+					<if test="tagPic != null and tagPic != ''" >
+				   		and tagPic = #{tagPic}
+					</if>
+					<if test="typeId != null and typeId != ''" >
+				   		and typeId = #{typeId}
+					</if>
+					<if test="createTime != null and createTime != ''" >
+				   		and createTime = #{createTime}
+					</if>
+					<if test="editTime != null and editTime != ''" >
+				   		and editTime = #{editTime}
+					</if>
+					<if test="editor != null and editor != ''" >
+				   		and editor = #{editor}
+					</if>
+			</trim>
+		</where>
+	</sql>
+	
+	<!-- 根据id查询 ManageTag -->
+	<select id="findById"  resultMap="ManageTagResult" parameterType="java.lang.Integer">
+		select <include refid="Base_Column_List" /> from manage_tag where tagId = #{id}
+	</select>
+	
+	<!-- 无条件查询所有ManageTag -->
+	<select id="findAll" resultMap="ManageTagResult">
+		select <include refid="Base_Column_List" /> from manage_tag 
+	</select>
+	
+	<!-- 按Map对象条件查询所有ManageTag -->
+	<select id="findByMap" resultMap="ManageTagResult" parameterType="java.util.Map">
+		select <include refid="Base_Column_List" /> from manage_tag <include refid="Base_Where_Clause" />
+	</select>
+	
+	<!-- 按VO对象条件查询所有ManageTag -->
+	<select id="findByExample" resultMap="ManageTagResult" parameterType="com.manage.app.vo.ManageTagQuery">
+		select <include refid="Base_Column_List" /> from manage_tag <include refid="Base_Where_Clause" />
+	</select>
+	
+	<!-- ManageTag根据搜索条件，搜索分页数据 -->
+	<select id="findAllPage" resultMap="ManageTagResult" parameterType="Object">
+		select <include refid="Base_Column_List" /> from manage_tag  
+		<include refid="Base_Where_Clause" />
+		<if test="pager.orderCondition != null and pager.orderCondition != ''" >
+      	${pager.orderCondition}
+	    </if>
+	    <if test="pager.mysqlQueryCondition != null and pager.mysqlQueryCondition != ''" >
+	    ${pager.mysqlQueryCondition}
+	    </if>
+	</select>
+	
+	<!-- ManageTag列表总数-->
+	<select id="selectCount" resultType="java.lang.Integer"  parameterType="Object">
+		select count(1) from manage_tag 
+		<include refid="Base_Where_Clause" />
+	</select>
+	
+	<!-- ManageTag保存数据 -->
+	<insert id="save" parameterType="ManageTag">
+		<selectKey resultType="java.lang.Integer" order="AFTER" keyProperty="tagId">
+			SELECT LAST_INSERT_ID()
+  		</selectKey>
+		insert into manage_tag(
+		
+		title,
+		tagDesc,
+		tagPic,
+		typeId,
+		createTime,
+		editTime,
+		editor
+		) values(
+				#{title},
+		#{tagDesc},
+		#{tagPic},
+		#{typeId},
+		#{createTime},
+		#{editTime},
+		#{editor}
+		)
+	</insert>
+	
+	<!-- ManageTag修改数据 -->
+	<update id="update" parameterType="ManageTag">
+		update manage_tag 
+		<set>
+			<if test="title != null and title != ''" >
+			title=#{title},
+			</if>
+			<if test="tagDesc != null and tagDesc != ''" >
+			tagDesc=#{tagDesc},
+			</if>
+			<if test="tagPic != null and tagPic != ''" >
+			tagPic=#{tagPic},
+			</if>
+			<if test="typeId != null and typeId != ''" >
+			typeId=#{typeId},
+			</if>
+			<if test="createTime != null and createTime != ''" >
+			createTime=#{createTime},
+			</if>
+			<if test="editTime != null and editTime != ''" >
+			editTime=#{editTime},
+			</if>
+			<if test="editor != null and editor != ''" >
+			editor=#{editor}
+			</if>
+		</set> 
+		where 
+		tagId=#{tagId}
+		
+		
+		
+		
+		
+		
+		
+	</update>
+	
+	<!-- ManageTag删除数据 -->
+	<delete id="delete" parameterType="java.lang.Integer">
+		delete from manage_tag where 
+		tagId=#{tagId}
+															</delete>
+	
+</mapper>
+	

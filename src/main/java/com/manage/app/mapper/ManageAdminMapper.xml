@@ -21,7 +21,6 @@
 	<!-- 所有字段查询条件 -->
 	<sql id="Base_Where_Clause">
 		<where>
-		
 			<trim  suffixOverrides="," >
 					<if test="adminId != null and adminId != ''" >
 				   		and adminId = #{adminId}

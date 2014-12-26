@@ -148,7 +148,7 @@ function edit() {
 function del() {
     var arr = getSelectedArr();
     if (arr.length>0) {
-    	alert("======="+arr);  
+//     	alert("======="+arr);  
         $.messager.confirm('提示信息', '您确认要删除吗?', function (data) {
             if (data) {
                 $.ajax({

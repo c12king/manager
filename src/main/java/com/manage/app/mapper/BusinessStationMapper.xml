@@ -97,7 +97,7 @@
 	
 	<!-- 根据区域id查询 BusinessStation -->
 	<select id="getComboboxData"  resultMap="BusinessStationResult" parameterType="java.lang.Integer">
-		select s.stationId,s.staName from business_station s,manage_org o where o.orgId=s.orgId and countyId = #{id}
+		select s.stationId,s.staName from business_station s
 	</select>
 	
 	<select id="findByIdOrgName"  resultMap="BusinessStationResult" parameterType="java.lang.Integer">

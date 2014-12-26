@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.manage.app.dao.ManageTagTypeDao" >
+	<!-- 返回结构集 -->
+	<resultMap id="ManageTagTypeResult" type="ManageTagType">
+			<result column="typeId" property="typeId" />
+			<result column="tagTypeName" property="tagTypeName" />
+			<result column="createTime" property="createTime" />
+			<result column="editTime" property="editTime" />
+			<result column="editor" property="editor" />
+	</resultMap>
+	
+	<!-- 所有字段 -->
+	<sql id="Base_Column_List" >
+			typeId,
+			tagTypeName,
+			createTime,
+			editTime,
+			editor
+	</sql>
+	
+	<!-- 所有字段查询条件 -->
+	<sql id="Base_Where_Clause">
+		<where>
+			<trim  suffixOverrides="," >
+					<if test="typeId != null and typeId != ''" >
+				   		and typeId = #{typeId}
+					</if>
+					<if test="tagTypeName != null and tagTypeName != ''" >
+				   		and tagTypeName = #{tagTypeName}
+					</if>
+					<if test="createTime != null and createTime != ''" >
+				   		and createTime = #{createTime}
+					</if>
+					<if test="editTime != null and editTime != ''" >
+				   		and editTime = #{editTime}
+					</if>
+					<if test="editor != null and editor != ''" >
+				   		and editor = #{editor}
+					</if>
+			</trim>
+		</where>
+	</sql>
+	
+	<!-- 根据id查询 ManageTagType -->
+	<select id="findById"  resultMap="ManageTagTypeResult" parameterType="java.lang.Integer">
+		select <include refid="Base_Column_List" /> from manage_tag_type where typeId = #{id}
+	</select>
+	
+	<!-- 无条件查询所有ManageTagType -->
+	<select id="findAll" resultMap="ManageTagTypeResult">
+		select <include refid="Base_Column_List" /> from manage_tag_type 
+	</select>
+	
+	<!-- 按Map对象条件查询所有ManageTagType -->
+	<select id="findByMap" resultMap="ManageTagTypeResult" parameterType="java.util.Map">
+		select <include refid="Base_Column_List" /> from manage_tag_type <include refid="Base_Where_Clause" />
+	</select>
+	
+	<!-- 按VO对象条件查询所有ManageTagType -->
+	<select id="findByExample" resultMap="ManageTagTypeResult" parameterType="com.manage.app.vo.ManageTagTypeQuery">
+		select <include refid="Base_Column_List" /> from manage_tag_type <include refid="Base_Where_Clause" />
+	</select>
+	
+	<!-- ManageTagType根据搜索条件，搜索分页数据 -->
+	<select id="findAllPage" resultMap="ManageTagTypeResult" parameterType="Object">
+		select <include refid="Base_Column_List" /> from manage_tag_type  
+		<include refid="Base_Where_Clause" />
+		<if test="pager.orderCondition != null and pager.orderCondition != ''" >
+      	${pager.orderCondition}
+	    </if>
+	    <if test="pager.mysqlQueryCondition != null and pager.mysqlQueryCondition != ''" >
+	    ${pager.mysqlQueryCondition}
+	    </if>
+	</select>
+	
+	<!-- ManageTagType列表总数-->
+	<select id="selectCount" resultType="java.lang.Integer"  parameterType="Object">
+		select count(1) from manage_tag_type 
+		<include refid="Base_Where_Clause" />
+	</select>
+	
+	<!-- ManageTagType保存数据 -->
+	<insert id="save" parameterType="ManageTagType">
+		<selectKey resultType="java.lang.Integer" order="AFTER" keyProperty="typeId">
+			SELECT LAST_INSERT_ID()
+  		</selectKey>
+		insert into manage_tag_type(
+		
+		tagTypeName,
+		createTime,
+		editTime,
+		editor
+		) values(
+				#{tagTypeName},
+		#{createTime},
+		#{editTime},
+		#{editor}
+		)
+	</insert>
+	
+	<!-- ManageTagType修改数据 -->
+	<update id="update" parameterType="ManageTagType">
+		update manage_tag_type 
+		<set>
+			<if test="tagTypeName != null and tagTypeName != ''" >
+			tagTypeName=#{tagTypeName},
+			</if>
+			<if test="createTime != null and createTime != ''" >
+			createTime=#{createTime},
+			</if>
+			<if test="editTime != null and editTime != ''" >
+			editTime=#{editTime},
+			</if>
+			<if test="editor != null and editor != ''" >
+			editor=#{editor}
+			</if>
+		</set> 
+		where 
+		typeId=#{typeId}
+		
+		
+		
+		
+	</update>
+	
+	<!-- ManageTagType删除数据 -->
+	<delete id="delete" parameterType="java.lang.Integer">
+		delete from manage_tag_type where 
+		typeId=#{typeId}
+									</delete>
+	
+</mapper>
+	
