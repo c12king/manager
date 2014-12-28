@@ -34,7 +34,7 @@
 				   		and tagId = #{tagId}
 					</if>
 					<if test="title != null and title != ''" >
-				   		and title = #{title}
+				   		and title like '%${title}%'
 					</if>
 					<if test="tagDesc != null and tagDesc != ''" >
 				   		and tagDesc = #{tagDesc}

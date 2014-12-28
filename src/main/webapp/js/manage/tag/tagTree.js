@@ -527,49 +527,49 @@ function OpensearchWin() {
 	$('#search-window').window('open');
 	
 }
-//init= function(uuid) {  
-//    // this.identifier 是设定的全局变量，uuid是页面加载时的唯一编码  
-//    this.identifier = uuid;  
-//    // 图片上传  
-//    var idf = this.identifier;  
-//    var that = this;  
-//    $('#'+idf+'-tforma').form({  
-//        dataType : 'json',  
-//    beforeSubmit : function(a, f, o) {  
-//      $('#'+idf+'-statusPic').html('上传中...');  
-//    },  
-//        success : function(data) {    
-//     if (typeof (data) == 'string')  
-//       data = eval('(' + data + ')');  
-//     $('#'+idf+'-uploadWindow').window('close');  
-//     if ("success" == data.message) {  
-//         $('div[identifier='+that.identifier+']').find('#picPath').val(data.path);  
-//         $("#"+idf+"-path").val(data.path);  
-//         $("#"+idf).val(data.path.replace( "\\", "/"))
-//         $("#"+idf+"-statusPic").html( "<a target='window' href='javascript:void(0);' onclick='Preview(\""+idf+"\")'>预览</a>");  
-//     } else if ("error" == data.message)  
-//         $("#"+idf+"-statusPic").html("非图片数据!");  
-//     else  
-//         $("#"+idf+"-statusPic").html("上传数据错误!");  
-//          $("#"+idf+"-itemPic").val('');  
-//     },  
-//     error : function(jqXHR, textStatus,errorThrown) {  
-//         $('#$'+idf+'-uploadWindow').window('close');  
-//         //console.log("error:"+ data.responseText);  
-//         //console.log("status:" + textStatus);  
-//         $("#"+idf+"-statusPic").html("上传失败!");  
-//         $("#"+idf+"-itemPic").val('');  
-//     } });  
-//    }  
-//function Preview(id){
-//	var url =$("#"+id).val()
-//	if(url==""){
-//		return ;
-//	}
-//    var title="图片预览";
-//    var obj ={
-//        title:title,
-//        url:url
-//    }
-//    window.parent.treeOnFrame(obj);
-//}
+init= function(uuid) {  
+    // this.identifier 是设定的全局变量，uuid是页面加载时的唯一编码  
+    this.identifier = uuid;  
+    // 图片上传  
+    var idf = this.identifier;  
+    var that = this;  
+    $('#'+idf+'-tforma').form({  
+        dataType : 'json',  
+    beforeSubmit : function(a, f, o) {  
+      $('#'+idf+'-statusPic').html('上传中...');  
+    },  
+        success : function(data) {    
+     if (typeof (data) == 'string')  
+       data = eval('(' + data + ')');  
+     $('#'+idf+'-uploadWindow').window('close');  
+     if ("success" == data.message) {  
+         $('div[identifier='+that.identifier+']').find('#picPath').val(data.path);  
+         $("#"+idf+"-path").val(data.path);  
+         $("#"+idf).val(data.path.replace( "\\", "/"))
+         $("#"+idf+"-statusPic").html( "<a target='window' href='javascript:void(0);' onclick='Preview(\""+idf+"\")'>预览</a>");  
+     } else if ("error" == data.message)  
+         $("#"+idf+"-statusPic").html("非图片数据!");  
+     else  
+         $("#"+idf+"-statusPic").html("上传数据错误!");  
+          $("#"+idf+"-itemPic").val('');  
+     },  
+     error : function(jqXHR, textStatus,errorThrown) {  
+         $('#$'+idf+'-uploadWindow').window('close');  
+         //console.log("error:"+ data.responseText);  
+         //console.log("status:" + textStatus);  
+         $("#"+idf+"-statusPic").html("上传失败!");  
+         $("#"+idf+"-itemPic").val('');  
+     } });  
+    }  
+function Preview(id){
+	var url =$("#"+id).val()
+	if(url==""){
+		return ;
+	}
+    var title="图片预览";
+    var obj ={
+        title:title,
+        url:url
+    }
+    window.parent.treeOnFrame(obj);
+}
