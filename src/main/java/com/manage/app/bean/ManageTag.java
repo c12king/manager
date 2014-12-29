@@ -5,11 +5,11 @@ import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
 
+import java.util.*;
+
 
 public class ManageTag implements java.io.Serializable{
 	
-	private static final long serialVersionUID = 1L;
-
 	//别名
 	public static final String TABLE_ALIAS = "ManageTag";
 
@@ -18,6 +18,7 @@ public class ManageTag implements java.io.Serializable{
 	private java.lang.String tagDesc;
 	private java.lang.String tagPic;
 	private java.lang.Integer typeId;
+	private java.lang.Integer tagType;
 	private java.sql.Timestamp createTime;
 	private java.sql.Timestamp editTime;
 	private java.lang.String editor;
@@ -59,7 +60,20 @@ public class ManageTag implements java.io.Serializable{
 	public java.lang.String getTagPic() {
 		return this.tagPic;
 	}
-
+	public void setTypeId(java.lang.Integer value) {
+		this.typeId = value;
+	}
+	
+	public java.lang.Integer getTypeId() {
+		return this.typeId;
+	}
+	public void setTagType(java.lang.Integer value) {
+		this.tagType = value;
+	}
+	
+	public java.lang.Integer getTagType() {
+		return this.tagType;
+	}
 	public void setCreateTime(java.sql.Timestamp value) {
 		this.createTime = value;
 	}
@@ -89,6 +103,7 @@ public class ManageTag implements java.io.Serializable{
 			.append("TagDesc",getTagDesc())
 			.append("TagPic",getTagPic())
 			.append("TypeId",getTypeId())
+			.append("TagType",getTagType())
 			.append("CreateTime",getCreateTime())
 			.append("EditTime",getEditTime())
 			.append("Editor",getEditor())
@@ -108,14 +123,6 @@ public class ManageTag implements java.io.Serializable{
 		return new EqualsBuilder()
 			.append(getTagId(),other.getTagId())
 			.isEquals();
-	}
-
-	public java.lang.Integer getTypeId() {
-		return typeId;
-	}
-
-	public void setTypeId(java.lang.Integer typeId) {
-		this.typeId = typeId;
 	}
 }
 

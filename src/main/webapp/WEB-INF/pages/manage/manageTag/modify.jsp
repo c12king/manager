@@ -42,6 +42,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			            <textarea name="tagDesc" id="tagDesc"   type="text" style="width: 200px;" maxlength="256" class="easyui-validatebox"  required="true" missingMessage="请输入标签介绍" >${manageTag.tagDesc}</textarea>
 			          </td>
 			        </tr>
+			        
+			        <tr>
+			          <td>标签分类：</td>
+			          <td>
+			        		<div  type='text' id="tagType01" name="tagType" style='width:200px; margin-right:5px'></div>
+			          </td>
+			        </tr>
+			        
 			        <tr>
 			          <td>编&nbsp;辑&nbsp;人：</td>
 			          <td>
@@ -85,6 +93,25 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     </div>
     <script type="text/javascript">
 $(function(){
+    var data = "[{\"label\":1,\"value\":\"新闻\"},{\"label\":2,\"value\":\"跳骚市场\"},{\"label\":3,\"value\":\"活动\"}]";
+    data=JSON.parse(data);   
+    for(var i=0;i<data.length;i++){
+        if(data[i].label=='${manageTag.tagType}'){
+            data[i].selected=true;
+        }else{
+            data[i].selected=false;
+        }
+    }
+    vm ={
+   		editable:false,
+   	    valueField:'label',
+   	    textField:'value',
+   	    data:  data ,
+   	    required: true,
+   	    missingMessage:'该输入项为必填项'
+   	};
+    $("#tagType01").combobox(vm);
+    
 	init("modifyModuleIconImage");
 })
 

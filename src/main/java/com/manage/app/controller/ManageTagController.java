@@ -7,6 +7,7 @@ import java.util.Date;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,7 +51,22 @@ public class ManageTagController {
 	 * @return
 	 */
 	@RequestMapping(value="list")
-	public void list(ManageTagQuery query, HttpServletResponse response) {
+	public void list(HttpServletRequest request, ManageTagQuery query, HttpServletResponse response) {
+		
+		int cpage = 1;
+		if (StringUtils.isNotBlank(request.getParameter("page")))
+		    cpage=Integer.parseInt(request.getParameter("page"));
+		if (StringUtils.isNotBlank(request.getParameter("pageNo")))
+			cpage=Integer.parseInt(request.getParameter("pageNo"));
+		int size = 10;
+		if (StringUtils.isNotBlank(request.getParameter("rows")))
+			size=Integer.parseInt(request.getParameter("rows"));
+		if (StringUtils.isNotBlank(request.getParameter("pageSize")))  
+			size = Integer.parseInt(request.getParameter("pageSize"));
+		query.setPage(cpage);
+		query.setRows(size);
+		
+		
 		String json = "";
 		StringBuilder result = new StringBuilder();
 		try{
@@ -65,6 +81,7 @@ public class ManageTagController {
 			    .append("\"tagDesc\":\"").append(manageTag.getTagDesc()).append("\"").append(",")
 			    .append("\"tagPic\":\"").append(manageTag.getTagPic()).append("\"").append(",")
 			    .append("\"typeId\":\"").append(manageTag.getTypeId()).append("\"").append(",")
+			    .append("\"tagType\":\"").append(manageTag.getTagType()).append("\"").append(",")
 			    .append("\"createTime\":\"").append(manageTag.getCreateTime()).append("\"").append(",")
 			    .append("\"editTime\":\"").append(manageTag.getEditTime()).append("\"").append(",")
 			    .append("\"editor\":\"").append(manageTag.getEditor()).append("\"")
@@ -121,6 +138,7 @@ public class ManageTagController {
 		    manageTag.setTagPic(query.getTagPic());
 		   // manageTag.setTagType(query.getTagType());
 		    manageTag.setTypeId(query.getTypeId());
+		    manageTag.setTagType(query.getTagType());
 		    manageTag.setCreateTime(query.getCreateTime());
 		    manageTag.setEditTime(query.getEditTime());
 		    manageTag.setEditor(query.getEditor());
@@ -177,6 +195,7 @@ public class ManageTagController {
 		    manageTag.setTagDesc(query.getTagDesc().replaceAll("\r", "").replaceAll("\n", ""));
 		    manageTag.setTagPic(query.getTagPic());
 		    manageTag.setTypeId(query.getTypeId());
+		    manageTag.setTagType(query.getTagType());
 //		    manageTag.setCreateTime(query.getCreateTime());
 		    manageTag.setEditTime(new Timestamp(new Date().getTime()));
 		    manageTag.setEditor(query.getEditor());

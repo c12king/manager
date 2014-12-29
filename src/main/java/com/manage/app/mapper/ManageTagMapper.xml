@@ -9,6 +9,7 @@
 			<result column="tagDesc" property="tagDesc" />
 			<result column="tagPic" property="tagPic" />
 			<result column="typeId" property="typeId" />
+			<result column="tagType" property="tagType" />
 			<result column="createTime" property="createTime" />
 			<result column="editTime" property="editTime" />
 			<result column="editor" property="editor" />
@@ -21,6 +22,7 @@
 			tagDesc,
 			tagPic,
 			typeId,
+			tagType,
 			createTime,
 			editTime,
 			editor
@@ -44,6 +46,9 @@
 					</if>
 					<if test="typeId != null and typeId != ''" >
 				   		and typeId = #{typeId}
+					</if>
+				   <if test="tagType != null and tagType != ''" >
+				   		and tagType = #{tagType}
 					</if>
 					<if test="createTime != null and createTime != ''" >
 				   		and createTime = #{createTime}
@@ -107,6 +112,7 @@
 		tagDesc,
 		tagPic,
 		typeId,
+		tagType,
 		createTime,
 		editTime,
 		editor
@@ -115,6 +121,7 @@
 		#{tagDesc},
 		#{tagPic},
 		#{typeId},
+		#{tagType},
 		#{createTime},
 		#{editTime},
 		#{editor}
@@ -136,6 +143,9 @@
 			</if>
 			<if test="typeId != null and typeId != ''" >
 			typeId=#{typeId},
+			</if>
+			<if test="tagType != null and tagType != ''" >
+			tagType=#{tagType},
 			</if>
 			<if test="createTime != null and createTime != ''" >
 			createTime=#{createTime},

@@ -13,6 +13,7 @@ public class ManageTagQuery extends BaseBean {
 	private java.lang.String tagDesc;
 	private java.lang.String tagPic;
 	private java.lang.Integer typeId;
+	private java.lang.Integer tagType;
 	private java.sql.Timestamp createTime;
 	private java.sql.Timestamp editTime;
 	private java.lang.String editor;
@@ -23,6 +24,7 @@ public class ManageTagQuery extends BaseBean {
 		this.tagDesc = manageTag.getTagDesc();
 		this.tagPic = manageTag.getTagPic();
 		this.typeId = manageTag.getTypeId();
+		this.tagType = manageTag.getTagType();
 		this.createTime = manageTag.getCreateTime();
 		this.editTime = manageTag.getEditTime();
 		this.editor = manageTag.getEditor();
@@ -64,7 +66,21 @@ public class ManageTagQuery extends BaseBean {
 		this.tagPic = value;
 	}
 		
-
+	public java.lang.Integer getTypeId() {
+		return this.typeId;
+	}
+	
+	public void setTypeId(java.lang.Integer value) {
+		this.typeId = value;
+	}
+		
+	public java.lang.Integer getTagType() {
+		return this.tagType;
+	}
+	
+	public void setTagType(java.lang.Integer value) {
+		this.tagType = value;
+	}
 		
 	public java.sql.Timestamp getCreateTime() {
 		return this.createTime;
@@ -92,14 +108,6 @@ public class ManageTagQuery extends BaseBean {
 		
 	public String toString() {
 		return ToStringBuilder.reflectionToString(this,ToStringStyle.MULTI_LINE_STYLE);
-	}
-
-	public java.lang.Integer getTypeId() {
-		return typeId;
-	}
-
-	public void setTypeId(java.lang.Integer typeId) {
-		this.typeId = typeId;
 	}
 	
 }
