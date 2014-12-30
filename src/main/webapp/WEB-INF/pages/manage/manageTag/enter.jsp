@@ -170,26 +170,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             }]
         });
 
-    	var p = $('#grid').datagrid('getPager'); 
-    	if (p){                
-    		$(p).pagination({                    
-    			onSelectPage: function(pageNumber, pageSize) {
-    				$(this).pagination('loading');
-    				var queryParams = {
-    						pageNo: pageNumber, pageSize: pageSize /* ,
-    						typeId:function(){ 
-    			        		var node = $('#tagTreeul').tree('getSelected');
-    			         	    if(null==node){
-    			         	    	return id;
-    			         	    }
-    			         		return node.id;
-    			        	} */
-    				};
-    				
-    				grid.datagrid('reload', queryParams);
-    			}               
-    		});            
-    	}
 
         $('#btn-search, #btn-search-cancel').linkbutton();
         $('body').layout();
@@ -356,6 +336,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     	$('#search-window').window('open');
     	
     }
+    
+    function closeSearchWindow() {
+        $('#search-window').window('close');
+    }
+
     init= function(uuid) {  
         // this.identifier 是设定的全局变量，uuid是页面加载时的唯一编码  
         this.identifier = uuid;  
@@ -421,14 +406,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 </script>
 	<div data-options='region:"west",split:true,border:true'>
 		<div class="easyui-layout" data-options="fit:true"> 
-            <div data-options="region:'center',title:'标签列表'">
+<!--             <div data-options="region:'center',title:'标签列表'"> -->
             	<div id="grid" fit="true">
         		</div>
-            </div>   
+<!--             </div>    -->
         </div>   
 	</div>
-	
-	
+
 	<div id="add-window" title="新增窗口" style="width: 400px; height: 350px;"></div>
     <div id="edit-window" title="编辑窗口" style="width: 400px; height: 350px;"></div>   
     <div id="edit-window2" title="编辑窗口" style="width: 1000px; height: 500px;"></div>
