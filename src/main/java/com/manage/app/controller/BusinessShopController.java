@@ -1,6 +1,8 @@
 package com.manage.app.controller;
 
 import java.io.IOException;
+import java.sql.Timestamp;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -134,8 +136,8 @@ public class BusinessShopController {
 		    businessShop.setShopAddr(query.getShopAddr());
 		    businessShop.setShopUrl(query.getShopUrl());
 		    businessShop.setTypeId(query.getTypeId());
-		    businessShop.setCreatTime(query.getCreatTime());
-		    businessShop.setEditTime(query.getEditTime());
+		    businessShop.setCreatTime(new Timestamp(new Date().getTime()));
+		    businessShop.setEditTime(new Timestamp(new Date().getTime()));
 		    businessShop.setEditor(query.getEditor());
 			businessShopService.save(businessShop);
 			//保存成功
@@ -194,8 +196,8 @@ public class BusinessShopController {
 		    businessShop.setShopAddr(query.getShopAddr());
 		    businessShop.setShopUrl(query.getShopUrl());
 		    businessShop.setTypeId(query.getTypeId());
-		    businessShop.setCreatTime(query.getCreatTime());
-		    businessShop.setEditTime(query.getEditTime());
+//		    businessShop.setCreatTime(new Timestamp(new Date().getTime())); 
+		    businessShop.setEditTime(new Timestamp(new Date().getTime()));
 		    businessShop.setEditor(query.getEditor());
 			businessShopService.update(businessShop);
 			

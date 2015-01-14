@@ -26,9 +26,13 @@ public class BusinessShop implements java.io.Serializable{
 	private java.lang.String shopUrl;
 	private java.lang.Integer typeId;
 	private java.sql.Timestamp creatTime;
+
+
 	private java.sql.Timestamp editTime;
 	private java.lang.String editor;
 
+	private java.lang.String typeName;
+	
 	public BusinessShop(){
 	}
 
@@ -134,6 +138,7 @@ public class BusinessShop implements java.io.Serializable{
 			.append("ShopAddr",getShopAddr())
 			.append("ShopUrl",getShopUrl())
 			.append("TypeId",getTypeId())
+			.append("TypeName",getTypeName())
 			.append("CreatTime",getCreatTime())
 			.append("EditTime",getEditTime())
 			.append("Editor",getEditor())
@@ -153,6 +158,14 @@ public class BusinessShop implements java.io.Serializable{
 		return new EqualsBuilder()
 			.append(getShopId(),other.getShopId())
 			.isEquals();
+	}
+	
+	public java.lang.String getTypeName() {
+		return typeName;
+	}
+
+	public void setTypeName(java.lang.String typeName) {
+		this.typeName = typeName;
 	}
 }
 

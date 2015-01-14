@@ -61,12 +61,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		<div onclick='collapse2()'>隐藏节点</div> 
 	</div>
 	
-	<div id="add-window" title="新增窗口" style="width: 400px; height: 350px;"></div>
-    <div id="edit-window" title="编辑窗口" style="width: 400px; height: 350px;"></div>   
+	<div id="add-window" title="新增窗口" style="width: 400px; height: 400px;"></div>
+    <div id="edit-window" title="编辑窗口" style="width: 400px; height: 400px;"></div>
     <div id="edit-window2" title="编辑窗口" style="width: 1000px; height: 500px;"></div>
     <div id="search-window" title="查询窗口" style="width: 400px; height: 300px;">
 	<div style="padding: 20px 20px 40px 80px;">
-	    <form id="searchForm" method="post" action="<%=path %>/manage/manageExpressFee/list.do">
+	    <form id="searchForm" method="post" action="<%=path %>/manage/businessShop/list.do">
 	            <table>
 						<tr>
 				          <td>名称：</td>

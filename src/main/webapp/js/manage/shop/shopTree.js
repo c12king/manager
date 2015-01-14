@@ -313,7 +313,7 @@ function getSelectedArr() {
     var ids = [];
     var rows = grid.datagrid('getSelections');
     for (var i = 0; i < rows.length; i++) {
-         ids.push(rows[i].feeId);
+         ids.push(rows[i].shopId); 
     }
     return ids;
 }
@@ -331,16 +331,16 @@ function add() {
 	
 	if (node == null || node.id == 0)
 	{
-		alert("请选择快递公司！");
+		alert("请选择商铺类型！");
 		return 0;
 	}
-	$("#expressId").val(node.id);
+	$("#typeId").val(node.id);
 	win = $('#add-window').window({
         closed: true,
         modal: true,
         shadow: false,
         cache: false,
-        href: path+'/manage/manageExpressFee/add.do?'
+        href: path+'/manage/businessShop/add.do?'
     });
     $('#add-window').window('open');
     $('#add-window').window('resize');
@@ -371,11 +371,11 @@ function edit() {
             modal: true,
             shadow: false,
             cache: false,
-            href: path+'/manage/manageExpressFee/modify.do?feeId='+rows[0].feeId
+            href: path+'/manage/businessShop/modify.do?shopId='+rows[0].shopId
         });
     	$('#edit-window').window('open');
         $('#modifyForm').form('clear');
-        $('#modifyForm').form('load', '<%=path %>/manage/buseinessTel/edit.do?feeId=' + rows[0].feeId); 
+        $('#modifyForm').form('load', '<%=path %>/manage/businessShop/edit.do?shopId=' + rows[0].shopId); 
     }
 }
 
@@ -393,7 +393,7 @@ function del() {
         $.messager.confirm('提示信息', '您确认要删除吗?', function (data) {
             if (data) {
                 $.ajax({
-                    url: path+'/manage/manageExpressFee/delete.do?id=' + arr2str(arr), 
+                    url: path+'/manage/businessShop/delete.do?id=' + arr2str(arr), 
                     timeout: 1000,
                     cache: false,
                     success: function (data) {
@@ -451,7 +451,7 @@ function saveData3(oper, formId) {
 	var str=$('#'+formId).attr('action');
 	if(oper=="add"){
 		var node = $('#shopTreeul').tree('getSelected');
-		$("#expressId").val(node.id);
+		$("#typeId").val(node.id);
 		//str=path+"/manage/buseinessTel/save.do";
 	}
 	$('#'+formId).form('submit', {
@@ -486,7 +486,7 @@ function OpensearchWin() {
 	$('#search-window').window('open');
 	
 }
-//init= function(uuid) {  
+//init= function(uuid) {
 //    // this.identifier 是设定的全局变量，uuid是页面加载时的唯一编码  
 //    this.identifier = uuid;  
 //    // 图片上传  
@@ -532,3 +532,51 @@ function OpensearchWin() {
 //    }
 //    window.parent.treeOnFrame(obj);
 //}
+
+
+init= function(uuid) {  
+    // this.identifier 是设定的全局变量，uuid是页面加载时的唯一编码  
+    this.identifier = uuid;  
+    // 图片上传  
+    var idf = this.identifier;  
+    var that = this;  
+    $('#'+idf+'-tforma').form({  
+        dataType : 'json',  
+    beforeSubmit : function(a, f, o) {  
+      $('#'+idf+'-statusPic').html('上传中...');  
+    },  
+        success : function(data) {    
+     if (typeof (data) == 'string')  
+       data = eval('(' + data + ')');  
+     $('#'+idf+'-uploadWindow').window('close');  
+     if ("success" == data.message) {  
+         $('div[identifier='+that.identifier+']').find('#picPath').val(data.path);  
+         $("#"+idf+"-path").val(data.path);  
+         $("#"+idf).val(data.path.replace( "\\", "/"));
+         $("#"+idf+"-statusPic").html( "<a target='window' href='javascript:void(0);' onclick='Preview(\""+idf+"\")'>预览</a>");  
+     } else if ("error" == data.message)  
+         $("#"+idf+"-statusPic").html("非图片数据!");  
+     else  
+         $("#"+idf+"-statusPic").html("上传数据错误!");  
+          $("#"+idf+"-itemPic").val('');  
+     },  
+     error : function(jqXHR, textStatus,errorThrown) {  
+         $('#$'+idf+'-uploadWindow').window('close');  
+         //console.log("error:"+ data.responseText);  
+         //console.log("status:" + textStatus);  
+         $("#"+idf+"-statusPic").html("上传失败!");  
+         $("#"+idf+"-itemPic").val('');  
+     } });  
+    };
+function Preview(id){
+	var url =$("#"+id).val();
+	if(url==""){
+		return ;
+	}
+    var title="图片预览";
+    var obj ={
+        title:title,
+        url:url
+    };
+    window.parent.treeOnFrame(obj);
+}
