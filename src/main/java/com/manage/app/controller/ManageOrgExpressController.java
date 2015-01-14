@@ -86,7 +86,9 @@ public class ManageOrgExpressController {
 			    .append("\"editor\":\"").append( StringUtils.trimToEmpty(manageOrgExpress.getEditor()) ).append("\"").append(",")
 			    .append("\"staName\":\"").append( StringUtils.trimToEmpty(manageOrgExpress.getStaName()) ).append("\"").append(",")
 			    .append("\"expressComppay\":\"").append( StringUtils.trimToEmpty(manageOrgExpress.getExpressComppay()) ).append("\"").append(",")
-			    .append("\"expState\":\"").append(manageOrgExpress.getExpState()).append("\"")
+			    .append("\"expState\":\"").append(
+			    		manageOrgExpress.getExpState()==0?"取件":"不取件"  //0取件1不取件
+			    		).append("\"")
 				.append("}").append(",");
 			}
 			json = result.toString();

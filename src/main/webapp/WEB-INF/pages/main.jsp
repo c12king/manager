@@ -132,6 +132,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                         	<div class="selected"><a href="javascript:aClick('省市区管理', '<%=path%>/manage/manageProvice/ProvinceCityManagement.do');">省市区管理</a></div>
                         	<div class="selected"><a href="javascript:aClick('快递公司管理', '<%=path%>/manage/manageExpress/manageExpCom.do');">快递公司管理</a></div>
                         	<div class="selected"><a href="javascript:aClick('标签管理', '<%=path%>/manage/manageTag/enter.do');">标签管理</a></div>
+                            <div class="selected"><a href="javascript:aClick('商铺管理', '<%=path%>/manage/businessShopType/enter.do');">商铺管理</a></div>
+                        	
 <%--                         	<div class="selected"><a href="javascript:aClick('标签管理', '<%=path%>/manage/manageTagType/enter.do');">标签管理</a></div> --%>
                         </li>
                     </ul>

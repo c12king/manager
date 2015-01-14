@@ -40,7 +40,7 @@
 		editTime
 		) values(
 				'${buildingId}',
-		'新单元',
+		'单元',
 		'${createTime}',
 		'${editTime}'
 		)

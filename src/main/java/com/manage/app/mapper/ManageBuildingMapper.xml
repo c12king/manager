@@ -42,7 +42,7 @@
 				'${estateId}',
 		'${createTime}',
 		'${editTime}',
-		'新楼栋'	
+		'号楼'	
 		)
 			
 	</insert>

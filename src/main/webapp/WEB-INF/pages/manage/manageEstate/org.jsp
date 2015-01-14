@@ -59,23 +59,23 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 						<tr>
 							<td>楼栋名称<tb style='color: red'>*</tb>：</td>
 							<td>
-								<input id="f_name" class="easyui-validatebox" style='width: 150px;', type='text', name='buildingName', data-options="required:true,missingMessage:'栏目名称必须输入',validType:['reName']">
+								<input id="f_name" class="easyui-validatebox" style='width: 150px;', type='text', name='buildingName'>
 							</td>
 						</tr>
 						<tr>
 							<td>楼栋描述<tb style='color: red'>*</tb>：</td>
 							<td>
-								<textarea name="buildingDesc"  id="buildingDesc" rows="5" cols="18" class="easyui-validatebox" required="true" missingMessage="请输入楼栋描述" validType="reDes"></textarea>
+								<textarea name="buildingDesc"  id="buildingDesc" rows="5" cols="18" class="easyui-validatebox" ></textarea>
 							</td>
 						</tr>
 						<tr>
 							<td>静态地图<tb style='color: red'>*</tb>：</td>
 							<td>
-								<input id="buildingImage" class="easyui-validatebox" style='width: 150px;', type="hidden", name='buildingMap'>
-								<form:hidden path="picPath" id="picPath"></form:hidden>  
+								<input id="buildingImage" class="easyui-validatebox" style='width: 150px;' type="input", name='buildingMap' value="">
+								<!-- <form:hidden path="picPath" id="picPath"></form:hidden>  
 								      <span id="buildingImage-statusPic" style="color: #666;">  
 								      <a href="javascript:void(0)" onclick="Preview('buildingImage')">预览</a></span>  
-								      <a class="easyui-linkbutton" onclick="$('#buildingImage-uploadWindow').window('open')">修改</a>  
+								      <a class="easyui-linkbutton" onclick="$('#buildingImage-uploadWindow').window('open')">修改</a>  --> 
 							</td> 
 						</tr>
 						<tr>
@@ -111,17 +111,17 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 								<tr>
 									<td>单元名称<tb style='color: red'>*</tb>：</td>
 									<td>
-										<input id="unitName" class="easyui-validatebox" style='width: 150px;', type='text', name='unitName', data-options="required:true,missingMessage:'栏目名称必须输入',validType:['reName']">
+										<input id="unitName" class="easyui-validatebox" style='width: 150px;', type='text', name='unitName'">
 									</td>
 								</tr>
 								<tr>
 									<td>静态地图<tb style='color: red'>*</tb>：</td>
 									<td>  								
-									  <input id="unitImage" class="easyui-validatebox" style='width: 150px;', type="hidden", name='unitMap' >
-									  <form:hidden path="picPath" id="picPath"></form:hidden>  
+									  <input id="unitImage" class="easyui-validatebox" style='width: 150px;', type="input", name='unitMap' >
+									  <!-- <form:hidden path="picPath" id="picPath"></form:hidden>  
 								      <span id="unitImage-statusPic" style="color: #666;">  
 								      <a href="javascript:void(0)" onclick="Preview('unitImage')">预览</a></span>  
-								      <a class="easyui-linkbutton" onclick="$('#unitImage-uploadWindow').window('open')">修改</a>  
+								      <a class="easyui-linkbutton" onclick="$('#unitImage-uploadWindow').window('open')">修改</a>   -->
 								     </td>  
 								</tr>
 								<tr>

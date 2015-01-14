@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.manage.app.dao.BusinessShopDao" >
+	<!-- 返回结构集 -->
+	<resultMap id="BusinessShopResult" type="BusinessShop">
+			<result column="shopId" property="shopId" />
+			<result column="shopCode" property="shopCode" />
+			<result column="shopKey" property="shopKey" />
+			<result column="shopName" property="shopName" />
+			<result column="shopImg" property="shopImg" />
+			<result column="shopDesc" property="shopDesc" />
+			<result column="shopAddr" property="shopAddr" />
+			<result column="shopUrl" property="shopUrl" />
+			<result column="typeId" property="typeId" />
+			<result column="creatTime" property="creatTime" />
+			<result column="editTime" property="editTime" />
+			<result column="editor" property="editor" />
+	</resultMap>
+	
+	<!-- 所有字段 -->
+	<sql id="Base_Column_List" >
+			shopId,
+			shopCode,
+			shopKey,
+			shopName,
+			shopImg,
+			shopDesc,
+			shopAddr,
+			shopUrl,
+			typeId,
+			creatTime,
+			editTime,
+			editor
+	</sql>
+	
+	<!-- 所有字段查询条件 -->
+	<sql id="Base_Where_Clause">
+		<where>
+			<trim  suffixOverrides="," >
+					<if test="shopId != null and shopId != ''" >
+				   		and shopId = #{shopId}
+					</if>
+					<if test="shopCode != null and shopCode != ''" >
+				   		and shopCode = #{shopCode}
+					</if>
+					<if test="shopKey != null and shopKey != ''" >
+				   		and shopKey = #{shopKey}
+					</if>
+					<if test="shopName != null and shopName != ''" >
+				   		and shopName = #{shopName}
+					</if>
+					<if test="shopImg != null and shopImg != ''" >
+				   		and shopImg = #{shopImg}
+					</if>
+					<if test="shopDesc != null and shopDesc != ''" >
+				   		and shopDesc = #{shopDesc}
+					</if>
+					<if test="shopAddr != null and shopAddr != ''" >
+				   		and shopAddr = #{shopAddr}
+					</if>
+					<if test="shopUrl != null and shopUrl != ''" >
+				   		and shopUrl = #{shopUrl}
+					</if>
+					<if test="typeId != null and typeId != ''" >
+				   		and typeId = #{typeId}
+					</if>
+					<if test="creatTime != null and creatTime != ''" >
+				   		and creatTime = #{creatTime}
+					</if>
+					<if test="editTime != null and editTime != ''" >
+				   		and editTime = #{editTime}
+					</if>
+					<if test="editor != null and editor != ''" >
+				   		and editor = #{editor}
+					</if>
+			</trim>
+		</where>
+	</sql>
+	
+	<!-- 根据id查询 BusinessShop -->
+	<select id="findById"  resultMap="BusinessShopResult" parameterType="java.lang.Integer">
+		select <include refid="Base_Column_List" /> from business_shop where shopId = #{id}
+	</select>
+	
+	<!-- 无条件查询所有BusinessShop -->
+	<select id="findAll" resultMap="BusinessShopResult">
+		select <include refid="Base_Column_List" /> from business_shop 
+	</select>
+	
+	<!-- 按Map对象条件查询所有BusinessShop -->
+	<select id="findByMap" resultMap="BusinessShopResult" parameterType="java.util.Map">
+		select <include refid="Base_Column_List" /> from business_shop <include refid="Base_Where_Clause" />
+	</select>
+	
+	<!-- 按VO对象条件查询所有BusinessShop -->
+	<select id="findByExample" resultMap="BusinessShopResult" parameterType="com.manage.app.vo.BusinessShopQuery">
+		select <include refid="Base_Column_List" /> from business_shop <include refid="Base_Where_Clause" />
+	</select>
+	
+	<!-- BusinessShop根据搜索条件，搜索分页数据 -->
+	<select id="findAllPage" resultMap="BusinessShopResult" parameterType="Object">
+		select <include refid="Base_Column_List" /> from business_shop  
+		<include refid="Base_Where_Clause" />
+		<if test="pager.orderCondition != null and pager.orderCondition != ''" >
+      	${pager.orderCondition}
+	    </if>
+	    <if test="pager.mysqlQueryCondition != null and pager.mysqlQueryCondition != ''" >
+	    ${pager.mysqlQueryCondition}
+	    </if>
+	</select>
+	
+	<!-- BusinessShop列表总数-->
+	<select id="selectCount" resultType="java.lang.Integer"  parameterType="Object">
+		select count(1) from business_shop 
+		<include refid="Base_Where_Clause" />
+	</select>
+	
+	<!-- BusinessShop保存数据 -->
+	<insert id="save" parameterType="BusinessShop">
+		<selectKey resultType="java.lang.Integer" order="AFTER" keyProperty="shopId">
+			SELECT LAST_INSERT_ID()
+  		</selectKey>
+		insert into business_shop(
+		
+		shopCode,
+		shopKey,
+		shopName,
+		shopImg,
+		shopDesc,
+		shopAddr,
+		shopUrl,
+		typeId,
+		creatTime,
+		editTime,
+		editor
+		) values(
+				#{shopCode},
+		#{shopKey},
+		#{shopName},
+		#{shopImg},
+		#{shopDesc},
+		#{shopAddr},
+		#{shopUrl},
+		#{typeId},
+		#{creatTime},
+		#{editTime},
+		#{editor}
+		)
+	</insert>
+	
+	<!-- BusinessShop修改数据 -->
+	<update id="update" parameterType="BusinessShop">
+		update business_shop 
+		<set>
+			<if test="shopCode != null and shopCode != ''" >
+			shopCode=#{shopCode},
+			</if>
+			<if test="shopKey != null and shopKey != ''" >
+			shopKey=#{shopKey},
+			</if>
+			<if test="shopName != null and shopName != ''" >
+			shopName=#{shopName},
+			</if>
+			<if test="shopImg != null and shopImg != ''" >
+			shopImg=#{shopImg},
+			</if>
+			<if test="shopDesc != null and shopDesc != ''" >
+			shopDesc=#{shopDesc},
+			</if>
+			<if test="shopAddr != null and shopAddr != ''" >
+			shopAddr=#{shopAddr},
+			</if>
+			<if test="shopUrl != null and shopUrl != ''" >
+			shopUrl=#{shopUrl},
+			</if>
+			<if test="typeId != null and typeId != ''" >
+			typeId=#{typeId},
+			</if>
+			<if test="creatTime != null and creatTime != ''" >
+			creatTime=#{creatTime},
+			</if>
+			<if test="editTime != null and editTime != ''" >
+			editTime=#{editTime},
+			</if>
+			<if test="editor != null and editor != ''" >
+			editor=#{editor}
+			</if>
+		</set> 
+		where 
+		shopId=#{shopId}
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+	</update>
+	
+	<!-- BusinessShop删除数据 -->
+	<delete id="delete" parameterType="java.lang.Integer">
+		delete from business_shop where 
+		shopId=#{shopId}
+																							</delete>
+	
+</mapper>
+	

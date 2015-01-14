@@ -24,6 +24,8 @@
 		<typeAlias alias="ManageOrgExpress" type="com.manage.app.bean.ManageOrgExpress"/>
 		<typeAlias alias="ManageTag" type="com.manage.app.bean.ManageTag"/>
 		<typeAlias alias="ManageTagType" type="com.manage.app.bean.ManageTagType"/>
+		<typeAlias alias="BusinessShop" type="com.manage.app.bean.BusinessShop"/>
+		<typeAlias alias="BusinessShopType" type="com.manage.app.bean.BusinessShopType"/>
 		
 		<!-- manage -->
 	</typeAliases>
@@ -63,6 +65,9 @@
 		<mapper resource="com/manage/app/mapper/ManageExpressFeeMapper.xml" />
 		<mapper resource="com/manage/app/mapper/ManageOrgExpressMapper.xml" />
 		<mapper resource="com/manage/app/mapper/ManageTagTypeMapper.xml" />
-		<mapper resource="/com/manage/app/mapper/ManageTagMapper.xml" />
+		<mapper resource="com/manage/app/mapper/ManageTagMapper.xml" />
+		<mapper resource="com/manage/app/mapper/BusinessShopMapper.xml" />
+		<mapper resource="com/manage/app/mapper/BusinessShopTypeMapper.xml" />
+		
 	</mappers>
 </configuration>
