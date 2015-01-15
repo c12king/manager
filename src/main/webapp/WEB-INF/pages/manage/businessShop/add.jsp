@@ -32,43 +32,43 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			        <tr>
 			          <td>商铺名称：</td>
 			          <td>
-			          	<input name="shopName" id=shopName type="text" style="width: 200px;" value="" maxlength="60" class="easyui-validatebox"  required="true" missingMessage="请输入商铺类型名称" />
+			          	<input name="shopName" id=shopName type="text" style="width: 200px;" value="" maxlength="256" class="easyui-validatebox"  required="true" missingMessage="请输入商铺类型名称" />
 			          </td>
 			        </tr>
 			        <tr>
 			          <td>商铺编码 ：</td>
 			          <td>
-			          	<input name="shopCode" id=shopCode type="text" style="width: 200px;" value="" maxlength="60" class="easyui-validatebox"  required="true" missingMessage="请输入商铺类型名称" />
+			          	<input name="shopCode" id=shopCode type="text" style="width: 200px;" value="" maxlength="40" class="easyui-validatebox"  required="true" missingMessage="请输入商铺类型名称" />
 			          </td>
 			        </tr>
 			        <tr>
 			          <td>商铺秘钥 ：</td>
 			          <td>
-			          	<input name="shopKey" id=shopKey type="text" style="width: 200px;" value="" maxlength="60" class="easyui-validatebox"  required="true" missingMessage="请输入商铺类型名称" />
+			          	<input name="shopKey" id=shopKey type="text" style="width: 200px;" value="" maxlength="40" class="easyui-validatebox"  required="true" missingMessage="请输入商铺类型名称" />
 			          </td>
 			        </tr>
 			        <tr>
 			          <td>商铺地址 ：</td>
 			          <td>
-			          	<input name="shopAddr" id=shopAddr type="text" style="width: 200px;" value="" maxlength="60" class="easyui-validatebox"  required="true" missingMessage="请输入商铺类型名称" />
+			          	<input name="shopAddr" id=shopAddr type="text" style="width: 200px;" value="" maxlength="200" class="easyui-validatebox"  required="true" missingMessage="请输入商铺类型名称" />
 			          </td>
 			        </tr>
 			        <tr>
 			          <td>商铺描述 ：</td>
 			          <td>
-			          	<input name="shopDesc" id=shopDesc type="text" style="width: 200px;" value="" maxlength="60" class="easyui-validatebox"  required="true" missingMessage="请输入商铺类型名称" />
+			          	<input name="shopDesc" id=shopDesc type="text" style="width: 200px;" value="" maxlength="512" class="easyui-validatebox"  required="true" missingMessage="请输入商铺类型名称" />
 			          </td>
 			        </tr>
 			        <tr>
 			          <td>商铺连接地址 ：</td>
 			          <td>
-			          	<input name="shopUrl" id=shopUrl type="text" style="width: 200px;" value="" maxlength="60" class="easyui-validatebox"  required="true" missingMessage="请输入商铺类型名称" />
+			          	<input name="shopUrl" id=shopUrl type="text" style="width: 200px;" value="" maxlength="128" class="easyui-validatebox"  required="true" missingMessage="请输入商铺类型名称" />
 			          </td>
 			        </tr>
 			        <tr>
 			          <td>编辑人：</td>
 			          <td>
-			          	<input name="editor" id=editor type="text" style="width: 200px;" value="" maxlength="60" class="easyui-validatebox"  required="true" missingMessage="请输入商铺类型名称" />
+			          	<input name="editor" id=editor type="text" style="width: 200px;" value="" maxlength="32" class="easyui-validatebox"  required="true" missingMessage="请输入商铺类型名称" />
 			          </td>
 			        </tr>
 			        <tr>

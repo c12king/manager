@@ -44,43 +44,43 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			        <tr>
 			          <td>商铺名称：</td>
 			          <td>
-			          	<input name="shopName" id="shopName" type="text" style="width: 200px;" value="${businessShop.shopName}" maxlength="60" class="easyui-validatebox"  required="true" missingMessage="请输入商铺类型名称" />
+			          	<input name="shopName" id="shopName" type="text" style="width: 200px;" value="${businessShop.shopName}" maxlength="256" class="easyui-validatebox"  required="true" missingMessage="请输入商铺类型名称" />
 			          </td>
 			        </tr>
 			        <tr>
 			          <td>商铺编码 ：</td>
 			          <td>
-			          	<input name="shopCode" id="shopCode" type="text" style="width: 200px;" value="${businessShop.shopCode}" maxlength="60" class="easyui-validatebox"  required="true" missingMessage="请输入商铺类型名称" />
+			          	<input name="shopCode" id="shopCode" type="text" style="width: 200px;" value="${businessShop.shopCode}" maxlength="40" class="easyui-validatebox"  required="true" missingMessage="请输入商铺类型名称" />
 			          </td>
 			        </tr>
 			        <tr>
 			          <td>商铺秘钥 ：</td>
 			          <td>
-			          	<input name="shopKey" id="shopKey" type="text" style="width: 200px;" value="${businessShop.shopKey}" maxlength="60" class="easyui-validatebox"  required="true" missingMessage="请输入商铺类型名称" />
+			          	<input name="shopKey" id="shopKey" type="text" style="width: 200px;" value="${businessShop.shopKey}" maxlength="40" class="easyui-validatebox"  required="true" missingMessage="请输入商铺类型名称" />
 			          </td>
 			        </tr>
 			        <tr>
 			          <td>商铺地址 ：</td>
 			          <td>
-			          	<input name="shopAddr" id="shopAddr" type="text" style="width: 200px;" value="${businessShop.shopAddr}" maxlength="60" class="easyui-validatebox"  required="true" missingMessage="请输入商铺类型名称" />
+			          	<input name="shopAddr" id="shopAddr" type="text" style="width: 200px;" value="${businessShop.shopAddr}" maxlength="200" class="easyui-validatebox"  required="true" missingMessage="请输入商铺类型名称" />
 			          </td>
 			        </tr>
 			        <tr>
 			          <td>商铺描述 ：</td>
 			          <td>
-			          	<input name="shopDesc" id="shopDesc" type="text" style="width: 200px;" value="${businessShop.shopDesc}" maxlength="60" class="easyui-validatebox"  required="true" missingMessage="请输入商铺类型名称" />
+			          	<input name="shopDesc" id="shopDesc" type="text" style="width: 200px;" value="${businessShop.shopDesc}" maxlength="512" class="easyui-validatebox"  required="true" missingMessage="请输入商铺类型名称" />
 			          </td>
 			        </tr>
 			        <tr>
 			          <td>商铺连接地址 ：</td>
 			          <td>
-			          	<input name="shopUrl" id="shopUrl" type="text" style="width: 200px;" value="${businessShop.shopUrl}" maxlength="60" class="easyui-validatebox"  required="true" missingMessage="请输入商铺类型名称" />
+			          	<input name="shopUrl" id="shopUrl" type="text" style="width: 200px;" value="${businessShop.shopUrl}" maxlength="128" class="easyui-validatebox"  required="true" missingMessage="请输入商铺类型名称" />
 			          </td>
 			        </tr>
 			        <tr>
 			          <td>编辑人：</td>
 			          <td>
-			          	<input name="editor" id="editor" type="text" style="width: 200px;" value="${businessShop.editor}" maxlength="60" class="easyui-validatebox"  required="true" missingMessage="请输入商铺类型名称" />
+			          	<input name="editor" id="editor" type="text" style="width: 200px;" value="${businessShop.editor}" maxlength="32" class="easyui-validatebox"   missingMessage="请输入商铺类型名称" />
 			          </td>
 			        </tr>
 			        <tr>
@@ -118,7 +118,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <script type="text/javascript">
 $(function(){ 
 	alert('ccc')
-	init("moduleIconImage");
+	init("modifyModuleIconImage");
 });
 </script>
 </body>
