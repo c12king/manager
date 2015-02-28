@@ -2,7 +2,6 @@ package com.manage.app.service;
 
 import org.ietf.jgss.GSSException;
 
-import com.manage.app.bean.ManageCity;
 import com.manage.app.bean.ManageCounty;
 import com.utis.Page;
 

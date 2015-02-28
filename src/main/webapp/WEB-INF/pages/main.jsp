@@ -132,9 +132,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                         	<div class="selected"><a href="javascript:aClick('省市区管理', '<%=path%>/manage/manageProvice/ProvinceCityManagement.do');">省市区管理</a></div>
                         	<div class="selected"><a href="javascript:aClick('快递公司管理', '<%=path%>/manage/manageExpress/manageExpCom.do');">快递公司管理</a></div>
                         	<div class="selected"><a href="javascript:aClick('标签管理', '<%=path%>/manage/manageTag/enter.do');">标签管理</a></div>
-                            <div class="selected"><a href="javascript:aClick('商铺管理', '<%=path%>/manage/businessShopType/enter.do');">商铺管理</a></div>
+<%--                        <div class="selected"><a href="javascript:aClick('标签管理', '<%=path%>/manage/manageTagType/enter.do');">标签管理</a></div> --%>
+                        	                        	                        	<div class="selected"><a href="javascript:aClick('管理员管理', '<%=path%>/manage/manageAdmin/enter.do');">管理员管理</a></div>
                         	
-<%--                         	<div class="selected"><a href="javascript:aClick('标签管理', '<%=path%>/manage/manageTagType/enter.do');">标签管理</a></div> --%>
+                        	<div class="selected"><a href="javascript:aClick('标准角色管理', '<%=path%>/manage/businessRole/standardEnter.do');">标准角色管理</a></div>
+                        	<div class="selected"><a href="javascript:aClick('特殊角色管理', '<%=path%>/manage/businessRole/specialEnter.do');">特殊角色管理</a></div>
+                        	<div class="selected"><a href="javascript:aClick('角色组管理', '<%=path%>/manage/businessRoleGroup/enter.do');">角色组管理</a></div>
+                        	
                         </li>
                     </ul>
 				</div>
@@ -182,21 +186,21 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				<div title="社区数据统计">
 					<ul>
                         <li>
-                            <div class="selected"><a href="javascript:aClick('新闻浏览总量', '<%=path%>/statis/community/newsVisits.do');">新闻浏览总量</a></div>
-                            <div class="selected"><a href="javascript:aClick('新闻评论总量', '<%=path%>/statis/community/newsComments.do');">新闻评论总量</a></div>
-                            <div class="selected"><a href="javascript:aClick('新闻点赞总量', '<%=path%>/statis/community/newsSupports.do');">新闻点赞总量</a></div>
+                            <div class="selected"><a href="javascript:aClick('新鲜事浏览总量', '<%=path%>/statis/community/newsVisits.do');">新鲜事浏览总量</a></div>
+                            <div class="selected"><a href="javascript:aClick('新鲜事评论总量', '<%=path%>/statis/community/newsComments.do');">新鲜事评论总量</a></div>
+                            <div class="selected"><a href="javascript:aClick('新鲜事点赞总量', '<%=path%>/statis/community/newsSupports.do');">新鲜事点赞总量</a></div>
                             <div class="selected"><a href="javascript:aClick('爆料总量', '<%=path%>/statis/community/breakCount.do');">爆料总量</a></div>
-                            <div class="selected"><a href="javascript:aClick('爆料新闻浏览总量', '<%=path%>/statis/community/breakNewsVisits.do');">爆料新闻浏览总量</a></div>
+                            <div class="selected"><a href="javascript:aClick('爆料新鲜事浏览总量', '<%=path%>/statis/community/breakNewsVisits.do');">爆料新鲜事浏览总量</a></div>
                             
                             <div class="selected"><a href="javascript:aClick('爆料选取总量', '<%=path%>/statis/community/breakSelect.do');">爆料选取总量</a></div>
                             <div class="selected"><a href="javascript:aClick('爆料选取占比', '<%=path%>/statis/community/breakSelectCompare.do');">爆料选取占比</a></div>
                             
-                            <div class="selected"><a href="javascript:aClick('单篇新闻浏览量排名', '<%=path%>/statis/community/singleNewsVisits.do');">单篇新闻浏览量排名</a></div>
-                            <div class="selected"><a href="javascript:aClick('平均新闻浏览量', '<%=path%>/statis/community/averageNewsVisits.do');">平均新闻浏览量</a></div>
-                            <div class="selected"><a href="javascript:aClick('单篇新闻评论量排名', '<%=path%>/statis/community/singleNewsComments.do');">单篇新闻评论量排名</a></div>
-                            <div class="selected"><a href="javascript:aClick('平均新闻评论量', '<%=path%>/statis/community/averageNewsComments.do');">平均新闻评论量</a></div>
-                            <div class="selected"><a href="javascript:aClick('单篇新闻点赞量排名', '<%=path%>/statis/community/singleNewsSupports.do');">单篇新闻点赞量排名</a></div>
-                            <div class="selected"><a href="javascript:aClick('平均新闻点赞量', '<%=path%>/statis/community/averageNewsSupports.do');">平均新闻点赞量</a></div>
+                            <div class="selected"><a href="javascript:aClick('单篇新鲜事浏览量排名', '<%=path%>/statis/community/singleNewsVisits.do');">单篇新鲜事浏览量排名</a></div>
+                            <div class="selected"><a href="javascript:aClick('平均新鲜事浏览量', '<%=path%>/statis/community/averageNewsVisits.do');">平均新鲜事浏览量</a></div>
+                            <div class="selected"><a href="javascript:aClick('单篇新鲜事评论量排名', '<%=path%>/statis/community/singleNewsComments.do');">单篇新鲜事评论量排名</a></div>
+                            <div class="selected"><a href="javascript:aClick('平均新鲜事评论量', '<%=path%>/statis/community/averageNewsComments.do');">平均新鲜事评论量</a></div>
+                            <div class="selected"><a href="javascript:aClick('单篇新鲜事点赞量排名', '<%=path%>/statis/community/singleNewsSupports.do');">单篇新鲜事点赞量排名</a></div>
+                            <div class="selected"><a href="javascript:aClick('平均新鲜事点赞量', '<%=path%>/statis/community/averageNewsSupports.do');">平均新鲜事点赞量</a></div>
                             <div class="selected"><a href="javascript:aClick('爆料浏览量排名', '<%=path%>/statis/community/breakVisits.do');">爆料浏览量排名</a></div>
                             <div class="selected"><a href="javascript:aClick('平均爆料浏览量', '<%=path%>/statis/community/averageBreakVisits.do');">平均爆料浏览量</a></div>
                             <div class="selected"><a href="javascript:aClick('爆料评论量排名', '<%=path%>/statis/community/breakCommentsRank.do');">爆料评论量排名</a></div>
@@ -209,13 +213,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				<div title="运营数据统计">
 					<ul>
                         <li>
-							<div class="selected"><a href="javascript:aClick('新闻总量', '<%=path%>/statis/operation/newsCount.do');">新闻总量</a></div>
-							<div class="selected"><a href="javascript:aClick('各社区新闻总量占比', '<%=path%>/statis/operation/communityNewsCompare.do');">各社区新闻总量占比</a></div>
-							<div class="selected"><a href="javascript:aClick('各社区新闻总量排名', '<%=path%>/statis/operation/communityNewsCountRank.do');">各社区新闻总量排名</a></div>
-							<div class="selected"><a href="javascript:aClick('新闻评论总量', '<%=path%>/statis/operation/newsComments.do');">新闻评论总量</a></div>
-							<div class="selected"><a href="javascript:aClick('各社区新闻评论排名', '<%=path%>/statis/operation/communityNewsCommentsRank.do');">各社区新闻评论排名</a></div>
-							<div class="selected"><a href="javascript:aClick('各社区新闻评论占比', '<%=path%>/statis/operation/communityNewsCommentsCompare.do');">各社区新闻评论占比</a></div>
-							<div class="selected"><a href="javascript:aClick('新闻平均评论量', '<%=path%>/statis/operation/averageNewsComments.do');">新闻平均评论量</a></div>
+							<div class="selected"><a href="javascript:aClick('新鲜事总量', '<%=path%>/statis/operation/newsCount.do');">新鲜事总量</a></div>
+							<div class="selected"><a href="javascript:aClick('各社区新鲜事总量占比', '<%=path%>/statis/operation/communityNewsCompare.do');">各社区新鲜事总量占比</a></div>
+							<div class="selected"><a href="javascript:aClick('各社区新鲜事总量排名', '<%=path%>/statis/operation/communityNewsCountRank.do');">各社区新鲜事总量排名</a></div>
+							<div class="selected"><a href="javascript:aClick('新鲜事评论总量', '<%=path%>/statis/operation/newsComments.do');">新鲜事评论总量</a></div>
+							<div class="selected"><a href="javascript:aClick('各社区新鲜事评论排名', '<%=path%>/statis/operation/communityNewsCommentsRank.do');">各社区新鲜事评论排名</a></div>
+							<div class="selected"><a href="javascript:aClick('各社区新鲜事评论占比', '<%=path%>/statis/operation/communityNewsCommentsCompare.do');">各社区新鲜事评论占比</a></div>
+							<div class="selected"><a href="javascript:aClick('新鲜事平均评论量', '<%=path%>/statis/operation/averageNewsComments.do');">新鲜事平均评论量</a></div>
 							<div class="selected"><a href="javascript:aClick('爆料总量', '<%=path%>/statis/operation/breakCount.do');">爆料总量</a></div>
 							<div class="selected"><a href="javascript:aClick('各社区爆料总量占比', '<%=path%>/statis/operation/communityBreakCompare.do');">各社区爆料总量占比</a></div>
 							<div class="selected"><a href="javascript:aClick('各社区爆料总量排名', '<%=path%>/statis/operation/communityBreakRank.do');">各社区爆料总量排名</a></div>
@@ -264,18 +268,18 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                             <div class="selected"><a href="javascript:aClick('APP-APP页面总浏览量', '<%=basePath %>/app/appStatisticsClick/appVisits.do');">APP-APP页面总浏览量</a></div>
                             <div class="selected"><a href="javascript:aClick('APP-平均访问页数', '<%=basePath %>/app/appStatisticsClick/appAvePages.do');">APP-平均访问页数</a></div>
                             
-                            <div class="selected"><a href="javascript:aClick('新闻-新发新闻总篇数', '<%=basePath %>/app/appStatisticsClick/newPubInfoCount.do');">新闻-新发新闻总篇数</a></div>
-                            <div class="selected"><a href="javascript:aClick('新闻-总访问人数', '<%=basePath %>/app/appStatisticsClick/infoCount.do');">新闻-总访问人数</a></div>
-                            <div class="selected"><a href="javascript:aClick('新闻-页面总浏览量', '<%=basePath %>/app/appStatisticsClick/infoVisits.do');">新闻-页面总浏览量</a></div>
-                            <div class="selected"><a href="javascript:aClick('新闻-人均访问页数', '<%=basePath %>/app/appStatisticsClick/infoAvePages.do');">新闻-平均访问页数</a></div>
-                            <div class="selected"><a href="javascript:aClick('新闻-被访问新闻总篇数', '<%=basePath %>/app/appStatisticsClick/visitedInfoCount.do');">新闻-被访问新闻总篇数</a></div>
-                            <div class="selected"><a href="javascript:aClick('新闻-篇均浏览人数', '<%=basePath %>/app/appStatisticsClick/personCountPerPage.do');">新闻-篇均浏览人数</a></div>
-                            <div class="selected"><a href="javascript:aClick('新闻-社区报新增新闻篇数', '<%=basePath %>/app/appStatisticsClick/newComPubInfoCount.do');">新闻-社区报新增新闻篇数</a></div>
-                            <div class="selected"><a href="javascript:aClick('新闻-社区报新闻被访问新闻篇数', '<%=basePath %>/app/appStatisticsClick/comVisitedInfoCount.do');">新闻-社区报新闻被访问新闻篇数</a></div>
-                            <div class="selected"><a href="javascript:aClick('新闻-社区报篇均浏览人数', '<%=basePath %>/app/appStatisticsClick/comInfoAvePages.do');">新闻-社区报篇均浏览人数</a></div>
-                            <div class="selected"><a href="javascript:aClick('新闻-运营新增新闻篇数', '<%=basePath %>/app/appStatisticsClick/newOpePubInfoCount.do');">新闻-运营新增新闻篇数</a></div>
-                            <div class="selected"><a href="javascript:aClick('新闻-运营被访问新闻篇数', '<%=basePath %>/app/appStatisticsClick/opeVisitedInfoCount.do');">新闻-运营被访问新闻篇数</a></div>
-                            <div class="selected"><a href="javascript:aClick('新闻-运营篇均浏览人数', '<%=basePath %>/app/appStatisticsClick/opeInfoAvePages.do');">新闻-运营篇均浏览人数</a></div>
+                            <div class="selected"><a href="javascript:aClick('新鲜事-新发新鲜事总篇数', '<%=basePath %>/app/appStatisticsClick/newPubInfoCount.do');">新鲜事-新发新鲜事总篇数</a></div>
+                            <div class="selected"><a href="javascript:aClick('新鲜事-总访问人数', '<%=basePath %>/app/appStatisticsClick/infoCount.do');">新鲜事-总访问人数</a></div>
+                            <div class="selected"><a href="javascript:aClick('新鲜事-页面总浏览量', '<%=basePath %>/app/appStatisticsClick/infoVisits.do');">新鲜事-页面总浏览量</a></div>
+                            <div class="selected"><a href="javascript:aClick('新鲜事-人均访问页数', '<%=basePath %>/app/appStatisticsClick/infoAvePages.do');">新鲜事-平均访问页数</a></div>
+                            <div class="selected"><a href="javascript:aClick('新鲜事-被访问新鲜事总篇数', '<%=basePath %>/app/appStatisticsClick/visitedInfoCount.do');">新鲜事-被访问新鲜事总篇数</a></div>
+                            <div class="selected"><a href="javascript:aClick('新鲜事-篇均浏览人数', '<%=basePath %>/app/appStatisticsClick/personCountPerPage.do');">新鲜事-篇均浏览人数</a></div>
+                            <div class="selected"><a href="javascript:aClick('新鲜事-社区报新增新鲜事篇数', '<%=basePath %>/app/appStatisticsClick/newComPubInfoCount.do');">新鲜事-社区报新增新鲜事篇数</a></div>
+                            <div class="selected"><a href="javascript:aClick('新鲜事-社区报新鲜事被访问新鲜事篇数', '<%=basePath %>/app/appStatisticsClick/comVisitedInfoCount.do');">新鲜事-社区报新鲜事被访问新鲜事篇数</a></div>
+                            <div class="selected"><a href="javascript:aClick('新鲜事-社区报篇均浏览人数', '<%=basePath %>/app/appStatisticsClick/comInfoAvePages.do');">新鲜事-社区报篇均浏览人数</a></div>
+                            <div class="selected"><a href="javascript:aClick('新鲜事-运营新增新鲜事篇数', '<%=basePath %>/app/appStatisticsClick/newOpePubInfoCount.do');">新鲜事-运营新增新鲜事篇数</a></div>
+                            <div class="selected"><a href="javascript:aClick('新鲜事-运营被访问新鲜事篇数', '<%=basePath %>/app/appStatisticsClick/opeVisitedInfoCount.do');">新鲜事-运营被访问新鲜事篇数</a></div>
+                            <div class="selected"><a href="javascript:aClick('新鲜事-运营篇均浏览人数', '<%=basePath %>/app/appStatisticsClick/opeInfoAvePages.do');">新鲜事-运营篇均浏览人数</a></div>
                             
                             <div class="selected"><a href="javascript:aClick('快递-总访问人数数', '<%=basePath %>/app/appStatisticsClick/expressCount.do');">快递-总访问人数</a></div>
                             <div class="selected"><a href="javascript:aClick('快递-总浏览量', '<%=basePath %>/app/appStatisticsClick/expressVisits.do');">快递-总浏览量</a></div>
@@ -285,9 +289,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                             <div class="selected"><a href="javascript:aClick('跳蚤市场-总浏览量', '<%=basePath %>/app/appStatisticsClick/marketVisits.do');">跳蚤市场-总浏览量</a></div>
                             <div class="selected"><a href="javascript:aClick('跳蚤市场-平均访问页数', '<%=basePath %>/app/appStatisticsClick/marketAvePages.do');">跳蚤市场-平均访问页数</a></div>
                             
-                            <div class="selected"><a href="javascript:aClick('邻里求助-总访问人数数', '<%=basePath %>/app/appStatisticsClick/helpCount.do');">邻里求助-总访问人数</a></div>
-                            <div class="selected"><a href="javascript:aClick('邻里求助-总浏览量', '<%=basePath %>/app/appStatisticsClick/helpVisits.do');">邻里求助-总浏览量</a></div>
-                            <div class="selected"><a href="javascript:aClick('邻里求助-平均访问页数', '<%=basePath %>/app/appStatisticsClick/helpAvePages.do');">邻里求助-平均访问页数</a></div>
+                            <div class="selected"><a href="javascript:aClick('社区聊吧-总访问人数数', '<%=basePath %>/app/appStatisticsClick/helpCount.do');">社区聊吧-总访问人数</a></div>
+                            <div class="selected"><a href="javascript:aClick('社区聊吧-总浏览量', '<%=basePath %>/app/appStatisticsClick/helpVisits.do');">社区聊吧-总浏览量</a></div>
+                            <div class="selected"><a href="javascript:aClick('社区聊吧-平均访问页数', '<%=basePath %>/app/appStatisticsClick/helpAvePages.do');">社区聊吧-平均访问页数</a></div>
                             
                             <div class="selected"><a href="javascript:aClick('中医养生-总访问人数数', '<%=basePath %>/app/appStatisticsClick/chinCount.do');">中医养生-总访问人数</a></div>
                             <div class="selected"><a href="javascript:aClick('中医养生-总浏览量', '<%=basePath %>/app/appStatisticsClick/chinVisits.do');">中医养生-总浏览量</a></div>

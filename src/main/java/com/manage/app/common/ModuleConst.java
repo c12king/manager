@@ -1,6 +1,5 @@
 package com.manage.app.common;
 
-import com.manage.app.common.ModuleConst;
 
 /**
  * 对应数据库中的manage_module中的4条记录，数据库发生主键变化，即修改这里

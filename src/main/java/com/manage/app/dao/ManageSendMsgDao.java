@@ -3,19 +3,12 @@ package com.manage.app.dao;
 import java.util.List;
 import java.util.Map;
 
-
-
-
-
-
-
 import org.ietf.jgss.GSSException;
 import org.springframework.stereotype.Repository;
 
-import com.manage.framework.exception.DaoException;
-import com.manage.app.bean.ManageHouse;
 import com.manage.app.bean.ManageSendMsg;
 import com.manage.app.vo.ManageSendMsgQuery;
+import com.manage.framework.exception.DaoException;
 import com.utis.Page;
 
 @Repository

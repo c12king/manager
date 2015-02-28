@@ -6,7 +6,6 @@ import org.ietf.jgss.GSSException;
 import org.springframework.stereotype.Repository;
 
 import com.manage.app.bean.BusinessCommunity;
-import com.manage.app.bean.BusinessMenu;
 import com.manage.app.bean.BusinessProperty;
 import com.manage.app.bean.BusinessStation;
 import com.manage.app.bean.ManageOrg;

@@ -61,6 +61,7 @@ $(function() {
     		          { field: 'staIcon', title: '驿站图标', width: 150, align:'center' },
     		          { field: 'staLongitude', title: '驿站经度', width: 150, align:'center' },
     		          { field: 'staLatitude', title: '驿站纬度', width: 150, align:'center' },
+    		          { field: 'isDoor', title: '是否取件', width: 150, align:'center' },
     		          { field: 'crateTime', title: '创建时间', width: 150, align:'center' },
     		          { field: 'editTime', title: '编辑时间', width: 150, align:'center' },
     		          { field: 'editor', title: '编辑人', width: 150, align:'center' },
@@ -195,8 +196,8 @@ function del() {
 }
 
 function showAll() {
-	$('#searchForm').form('clear');
-	grid.datagrid('reload',{});
+	$("#name").val("")
+	grid.datagrid('reload');
 }
 
 function saveData(oper, formId) {

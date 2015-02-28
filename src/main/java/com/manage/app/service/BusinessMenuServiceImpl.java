@@ -3,28 +3,19 @@ package com.manage.app.service;
 
 
 
-import java.lang.reflect.Proxy;
-import java.net.MalformedURLException;
-import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Isolation;
-import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.manage.app.bean.BusinessCommunity;
 import com.manage.app.bean.BusinessMenu;
 import com.manage.app.dao.BusinessMenuDao;
 import com.manage.framework.exception.DaoException;
 import com.manage.framework.exception.ServiceException;
-import com.utis.Page;
 import com.utis.TreeNode;
 @Service("MenuService")
 @Transactional
@@ -117,6 +108,35 @@ public class BusinessMenuServiceImpl implements BusinessMenuService{
 			e.printStackTrace();
 		}
 		return list;
+	}
+	
+	/**
+	 * 获取所有菜单
+	 * @param id
+	 * @return
+	 * @throws ServiceException
+	 */
+	public List<BusinessMenu> findAllMenu() throws ServiceException {
+		List<BusinessMenu> list = null;
+		try {
+			list= businessMenuDao.findAllMenu();
+		} catch (DaoException e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+	
+	/**
+	 * 获取单个菜单
+	 */
+	public BusinessMenu findMenuById(Integer menuId) throws ServiceException {
+		BusinessMenu businessMenu = null;
+		try {
+			businessMenu= businessMenuDao.findMenuById(menuId);
+		} catch (DaoException e) {
+			e.printStackTrace();
+		}
+		return businessMenu;
 	}
 	
 }

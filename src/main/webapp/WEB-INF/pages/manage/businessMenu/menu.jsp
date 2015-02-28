@@ -98,6 +98,28 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					 	</td> 
 					</td>
 				</tr>
+				
+				<tr>
+			          <td>是否展示社区：</td>
+			          <td>
+			          	<select name="isCom" id="isCom" class="selectwidth easyui-validatebox"  required="true" missingMessage="是否展示社区">
+			          		<option value="">请选择</option>
+			          		<option value="0" selected >是</option>
+			          		<option value="1" >否</option>
+			          	</select>
+			          </td>
+			        </tr>
+			        <tr>
+			          <td>是否展示小区：</td>
+			          <td>
+			          	<select name="isEstate" id="isEstate" class="selectwidth easyui-validatebox"  required="true" missingMessage="是否展示小区">
+			          		<option value="">请选择</option>
+			          		<option value="0" selected >是</option>
+			          		<option value="1" >否</option>
+			          	</select>
+			          </td>
+			        </tr>
+				
 				<tr>
 					<td></td>
 					<td>

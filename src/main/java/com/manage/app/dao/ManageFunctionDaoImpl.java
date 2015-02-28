@@ -9,7 +9,6 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.manage.app.bean.BusinessCommunity;
 import com.manage.app.bean.ManageFunction;
 import com.manage.framework.exception.DaoException;
 import com.utis.Page;
@@ -102,5 +101,18 @@ public class ManageFunctionDaoImpl implements ManageFunctionDao {
 	public ManageFunction findByFunctionId(final Integer id) throws DaoException {
 		ManageFunction manageFunction = this.sqlSessionTemplate.selectOne("findByFunctionId",id);
 		return manageFunction;
+	}
+	
+	/**
+	 * 获取菜单下的功能
+	 * @param pageSize
+	 * @param pageNo
+	 * @return
+	 * @throws GSServiceException
+	 */
+	public List<ManageFunction> findFunctionByMenu(Integer menuId) throws GSSException{
+		List<ManageFunction> list = this.sqlSessionTemplate.selectList("findFunctionByMenu",menuId);
+		
+		return list;
 	}
 }

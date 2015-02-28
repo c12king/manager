@@ -27,7 +27,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <body>
 	<div style="padding: 20px 20px 40px 30px;">
             <form id="addForm" method="post" action="<%=path %>/manage/businessShop/save.do">
- 			<input name="typeId" id="typeId" type="hidden"  value="" /> 
+ 			<input name="typeId" id="typeId" type="hidden"  value="${typeId}" /> 
             <table>
 			        <tr>
 			          <td>商铺名称：</td>

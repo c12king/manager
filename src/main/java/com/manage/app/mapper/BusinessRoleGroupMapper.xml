@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.manage.app.dao.BusinessRoleGroupDao" >
+	<!-- 返回结构集 -->
+	<resultMap id="BusinessRoleGroupResult" type="BusinessRoleGroup">
+			<result column="groupId" property="groupId" />
+			<result column="groupName" property="groupName" />
+			<result column="groupDesc" property="groupDesc" />
+	</resultMap>
+	
+	<!-- 所有字段 -->
+	<sql id="Base_Column_List" >
+			groupId,
+			groupName,
+			groupDesc
+	</sql>
+	
+	<!-- 所有字段查询条件 -->
+	<sql id="Base_Where_Clause">
+		<where>
+			<trim  suffixOverrides="," >
+					<if test="groupId != null and groupId != ''" >
+				   		and groupId = #{groupId}
+					</if>
+					<if test="groupName != null and groupName != ''" >
+				   		and groupName = #{groupName}
+					</if>
+					<if test="groupDesc != null and groupDesc != ''" >
+				   		and groupDesc = #{groupDesc}
+					</if>
+			</trim>
+		</where>
+	</sql>
+	
+	<!-- 根据id查询 BusinessRoleGroup -->
+	<select id="findById"  resultMap="BusinessRoleGroupResult" parameterType="java.lang.Integer">
+		select <include refid="Base_Column_List" /> from business_role_group where groupId = #{id}
+	</select>
+	
+	<!-- 无条件查询所有BusinessRoleGroup -->
+	<select id="findAll" resultMap="BusinessRoleGroupResult">
+		select <include refid="Base_Column_List" /> from business_role_group order by groupId desc
+	</select>
+	
+	<!-- 按Map对象条件查询所有BusinessRoleGroup -->
+	<select id="findByMap" resultMap="BusinessRoleGroupResult" parameterType="java.util.Map">
+		select <include refid="Base_Column_List" /> from business_role_group <include refid="Base_Where_Clause" />
+	</select>
+	
+	<!-- 按VO对象条件查询所有BusinessRoleGroup -->
+	<select id="findByExample" resultMap="BusinessRoleGroupResult" parameterType="com.manage.app.vo.BusinessRoleGroupQuery">
+		select <include refid="Base_Column_List" /> from business_role_group <include refid="Base_Where_Clause" />
+	</select>
+	
+	<!-- BusinessRoleGroup根据搜索条件，搜索分页数据 -->
+	<select id="findAllPage" resultMap="BusinessRoleGroupResult" parameterType="Object">
+		select <include refid="Base_Column_List" /> from business_role_group  
+		<include refid="Base_Where_Clause" />
+		<if test="pager.orderCondition != null and pager.orderCondition != ''" >
+      	${pager.orderCondition}
+	    </if>
+	    <if test="pager.mysqlQueryCondition != null and pager.mysqlQueryCondition != ''" >
+	    ${pager.mysqlQueryCondition}
+	    </if>
+	</select>
+	
+	<!-- BusinessRoleGroup列表总数-->
+	<select id="selectCount" resultType="java.lang.Integer"  parameterType="Object">
+		select count(1) from business_role_group 
+		<include refid="Base_Where_Clause" />
+	</select>
+	
+	<!-- BusinessRoleGroup保存数据 -->
+	<insert id="save" parameterType="BusinessRoleGroup">
+		<selectKey resultType="java.lang.Integer" order="AFTER" keyProperty="groupId">
+			SELECT LAST_INSERT_ID()
+  		</selectKey>
+		insert into business_role_group(
+		
+		groupName,
+		groupDesc
+		) values(
+				#{groupName},
+		#{groupDesc}
+		)
+	</insert>
+	
+	<!-- BusinessRoleGroup修改数据 -->
+	<update id="update" parameterType="BusinessRoleGroup">
+		update business_role_group 
+		<set>
+			<if test="groupName != null and groupName != ''" >
+			groupName=#{groupName},
+			</if>
+			<if test="groupDesc != null and groupDesc != ''" >
+			groupDesc=#{groupDesc}
+			</if>
+		</set> 
+		where 
+		groupId=#{groupId}
+		
+		
+	</update>
+	
+	<!-- BusinessRoleGroup删除数据 -->
+	<delete id="delete" parameterType="java.lang.Integer">
+		delete from business_role_group where 
+		groupId=#{groupId}
+					</delete>
+	
+	<!-- BusinessRoleGroup根据搜索条件，搜索分页所需的数据 -->
+	<select id="findAllPageByField" resultMap="BusinessRoleGroupResult" parameterType="Object">
+		select 
+		<if test="fieldMap != null and fieldMap != ''" >
+			<foreach collection="fieldMap" item="field" separator=",">  
+	    	#{field}
+	    	</foreach>
+		</if>
+		<if test="fieldMap == null"> * </if>
+		from business_role_group  
+		<include refid="Base_Where_Clause" />
+		<if test="pager.orderCondition != null and pager.orderCondition != ''" >
+      	${pager.orderCondition}
+	    </if>
+	    <if test="pager.mysqlQueryCondition != null and pager.mysqlQueryCondition != ''" >
+	    ${pager.mysqlQueryCondition}
+	    </if>
+	</select>
+	
+	<!-- BusinessRoleGroup根据条件查询所需字段，返回列表 -->
+	<select id="findListByField" resultMap="BusinessRoleGroupResult" parameterType="Object">
+		select 
+		<if test="fieldMap != null and fieldMap != ''" >
+			<foreach collection="fieldMap" item="field" separator=",">  
+	    	#{field}
+	    	</foreach>
+		</if>
+		<if test="fieldMap == null"> * </if>
+		from business_role_group  
+		<include refid="Base_Where_Clause" />
+		<if test="pager.orderCondition != null and pager.orderCondition != ''" >
+      	${pager.orderCondition}
+	    </if>
+	</select>
+	
+	<!-- 根据id查询 BusinessRoleGroup -->
+	<select id="findByField"  resultMap="BusinessRoleGroupResult" parameterType="Object">
+		select 
+		<if test="fieldMap != null and fieldMap != ''" >
+			<foreach collection="fieldMap" item="field" separator=",">  
+	    	#{field}
+	    	</foreach>
+		</if>
+		<if test="fieldMap == null"> * </if>
+		from business_role_group where groupId = #{id}
+	</select>
+	
+</mapper>
+	

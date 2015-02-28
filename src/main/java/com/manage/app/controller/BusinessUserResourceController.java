@@ -3,33 +3,21 @@ package com.manage.app.controller;
 import java.io.IOException;
 import java.sql.Timestamp;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import net.sf.json.JSONObject;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
-import com.manage.app.vo.BaseBean;
-
 
 import com.manage.app.bean.BusinessUser;
 import com.manage.app.bean.BusinessUserResource;
-import com.manage.app.bean.ManageBuilding;
-import com.manage.app.bean.ManageEstate;
-import com.manage.app.common.ModuleConst;
+import com.manage.app.service.BusinessUserCommunityService;
 import com.manage.app.service.BusinessUserResourceService;
 import com.manage.app.service.BusinessUserService;
 import com.manage.app.service.ManageBuildingService;
@@ -49,6 +37,8 @@ public class BusinessUserResourceController {
 	private ManageBuildingService manageBuildingService;
 	@Autowired
 	private ManageEstateService manageEstateService;
+	@Autowired
+	private BusinessUserCommunityService businessUserCommunityService;
 	
 	private final String LIST_ACTION = "redirect:/business/businessUserResource/list.do";
 	
@@ -140,7 +130,81 @@ public class BusinessUserResourceController {
 			Integer userId = new Integer(request.getParameter("userId"));
 			entity.setUserId(userId);
 			BusinessUser businessUser = businessUserService.findById(entity);
-			if(businessUser.getOrgType().equals(ModuleConst.PROPERTY_CODE)) {
+			
+			//物业，驿站
+			String[] estateIds = request.getParameterValues("estateId");
+			if(estateIds != null && estateIds.length > 0) {
+				//先删除，再添加
+				businessUserResourceService.delete(userId);
+				businessUserResourceService.save_resources(new Integer(request.getParameter("userId")),null,estateIds);
+			}else{
+				businessUserResourceService.delete(userId);
+			}
+			
+			/*//社区报
+			String[] comIds = request.getParameterValues("comId");
+			//先删除该用户下已有的社区
+			businessUserCommunityService.deleteCommunity(userId);
+			
+			//再保存新的社区关系
+			if(comIds != null && comIds.length > 0) {
+				BusinessUserCommunity businessUserCommunity = new BusinessUserCommunity();
+				for(int i=0;i<comIds.length;i++) {
+					Integer comId = new Integer(comIds[i]);
+					businessUserCommunity.setUserId(userId);
+					businessUserCommunity.setComId(comId);
+					businessUserCommunity.setCreateTime(new Timestamp(System.currentTimeMillis()));
+					businessUserCommunity.setEditTime(new Timestamp(System.currentTimeMillis()));
+					businessUserCommunityService.save(businessUserCommunity);
+				}
+			}*/
+			
+			/*if(comIds != null && comIds.length > 0) {
+				//先删除，再添加
+				businessUserResourceService.delete(userId);
+				for(int i=0;i<comIds.length;i++) {
+					Integer comId = new Integer(comIds[i]);
+					Map map = new HashMap();
+					map.put("comId", comId);
+					List estateList = manageEstateService.selectManageEstateByComId(comId);
+					if(estateList.size() > 0) {
+						for(int j=0;j<estateList.size();j++) {
+							ManageEstate estate = (ManageEstate) estateList.get(j);
+							businessUserResource = new BusinessUserResource();
+							businessUserResource.setUserId(businessUser.getUserId());
+						    businessUserResource.setEstateId(estate.getEstateId());
+						    //businessUserResource.setBuildingId(building.getBuildingId());
+						    //businessUserResource.setUnitId(query.getUnitId());
+						    businessUserResource.setEstateName(estate.getEstateName());
+						    //businessUserResource.setBuildingName(building.getBuildingName());
+						    //businessUserResource.setUnitName(query.getUnitName());
+						    businessUserResource.setCreateTime(new Timestamp(System.currentTimeMillis()));
+						    businessUserResource.setEditTime(new Timestamp(System.currentTimeMillis()));
+						    //businessUserResource.setEditor(query.getEditor());
+						    businessUserResource.setComId(comId);
+							businessUserResourceService.save(businessUserResource);
+						}
+					}else{
+						businessUserResource = new BusinessUserResource();
+						businessUserResource.setUserId(businessUser.getUserId());
+					    businessUserResource.setEstateId(0);
+					    //businessUserResource.setBuildingId(building.getBuildingId());
+					    //businessUserResource.setUnitId(query.getUnitId());
+					    businessUserResource.setEstateName("");
+					    //businessUserResource.setBuildingName(building.getBuildingName());
+					    //businessUserResource.setUnitName(query.getUnitName());
+					    businessUserResource.setCreateTime(new Timestamp(System.currentTimeMillis()));
+					    businessUserResource.setEditTime(new Timestamp(System.currentTimeMillis()));
+					    //businessUserResource.setEditor(query.getEditor());
+					    businessUserResource.setComId(comId);
+						businessUserResourceService.save(businessUserResource);
+					}
+				}
+			}else{
+				businessUserResourceService.delete(userId);
+			}*/
+			
+			/*if(businessUser.getOrgType().equals(ModuleConst.PROPERTY_CODE)) {
 				String[] estateIds = request.getParameterValues("estateId");
 				if(estateIds != null && estateIds.length > 0) {
 					//先删除，再添加
@@ -223,7 +287,7 @@ public class BusinessUserResourceController {
 				//businessUserResourceService.save_resources(new Integer(request.getParameter("userId")),request.getParameterValues("comId"),request.getParameterValues("estateId"));
 				businessUserResourceService.save_resources(new Integer(request.getParameter("userId")),null,request.getParameterValues("estateId"));
 			}
-			
+			*/
 			//保存成功
 			json = "{\"success\":\"true\",\"message\":\"保存成功\"}";
 		} catch(Exception e) {

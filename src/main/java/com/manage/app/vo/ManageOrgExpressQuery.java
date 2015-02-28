@@ -1,13 +1,9 @@
 package com.manage.app.vo;
 
-import org.apache.commons.lang.builder.EqualsBuilder;
-import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
 
-import java.io.Serializable;
 import com.manage.app.bean.ManageOrgExpress;
-import com.manage.app.vo.BaseBean;
 
 public class ManageOrgExpressQuery extends BaseBean {
 	

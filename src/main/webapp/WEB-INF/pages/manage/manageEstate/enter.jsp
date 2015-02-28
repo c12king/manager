@@ -210,8 +210,8 @@ function del() {
 }
 
 function showAll() {
-	$('#searchForm').form('clear');
-	grid.datagrid('reload',{});
+	$("#name").val("")
+	grid.datagrid('reload');
 }
 
 function saveData(oper, formId) {

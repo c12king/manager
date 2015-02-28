@@ -4,20 +4,17 @@ import java.util.List;
 import java.util.Map;
 
 import net.sf.json.JSONArray;
-import net.sf.json.JSONObject;
 
 import org.ietf.jgss.GSSException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Isolation;
-import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.manage.app.bean.ManageBuilding;
-import com.manage.app.bean.BusinessPosition;
 import com.manage.app.dao.ManageBuildingDao;
+import com.manage.framework.exception.ServiceException;
 import com.utis.Page;
 import com.utis.TreeNode;
 

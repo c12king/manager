@@ -13,15 +13,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.manage.app.vo.BaseBean;
-import com.manage.framework.exception.ServiceException;
-import com.manage.framework.exception.DaoException;
-
-import com.manage.app.vo.BusinessUserResourceQuery;
 import com.manage.app.bean.BusinessUserResource;
 import com.manage.app.bean.ManageEstate;
+import com.manage.app.dao.BusinessCommunityDao;
 import com.manage.app.dao.BusinessUserResourceDao;
 import com.manage.app.dao.ManageEstateDao;
+import com.manage.app.vo.BaseBean;
+import com.manage.app.vo.BusinessUserResourceQuery;
+import com.manage.framework.exception.DaoException;
+import com.manage.framework.exception.ServiceException;
 
 @Service("BusinessUserResourceService")
 @Transactional
@@ -32,6 +32,10 @@ public class BusinessUserResourceServiceImpl implements BusinessUserResourceServ
 	private BusinessUserResourceDao businessUserResourceDao;
 	@Autowired
 	private ManageEstateDao manageEstateDao;
+	
+	@Autowired
+	private BusinessCommunityDao businessCommunityDao;
+	
 	/**
 	 * 查询单个BusinessUserResource
 	 * @param id
@@ -218,7 +222,9 @@ public class BusinessUserResourceServiceImpl implements BusinessUserResourceServ
 					try {
 						manageEstate = manageEstateDao.selectSingleManageById(new Integer(string));
 						businessUserResource.setEstateName(manageEstate.getEstateName());
-		 	        	businessUserResourceDao.save(businessUserResource);
+						//BusinessCommunity businessCommunity = businessCommunityDao.findById(manageEstate.getComId());
+						businessUserResource.setComId(manageEstate.getComId());
+						businessUserResourceDao.save(businessUserResource);
 					} catch (GSSException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();

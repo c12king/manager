@@ -11,8 +11,8 @@ var reUserUserMessage="该输入项只能是数字、字母和下划线，并不
 var reUserCon=/^[a-zA-Z_]\w{1,30}$/;
 var reUserConUserMessage="该输入项只能是数字、字母和下划线，并不能以数字开头，至少1位，最多30位"
 
-var reName=/^[a-zA-Z0-9_\u4e00-\u9fa5]{1,32}$/;
-var reNameMessage="该输入项只能是数字、字母，下划线和汉字,最多32位"
+var reName=/^[a-zA-Z0-9_\u4e00-\u9fa5]{1,64}$/;
+var reNameMessage="该输入项只能是数字、字母，下划线和汉字,最多64位"
 
 var rePath=/^([a-zA-Z0-9_.#]+)+$/;
 var rePathMessage="该输入项只能是数字、字母和指定符号"

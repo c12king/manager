@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.manage.app.dao.BusinessRoleMenuDao" >
+	<!-- 返回结构集 -->
+	<resultMap id="BusinessRoleMenuResult" type="BusinessRoleMenu">
+			<result column="romeId" property="romeId" />
+			<result column="roleId" property="roleId" />
+			<result column="menuId" property="menuId" />
+			<result column="createTime" property="createTime" />
+			<result column="editTime" property="editTime" />
+			<result column="editor" property="editor" />
+			<result column="no" property="no" />
+	</resultMap>
+	
+	<!-- 所有字段 -->
+	<sql id="Base_Column_List" >
+			romeId,
+			roleId,
+			menuId,
+			createTime,
+			editTime,
+			editor,
+			no
+	</sql>
+	
+	<!-- 所有字段查询条件 -->
+	<sql id="Base_Where_Clause">
+		<where>
+			<trim  suffixOverrides="," >
+					<if test="romeId != null and romeId != ''" >
+				   		and romeId = #{romeId}
+					</if>
+					<if test="roleId != null and roleId != ''" >
+				   		and roleId = #{roleId}
+					</if>
+					<if test="menuId != null and menuId != ''" >
+				   		and menuId = #{menuId}
+					</if>
+					<if test="createTime != null and createTime != ''" >
+				   		and createTime = #{createTime}
+					</if>
+					<if test="editTime != null and editTime != ''" >
+				   		and editTime = #{editTime}
+					</if>
+					<if test="editor != null and editor != ''" >
+				   		and editor = #{editor}
+					</if>
+					<if test="no != null and no != ''" >
+				   		and no = #{no}
+					</if>
+			</trim>
+		</where>
+	</sql>
+	
+	<!-- 根据id查询 BusinessRoleMenu -->
+	<select id="findById"  resultMap="BusinessRoleMenuResult" parameterType="java.lang.Integer">
+		select <include refid="Base_Column_List" /> from business_role_menu where romeId = #{id}
+	</select>
+	
+	<!-- 无条件查询所有BusinessRoleMenu -->
+	<select id="findAll" resultMap="BusinessRoleMenuResult">
+		select <include refid="Base_Column_List" /> from business_role_menu 
+	</select>
+	
+	<!-- 按Map对象条件查询所有BusinessRoleMenu -->
+	<select id="findByMap" resultMap="BusinessRoleMenuResult" parameterType="java.util.Map">
+		select <include refid="Base_Column_List" /> from business_role_menu <include refid="Base_Where_Clause" />
+	</select>
+	
+	<!-- 按VO对象条件查询所有BusinessRoleMenu -->
+	<select id="findByExample" resultMap="BusinessRoleMenuResult" parameterType="com.manage.app.vo.BusinessRoleMenuQuery">
+		select <include refid="Base_Column_List" /> from business_role_menu <include refid="Base_Where_Clause" />
+	</select>
+	
+	<!-- BusinessRoleMenu根据搜索条件，搜索分页数据 -->
+	<select id="findAllPage" resultMap="BusinessRoleMenuResult" parameterType="Object">
+		select <include refid="Base_Column_List" /> from business_role_menu  
+		<include refid="Base_Where_Clause" />
+		<if test="pager.orderCondition != null and pager.orderCondition != ''" >
+      	${pager.orderCondition}
+	    </if>
+	    <if test="pager.mysqlQueryCondition != null and pager.mysqlQueryCondition != ''" >
+	    ${pager.mysqlQueryCondition}
+	    </if>
+	</select>
+	
+	<!-- BusinessRoleMenu列表总数-->
+	<select id="selectCount" resultType="java.lang.Integer"  parameterType="Object">
+		select count(1) from business_role_menu 
+		<include refid="Base_Where_Clause" />
+	</select>
+	
+	<!-- BusinessRoleMenu保存数据 -->
+	<insert id="save" parameterType="BusinessRoleMenu">
+		<selectKey resultType="java.lang.Integer" order="AFTER" keyProperty="romeId">
+			SELECT LAST_INSERT_ID()
+  		</selectKey>
+		insert into business_role_menu(
+		
+		roleId,
+		menuId,
+		createTime,
+		editTime,
+		editor,
+		no
+		) values(
+				#{roleId},
+		#{menuId},
+		#{createTime},
+		#{editTime},
+		#{editor},
+		#{no}
+		)
+	</insert>
+	
+	<!-- BusinessRoleMenu修改数据 -->
+	<update id="update" parameterType="BusinessRoleMenu">
+		update business_role_menu 
+		<set>
+			<if test="roleId != null and roleId != ''" >
+			roleId=#{roleId},
+			</if>
+			<if test="menuId != null and menuId != ''" >
+			menuId=#{menuId},
+			</if>
+			<if test="createTime != null and createTime != ''" >
+			createTime=#{createTime},
+			</if>
+			<if test="editTime != null and editTime != ''" >
+			editTime=#{editTime},
+			</if>
+			<if test="editor != null and editor != ''" >
+			editor=#{editor},
+			</if>
+			<if test="no != null and no != ''" >
+			no=#{no}
+			</if>
+		</set> 
+		where 
+		romeId=#{romeId}
+		
+		
+		
+		
+		
+		
+	</update>
+	
+	<!-- BusinessRoleMenu删除数据 -->
+	<delete id="delete" parameterType="java.lang.Integer">
+		delete from business_role_menu where 
+		romeId=#{romeId}
+													</delete>
+	
+	<!-- BusinessRoleMenu根据搜索条件，搜索分页所需的数据 -->
+	<select id="findAllPageByField" resultMap="BusinessRoleMenuResult" parameterType="Object">
+		select 
+		<if test="fieldMap != null and fieldMap != ''" >
+			<foreach collection="fieldMap" item="field" separator=",">  
+	    	#{field}
+	    	</foreach>
+		</if>
+		<if test="fieldMap == null"> * </if>
+		from business_role_menu  
+		<include refid="Base_Where_Clause" />
+		<if test="pager.orderCondition != null and pager.orderCondition != ''" >
+      	${pager.orderCondition}
+	    </if>
+	    <if test="pager.mysqlQueryCondition != null and pager.mysqlQueryCondition != ''" >
+	    ${pager.mysqlQueryCondition}
+	    </if>
+	</select>
+	
+	<!-- BusinessRoleMenu根据条件查询所需字段，返回列表 -->
+	<select id="findListByField" resultMap="BusinessRoleMenuResult" parameterType="Object">
+		select 
+		<if test="fieldMap != null and fieldMap != ''" >
+			<foreach collection="fieldMap" item="field" separator=",">  
+	    	#{field}
+	    	</foreach>
+		</if>
+		<if test="fieldMap == null"> * </if>
+		from business_role_menu  
+		<include refid="Base_Where_Clause" />
+		<if test="pager.orderCondition != null and pager.orderCondition != ''" >
+      	${pager.orderCondition}
+	    </if>
+	</select>
+	
+	<!-- 根据id查询 BusinessRoleMenu -->
+	<select id="findByField"  resultMap="BusinessRoleMenuResult" parameterType="Object">
+		select 
+		<if test="fieldMap != null and fieldMap != ''" >
+			<foreach collection="fieldMap" item="field" separator=",">  
+	    	#{field}
+	    	</foreach>
+		</if>
+		<if test="fieldMap == null"> * </if>
+		from business_role_menu where romeId = #{id}
+	</select>
+	
+</mapper>
+	

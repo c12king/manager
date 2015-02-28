@@ -25,12 +25,17 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<link rel="stylesheet" type="text/css" href="<%=path %>/css/themes/icon.css">
 	<script type="text/javascript" src="<%=path %>/js/jquery.min.js"></script>
 	<script type="text/javascript" src="<%=path %>/js/jquery.easyui.min.js"></script>
-
+<script>
+	$(function() {
+		$( "#tabs" ).tabs();
+	});
+	
+	</script>
 </head>
 <body>
 <script type="text/javascript">
 $(function(){
-	init("userPhotoImage");
+	//init("userPhotoImage");
 })
 </script>
 	<div style="padding: 20px 20px 40px 30px;">
@@ -52,6 +57,62 @@ $(function(){
 			          	<input name="userName" id="userName" type="text" style="width: 150px;" value="" class="easyui-validatebox" required="true" missingMessage="请输入真实姓名" validType="reName"/>
 			          </td>
 			        </tr>
+			        
+			        <tr>
+			          <td>角色类型：</td>
+			          <td>
+			          	  	标准角色
+			          	<!-- <select name="roleType" id="roleType" class="easyui-validatebox" required="true" missingMessage="请选择角色类型">
+			          		<option value="0" selected >标准角色</option>
+			          		<option value="1">特殊角色</option>
+			          	</select> -->
+			          </td>
+			        </tr>
+			        
+			        <tr>
+			          <td>角色：</td>
+			          <td>
+			          
+			          <div id="tabs">
+							<table cellpadding="0" cellspacing="0" style="width: 950px; margin: 0px;padding: 0px;">
+								
+								<tr style="border: 1px solid #C0C0C0; line-height: 25px;">
+									<td style="padding-left:5px; border: 1px solid #C0C0C0; width: 200px" >角色组</td>
+									<td style="border: 1px solid #C0C0C0;">角色</td>
+								</tr>
+								
+								<c:forEach items="${groupList}" var="group" varStatus="groupIndex">								
+								<tr style="border: 1px solid #C0C0C0; line-height: 25px;">
+									<td style="padding-left:5px; border: 1px solid  #C0C0C0; width: 100px">
+									${group.groupName}</td>
+									<td style="border: 1px solid #C0C0C0;">
+										<c:forEach items="${group.roleList}" var="role">
+											<input type="checkbox" id="roleId_${role.roleId}" name="roleId" value="${role.roleId }" />
+											${role.roleName }
+										</c:forEach>
+									</td>
+								</tr>
+								</c:forEach>
+							</table>
+						</div>
+						
+					</div>
+			          
+			          </td>
+			        </tr>
+			        
+			        <%-- <tr>
+			          <td>&nbsp;</td>
+			          <td>
+			          	<select name="roleId" id="roleId" multiple="multiple" size="8" style="width:150px;" class="easyui-validatebox" required="true" missingMessage="请选择角色">
+			          		<option value="">角色</option>
+			          		<c:forEach items="${roleList}" var="role" > 
+	            				<option value="${role.roleId }">${role.roleName }</option>
+	            			</c:forEach>
+			          	</select>
+			          </td>
+			        </tr> --%>
+			        
 			        <tr>
 			          <td>部门：</td>
 			          <td>
@@ -92,22 +153,22 @@ $(function(){
 			          <td>照片：</td>
 			          <td>
 			          	<input name="userPhoto" id="userPhotoImage" type="hidden" style="width: 150px;" value="" class="easyui-validatebox" />
-				          <form:hidden path="picPath" id="picPath"></form:hidden>  
+				         <!--  <form:hidden path="picPath" id="picPath"></form:hidden>  
 									      <span id="userPhotoImage-statusPic" style="color: #666;">  
 									      <a href="javascript:void(0)" onclick="Preview('userPhotoImage')">预览</a></span>  
-									      <a class="easyui-linkbutton" onclick="$('#userPhotoImage-uploadWindow').window('open')">修改</a>  
+									      <a class="easyui-linkbutton" onclick="$('#userPhotoImage-uploadWindow').window('open')">修改</a>   -->
 					 	</td> 
 			        </tr>
 					<tr>
 			          <td>个人介绍：</td>
 			          <td>
-			          	<textarea name="userBrief"  id="userBrief" rows="5" cols="18" class="easyui-validatebox" required="true" missingMessage="请输入个人介绍" validType="reDes"></textarea>
+			          	<textarea name="userBrief"  id="userBrief" rows="5" cols="18" class="easyui-validatebox" ></textarea>
 			          </td>
 			        </tr>
 					<tr>
 			          <td>服务内容：</td>
 			          <td>
-			          	<textarea name="userService"  id="userService" rows="5" cols="18" class="easyui-validatebox" required="true" missingMessage="请输入服务内容" validType="reDes"></textarea>
+			          	<textarea name="userService"  id="userService" rows="5" cols="18" class="easyui-validatebox" ></textarea>
 			          </td>
 			        </tr>
             </table>
@@ -117,7 +178,7 @@ $(function(){
             <a href="javascript:void(0)" onclick="saveData('add', 'addForm')" id="btn-save" class="easyui-linkbutton" data-options='iconCls:"icon-ok"'>保存</a>
             <a href="javascript:void(0)" onclick="closeWindow()" id="btn-cancel" class="easyui-linkbutton" data-options='iconCls:"icon-cancel"'>取消</a>
         </div>
-        <div id="userPhotoImage-uploadWindow" class="easyui-window" title="图片上传" modal="true" resizable="false" collapsible="false" minimizable="false" maximizable="false" closed="true" style="width:520px;height:100px;padding:5px;background: #fafafa;">  
+        <%-- <div id="userPhotoImage-uploadWindow" class="easyui-window" title="图片上传" modal="true" resizable="false" collapsible="false" minimizable="false" maximizable="false" closed="true" style="width:520px;height:100px;padding:5px;background: #fafafa;">  
         <div class="easyui-layout  with iframe" fit="true">  
             <div region="center" border="false" style="padding:10px;background:#fff;border:1px solid #ccc;">  
                 <form action="<%=path %>/manage/loadImage/uploadFile.do" method="post" enctype="multipart/form-data" style="color: #666;" id="userPhotoImage-tforma">  
@@ -126,6 +187,6 @@ $(function(){
                  </form>  
             </div>  
         </div>  
-    </div> 
+    </div>  --%>
 </body>
 </html>

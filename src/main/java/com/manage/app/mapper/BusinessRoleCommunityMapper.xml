@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.manage.app.dao.BusinessRoleCommunityDao" >
+	<!-- 返回结构集 -->
+	<resultMap id="BusinessRoleCommunityResult" type="BusinessRoleCommunity">
+			<result column="rocoId" property="rocoId" />
+			<result column="refuId" property="refuId" />
+			<result column="comId" property="comId" />
+			<result column="comName" property="comName" />
+	</resultMap>
+	
+	<!-- 所有字段 -->
+	<sql id="Base_Column_List" >
+			c.rocoId,
+			c.refuId,
+			c.comId
+	</sql>
+	
+	<!-- 所有字段查询条件 -->
+	<sql id="Base_Where_Clause">
+		<where>
+			<trim  suffixOverrides="," >
+					<if test="rocoId != null and rocoId != ''" >
+				   		and c.rocoId = #{rocoId}
+					</if>
+					<if test="refuId != null and refuId != ''" >
+				   		and c.refuId = #{refuId}
+					</if>
+					<if test="comId != null and comId != ''" >
+				   		and c.comId = #{comId}
+					</if>
+			</trim>
+		</where>
+	</sql>
+	
+	<!-- 根据id查询 BusinessRoleCommunity -->
+	<select id="findById"  resultMap="BusinessRoleCommunityResult" parameterType="java.lang.Integer">
+		select <include refid="Base_Column_List" /> from business_role_community c where c.rocoId = #{id}
+	</select>
+	
+	<!-- 无条件查询所有BusinessRoleCommunity -->
+	<select id="findAll" resultMap="BusinessRoleCommunityResult">
+		select <include refid="Base_Column_List" /> from business_role_community c
+	</select>
+	
+	<!-- 按Map对象条件查询所有BusinessRoleCommunity -->
+	<select id="findByMap" resultMap="BusinessRoleCommunityResult" parameterType="java.util.Map">
+		select <include refid="Base_Column_List" />, com.comName from business_role_community c 
+		left join business_community com on com.comId = c.comId 
+		
+	<include refid="Base_Where_Clause" />
+	</select>
+	
+	<!-- 按VO对象条件查询所有BusinessRoleCommunity -->
+	<select id="findByExample" resultMap="BusinessRoleCommunityResult" parameterType="com.manage.app.vo.BusinessRoleCommunityQuery">
+		select <include refid="Base_Column_List" /> from business_role_community c <include refid="Base_Where_Clause" />
+	</select>
+	
+	<!-- BusinessRoleCommunity根据搜索条件，搜索分页数据 -->
+	<select id="findAllPage" resultMap="BusinessRoleCommunityResult" parameterType="Object">
+		select <include refid="Base_Column_List" /> from business_role_community c 
+		
+		<include refid="Base_Where_Clause" />
+		<if test="pager.orderCondition != null and pager.orderCondition != ''" >
+      	${pager.orderCondition}
+	    </if>
+	    <if test="pager.mysqlQueryCondition != null and pager.mysqlQueryCondition != ''" >
+	    ${pager.mysqlQueryCondition}
+	    </if>
+	</select>
+	
+	<!-- BusinessRoleCommunity列表总数-->
+	<select id="selectCount" resultType="java.lang.Integer"  parameterType="Object">
+		select count(1) from business_role_community c
+		<include refid="Base_Where_Clause" />
+	</select>
+	
+	<!-- BusinessRoleCommunity保存数据 -->
+	<insert id="save" parameterType="BusinessRoleCommunity">
+		<selectKey resultType="java.lang.Integer" order="AFTER" keyProperty="rocoId">
+			SELECT LAST_INSERT_ID()
+  		</selectKey>
+		insert into business_role_community(
+		
+		refuId,
+		comId
+		) values(
+				#{refuId},
+		#{comId}
+		)
+	</insert>
+	
+	<!-- BusinessRoleCommunity修改数据 -->
+	<update id="update" parameterType="BusinessRoleCommunity">
+		update business_role_community 
+		<set>
+			<if test="refuId != null and refuId != ''" >
+			refuId=#{refuId},
+			</if>
+			<if test="comId != null and comId != ''" >
+			comId=#{comId}
+			</if>
+		</set> 
+		where 
+		rocoId=#{rocoId}
+		
+		
+	</update>
+	
+	<!-- BusinessRoleCommunity删除数据 -->
+	<delete id="delete" parameterType="java.lang.Integer">
+		delete from business_role_community where 
+		rocoId=#{rocoId}
+					</delete>
+	
+	<!-- BusinessRoleCommunity根据搜索条件，搜索分页所需的数据 -->
+	<select id="findAllPageByField" resultMap="BusinessRoleCommunityResult" parameterType="Object">
+		select 
+		<if test="fieldMap != null and fieldMap != ''" >
+			<foreach collection="fieldMap" item="field" separator=",">  
+	    	#{field}
+	    	</foreach>
+		</if>
+		<if test="fieldMap == null"> * </if>
+		from business_role_community  
+		<include refid="Base_Where_Clause" />
+		<if test="pager.orderCondition != null and pager.orderCondition != ''" >
+      	${pager.orderCondition}
+	    </if>
+	    <if test="pager.mysqlQueryCondition != null and pager.mysqlQueryCondition != ''" >
+	    ${pager.mysqlQueryCondition}
+	    </if>
+	</select>
+	
+	<!-- BusinessRoleCommunity根据条件查询所需字段，返回列表 -->
+	<select id="findListByField" resultMap="BusinessRoleCommunityResult" parameterType="Object">
+		select 
+		<if test="fieldMap != null and fieldMap != ''" >
+			<foreach collection="fieldMap" item="field" separator=",">  
+	    	#{field}
+	    	</foreach>
+		</if>
+		<if test="fieldMap == null"> * </if>
+		from business_role_community  
+		<include refid="Base_Where_Clause" />
+		<if test="pager.orderCondition != null and pager.orderCondition != ''" >
+      	${pager.orderCondition}
+	    </if>
+	</select>
+	
+	<!-- 根据id查询 BusinessRoleCommunity -->
+	<select id="findByField"  resultMap="BusinessRoleCommunityResult" parameterType="Object">
+		select 
+		<if test="fieldMap != null and fieldMap != ''" >
+			<foreach collection="fieldMap" item="field" separator=",">  
+	    	#{field}
+	    	</foreach>
+		</if>
+		<if test="fieldMap == null"> * </if>
+		from business_role_community where rocoId = #{id}
+	</select>
+	
+</mapper>
+	

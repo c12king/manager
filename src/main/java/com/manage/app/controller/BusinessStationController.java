@@ -3,31 +3,22 @@ package com.manage.app.controller;
 import java.io.IOException;
 import java.sql.Timestamp;
 import java.util.Date;
-import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import net.sf.json.JSONObject;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.manage.app.vo.BaseBean;
-
-
-import com.manage.app.bean.BusinessProperty;
 import com.manage.app.bean.BusinessStation;
 import com.manage.app.common.ModuleConst;
 import com.manage.app.service.BusinessStationService;
+import com.manage.app.vo.BaseBean;
 import com.manage.app.vo.BusinessStationQuery;
 
 
@@ -104,6 +95,7 @@ public class BusinessStationController {
 			    .append("\"staIcon\":\"").append(businessStation.getStaIcon()).append("\"").append(",")
 			    .append("\"staLongitude\":\"").append(businessStation.getStaLongitude()).append("\"").append(",")
 			    .append("\"staLatitude\":\"").append(businessStation.getStaLatitude()).append("\"").append(",")
+			    .append("\"isDoor\":\"").append( businessStation.getIsDoor()== 0?"取件":"不取件" ).append("\"").append(",") //0取件1不取件).append("\"").append(",")
 			    .append("\"crateTime\":\"").append(businessStation.getCrateTime()).append("\"").append(",")
 			    .append("\"editTime\":\"").append(businessStation.getEditTime()).append("\"").append(",")
 			    .append("\"editor\":\"").append(businessStation.getEditor()).append("\"")
@@ -166,6 +158,7 @@ public class BusinessStationController {
 		    businessStation.setStaLongitude(query.getStaLongitude());
 		    businessStation.setStaLatitude(query.getStaLatitude());
 		    businessStation.setCrateTime(query.getCrateTime());
+		    businessStation.setIsDoor(query.getIsDoor());
 		    businessStation.setEditTime(query.getEditTime());
 		    businessStation.setEditor(query.getEditor());
 	        Timestamp  ts=new Timestamp(new Date().getTime());
@@ -232,6 +225,7 @@ public class BusinessStationController {
 		    businessStation.setStaLatitude(query.getStaLatitude());
 		    businessStation.setCrateTime(query.getCrateTime());
 		    businessStation.setEditTime(query.getEditTime());
+		    businessStation.setIsDoor(query.getIsDoor());
 		    businessStation.setEditor(query.getEditor());
 	        Timestamp  ts=new Timestamp(new Date().getTime());
 	        businessStation.setEditTime(ts);

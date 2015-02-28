@@ -2,9 +2,7 @@ package com.manage.app.controller;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.Map;
 
-import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -14,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.manage.app.bean.BusinessMenu;
@@ -22,10 +19,8 @@ import com.manage.app.bean.BusinessStation;
 import com.manage.app.bean.ManageModulemenu;
 import com.manage.app.service.BusinessMenuService;
 import com.manage.app.service.ManageModulemenuService;
-import com.manage.app.vo.BusinessStationQuery;
-import com.utis.Page;
 /**
- * ²Ëµ¥¹ÜÀí
+ * èœå•ç®¡ç†
  * @author Administrator
  *
  */
@@ -40,7 +35,7 @@ public class BusinessMenuController {
 	private ManageModulemenuService manageModulemenuService;
 	
 	/**
-	 * ÌøÖÁÓÃ»§ÁĞ±í
+	 * è·³è‡³ç”¨æˆ·åˆ—è¡¨
 	 * @param request
 	 * @param response
 	 * @return
@@ -52,7 +47,7 @@ public class BusinessMenuController {
 		return mav;
 	}
 	/**
-	 * »ñÈ¡²Ëµ¥Ê÷ĞÎÕ¹Ê¾jsonÊı¾İ
+	 * è·å–èœå•æ ‘å½¢å±•ç¤ºjsonæ•°æ®
 	 * @param request
 	 * @param response
 	 * @param modelMap
@@ -78,7 +73,7 @@ public class BusinessMenuController {
 		}
 	}
 	/**
-	 * ¸ù¾İid²éÑ¯²Ëµ¥Êı¾İ
+	 * æ ¹æ®idæŸ¥è¯¢èœå•æ•°æ®
 	 * @param request
 	 * @param response
 	 * @param Menu
@@ -99,7 +94,7 @@ public class BusinessMenuController {
 		
 	}
 	/**
-	 * ĞÂÔö²Ëµ¥
+	 * æ–°å¢èœå•
 	 * @param request
 	 * @param response
 	 * @param Menu
@@ -117,7 +112,7 @@ public class BusinessMenuController {
 		}
 	}
 	/**
-	 * ĞŞ¸Ä²Ëµ¥
+	 * ä¿®æ”¹èœå•
 	 * @param request
 	 * @param response
 	 * @param Menu
@@ -137,7 +132,7 @@ public class BusinessMenuController {
 		
 	}
 	/**
-	 * É¾³ı²Ëµ¥
+	 * åˆ é™¤èœå•
 	 * @param request
 	 * @param response
 	 * @param Menu
@@ -156,7 +151,7 @@ public class BusinessMenuController {
 		}
 	}
 	/**
-	 * »ñÈ¡²Ëµ¥¸´Ñ¡¿òÊı¾İ
+	 * è·å–èœå•å¤é€‰æ¡†æ•°æ®
 	 * @param request
 	 * @param response
 	 * @param Menu
@@ -175,7 +170,7 @@ public class BusinessMenuController {
 	}
 	
 	/**
-	 * ½øÈë·ÖÅä²Ëµ¥Ò³
+	 * è¿›å…¥åˆ†é…èœå•é¡µ
 	 * @return
 	 */
 	@RequestMapping(value="assignMenu")

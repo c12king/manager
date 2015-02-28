@@ -33,9 +33,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <body>
 	<script type="text/javascript" src="<%=path %>/js/jquery-ui-1.10.2.custom.min.js"></script>
 <script>
-	$(function() {
-		$( "#tabs" ).tabs();
-	});
+	
 	</script>
 <div class="easyui-layout">
 	<div data-options='region:"center",split:true,border:true'>

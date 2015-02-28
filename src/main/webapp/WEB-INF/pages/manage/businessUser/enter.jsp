@@ -41,7 +41,6 @@ $(function() {
         fitColumns: true,
         queryParams:{
         	name:function(){
-        		console.log($("#userName").val());
         		return $("#userName").val();
         	}
         },
@@ -55,6 +54,7 @@ $(function() {
         		]],
         columns: [[
     		          { field: 'userName', title: '真实姓名', width: 150, align:'center' },
+    		          { field: 'roleId', title: '角色', width: 150, align:'center' },
     		          { field: 'posName', title: '职位', width: 150, align:'center' },
     		          { field: 'userTel', title: '电话号码', width: 150, align:'center' },
     		          { field: 'userCode', title: '唯一编码', width: 150, align:'center' },
@@ -84,11 +84,11 @@ $(function() {
             text: '修改',
             iconCls: 'icon-edit',
             handler: posEdit
-        }, '-', {
+        }/* , '-', {
             text: '编辑权限',
             iconCls: 'icon-edit',
             handler: editPermissions
-        }, '-', {
+        } */, '-', {
             text: '编辑资源',
             iconCls: 'icon-edit',
             handler: resources
@@ -218,12 +218,11 @@ function del() {
 }
 
 function showAll() {
-	$('#searchForm').form('clear');
+	$("#name").val("")
 	grid.datagrid('reload');
 }
 
 function saveData(oper, formId) {
-	console.log(1111111111)
 	$('#'+formId).form('submit', {
         url: $('#'+formId).attr('action'),
         onSubmit:function(){  
@@ -378,14 +377,15 @@ function resources() {
         return;
     }
     else{
-		win = $('#editPermissions-window').window({
+		win = $('#resource-window').window({
 	        closed: true,
 	        modal: true,
 	        shadow: false,
 	        cache: false,
+	        maximized:true,
 	        href: '<%=path %>/manage/businessUser/resources.do?orgType='+rows[0].orgType+'&userId='+rows[0].userId
 	    });
-	    $('#editPermissions-window').window('open');
+	    $('#resource-window').window('open');
     }
 }
 
@@ -408,6 +408,32 @@ function updatePosId(){
 	$("#orgName1").val(node.text)
 	$('#selectOrg-window').window('close');
 }
+
+//选择社区
+function selectCom(comId, comName) {
+	if($('#comId_'+comId+'_'+comName).is(':checked')) {
+		$(".estateId_"+comId).each(function(index, item) {
+			$(item).prop("checked",true);
+		});
+	}else{
+		$(".estateId_"+comId).each(function(index, item) {
+			$(item).prop("checked",false);
+		});
+	}
+}
+
+//选择小区
+function selectEstate(comId, comName, estateId, estateName) {
+	if($('#estateId_'+estateId+'_'+estateName).is(':checked')) {
+		$('#comId_'+comId+'_'+comName).prop("checked",true);
+	}else{
+		var ll = $(".estateId_"+comId+" :checked").length;
+		if(ll == 0) {
+			$('#comId_'+comId+'_'+comName).prop("checked",false);
+		}
+	}
+}
+
 </script>
 </head>
 <body class="easyui-layout" style="overflow-y: hidden;">
@@ -417,12 +443,13 @@ function updatePosId(){
         <div id="grid" fit="true">
         </div>
     </div>
-    <div id="editPermissions-window" title="权限编辑窗口" style="width: 1000px; height: 550px;"></div>
-    <div id="selectPos-window" title="选择组织结构窗口" style="width: 1000px; height: 500px;"></div>
-    <div id="add-window" title="新增窗口" style="width: 400px; height: 500px;"></div>
-    <div id="edit-window" title="编辑窗口" style="width: 400px; height: 500px;"></div>
+    <div id="editPermissions-window" title="权限编辑窗口" style="width: 800px; height: 500px;"></div>
+    <div id="resource-window" title="资源编辑窗口" style="width: 800px; height: 500px;"></div>
+    <div id="selectPos-window" title="选择组织结构窗口" style="width: 800px; height: 500px;"></div>
+    <div id="add-window" title="新增窗口" style="width: 800px; height: 500px;"></div>
+    <div id="edit-window" title="编辑窗口" style="width: 800px; height: 500px;"></div>
     <div id="edit-window2" title="编辑窗口" style="width: 1000px; height: 550px;"></div>
-    <div id="search-window" title="查询窗口" style="width: 400px; height: 500px;">
+    <div id="search-window" title="查询窗口" style="width: 500px; height: 500px;">
         <div style="padding: 20px 20px 40px 80px;">
             <form id="searchForm" method="post" action="<%=path %>/manage/businessUser/list.do">
             <table>

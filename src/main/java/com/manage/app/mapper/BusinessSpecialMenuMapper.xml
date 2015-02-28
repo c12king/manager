@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.manage.app.dao.BusinessSpecialMenuDao" >
+	<!-- 返回结构集 -->
+	<resultMap id="BusinessSpecialMenuResult" type="BusinessSpecialMenu">
+			<result column="spmeId" property="spmeId" />
+			<result column="refuId" property="refuId" />
+			<result column="menuId" property="menuId" />
+			<result column="no" property="no" />
+			<result column="menuName" property="menuName" />
+	</resultMap>
+	
+	<!-- 所有字段 -->
+	<sql id="Base_Column_List" >
+			sm.spmeId,
+			sm.refuId,
+			sm.menuId,
+			sm.no
+	</sql>
+	
+	<!-- 所有字段查询条件 -->
+	<sql id="Base_Where_Clause">
+		<where>
+			<trim  suffixOverrides="," >
+					<if test="spmeId != null and spmeId != ''" >
+				   		and sm.spmeId = #{spmeId}
+					</if>
+					<if test="refuId != null and refuId != ''" >
+				   		and sm.refuId = #{refuId}
+					</if>
+					<if test="menuId != null and menuId != ''" >
+				   		and sm.menuId = #{menuId}
+					</if>
+					<if test="no != null and no != ''" >
+				   		and sm.no = #{no}
+					</if>
+			</trim>
+		</where>
+	</sql>
+	
+	<!-- 根据id查询 BusinessSpecialMenu -->
+	<select id="findById"  resultMap="BusinessSpecialMenuResult" parameterType="java.lang.Integer">
+		select <include refid="Base_Column_List" /> from business_special_menu sm where sm.spmeId = #{id}
+	</select>
+	
+	<!-- 无条件查询所有BusinessSpecialMenu -->
+	<select id="findAll" resultMap="BusinessSpecialMenuResult">
+		select <include refid="Base_Column_List" /> from business_special_menu sm
+	</select>
+	
+	<!-- 按Map对象条件查询所有BusinessSpecialMenu -->
+	<select id="findByMap" resultMap="BusinessSpecialMenuResult" parameterType="java.util.Map">
+		select <include refid="Base_Column_List" />, menu.name as menuName from business_special_menu sm 
+		left join business_menu menu on menu.menuId = sm.menuId   
+		<include refid="Base_Where_Clause" />
+	</select>
+	
+	<!-- 按VO对象条件查询所有BusinessSpecialMenu -->
+	<select id="findByExample" resultMap="BusinessSpecialMenuResult" parameterType="com.manage.app.vo.BusinessSpecialMenuQuery">
+		select <include refid="Base_Column_List" /> from business_special_menu sm <include refid="Base_Where_Clause" />
+	</select>
+	
+	<!-- BusinessSpecialMenu根据搜索条件，搜索分页数据 -->
+	<select id="findAllPage" resultMap="BusinessSpecialMenuResult" parameterType="Object">
+		select <include refid="Base_Column_List" /> from business_special_menu sm 
+		<include refid="Base_Where_Clause" />
+		<if test="pager.orderCondition != null and pager.orderCondition != ''" >
+      	${pager.orderCondition}
+	    </if>
+	    <if test="pager.mysqlQueryCondition != null and pager.mysqlQueryCondition != ''" >
+	    ${pager.mysqlQueryCondition}
+	    </if>
+	</select>
+	
+	<!-- BusinessSpecialMenu列表总数-->
+	<select id="selectCount" resultType="java.lang.Integer"  parameterType="Object">
+		select count(1) from business_special_menu 
+		<include refid="Base_Where_Clause" />
+	</select>
+	
+	<!-- BusinessSpecialMenu保存数据 -->
+	<insert id="save" parameterType="BusinessSpecialMenu">
+		<selectKey resultType="java.lang.Integer" order="AFTER" keyProperty="spmeId">
+			SELECT LAST_INSERT_ID()
+  		</selectKey>
+		insert into business_special_menu(
+		
+		refuId,
+		menuId,
+		no
+		) values(
+				#{refuId},
+		#{menuId},
+		#{no}
+		)
+	</insert>
+	
+	<!-- BusinessSpecialMenu修改数据 -->
+	<update id="update" parameterType="BusinessSpecialMenu">
+		update business_special_menu 
+		<set>
+			<if test="refuId != null and refuId != ''" >
+			refuId=#{refuId},
+			</if>
+			<if test="menuId != null and menuId != ''" >
+			menuId=#{menuId},
+			</if>
+			<if test="no != null and no != ''" >
+			no=#{no}
+			</if>
+		</set> 
+		where 
+		spmeId=#{spmeId}
+		
+		
+		
+	</update>
+	
+	<!-- BusinessSpecialMenu删除数据 -->
+	<delete id="delete" parameterType="java.lang.Integer">
+		delete from business_special_menu where 
+		spmeId=#{spmeId}
+							</delete>
+	
+	<!-- BusinessSpecialMenu根据搜索条件，搜索分页所需的数据 -->
+	<select id="findAllPageByField" resultMap="BusinessSpecialMenuResult" parameterType="Object">
+		select 
+		<if test="fieldMap != null and fieldMap != ''" >
+			<foreach collection="fieldMap" item="field" separator=",">  
+	    	#{field}
+	    	</foreach>
+		</if>
+		<if test="fieldMap == null"> * </if>
+		from business_special_menu  
+		<include refid="Base_Where_Clause" />
+		<if test="pager.orderCondition != null and pager.orderCondition != ''" >
+      	${pager.orderCondition}
+	    </if>
+	    <if test="pager.mysqlQueryCondition != null and pager.mysqlQueryCondition != ''" >
+	    ${pager.mysqlQueryCondition}
+	    </if>
+	</select>
+	
+	<!-- BusinessSpecialMenu根据条件查询所需字段，返回列表 -->
+	<select id="findListByField" resultMap="BusinessSpecialMenuResult" parameterType="Object">
+		select 
+		<if test="fieldMap != null and fieldMap != ''" >
+			<foreach collection="fieldMap" item="field" separator=",">  
+	    	#{field}
+	    	</foreach>
+		</if>
+		<if test="fieldMap == null"> * </if>
+		from business_special_menu  
+		<include refid="Base_Where_Clause" />
+		<if test="pager.orderCondition != null and pager.orderCondition != ''" >
+      	${pager.orderCondition}
+	    </if>
+	</select>
+	
+	<!-- 根据id查询 BusinessSpecialMenu -->
+	<select id="findByField"  resultMap="BusinessSpecialMenuResult" parameterType="Object">
+		select 
+		<if test="fieldMap != null and fieldMap != ''" >
+			<foreach collection="fieldMap" item="field" separator=",">  
+	    	#{field}
+	    	</foreach>
+		</if>
+		<if test="fieldMap == null"> * </if>
+		from business_special_menu where spmeId = #{id}
+	</select>
+	
+</mapper>
+	

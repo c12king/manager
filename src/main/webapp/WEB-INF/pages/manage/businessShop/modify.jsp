@@ -117,7 +117,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     </div>
 <script type="text/javascript">
 $(function(){ 
-	alert('ccc')
+// 	alert('ccc')
 	init("modifyModuleIconImage");
 });
 </script>

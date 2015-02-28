@@ -7,8 +7,6 @@ import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
 
-import java.util.*;
-
 
 public class BusinessMenu implements java.io.Serializable{
 	
@@ -27,6 +25,25 @@ public class BusinessMenu implements java.io.Serializable{
 	private java.lang.String selectedIcon;
 	private java.lang.String unSelectedIcon;
 	private String code;
+	private Integer isCom;
+	private Integer isEstate;
+	
+	public Integer getIsCom() {
+		return isCom;
+	}
+
+	public void setIsCom(Integer isCom) {
+		this.isCom = isCom;
+	}
+
+
+	public Integer getIsEstate() {
+		return isEstate;
+	}
+
+	public void setIsEstate(Integer isEstate) {
+		this.isEstate = isEstate;
+	}
 
 	public BusinessMenu(){
 	}

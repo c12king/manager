@@ -5,16 +5,13 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
-
-
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.manage.framework.exception.DaoException;
-
 import com.manage.app.bean.ManageTagType;
 import com.manage.app.vo.ManageTagTypeQuery;
+import com.manage.framework.exception.DaoException;
 
 @Repository("ManageTagTypeDao")
 @Transactional

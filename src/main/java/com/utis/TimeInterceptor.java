@@ -1,16 +1,10 @@
 package com.utis;
 
-import java.util.Calendar;  
-  
-import javax.servlet.http.HttpServletRequest;  
-import javax.servlet.http.HttpServletResponse;  
-  
-import org.springframework.web.servlet.ModelAndView;  
-import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;  
+import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 
 public class TimeInterceptor extends HandlerInterceptorAdapter {  
-    // ¼Ì³ĞHandlerInterceptorAdapterÀà  
+    // ç»§æ‰¿HandlerInterceptorAdapterç±»  
  
 
  /* @Override
@@ -19,7 +13,7 @@ public class TimeInterceptor extends HandlerInterceptorAdapter {
 	  if(request.getSession().getAttribute("user")==null){
 		  return true;
 	  }else{
-		  response.sendRedirect("/login/login.jsp"); // ·µ»ØÌáÊ¾Ò³Ãæ  
+		  response.sendRedirect("/login/login.jsp"); // è¿”å›æç¤ºé¡µé¢  
 		  return false;
 	  }
 	

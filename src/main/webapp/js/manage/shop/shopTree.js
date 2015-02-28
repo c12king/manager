@@ -340,7 +340,7 @@ function add() {
         modal: true,
         shadow: false,
         cache: false,
-        href: path+'/manage/businessShop/add.do?'
+        href: path+'/manage/businessShop/add.do?typeId='+node.id
     });
     $('#add-window').window('open');
     $('#add-window').window('resize');

@@ -17,6 +17,7 @@
 			<result column="staLatitude" property="staLatitude" />
 			<result column="crateTime" property="crateTime" />
 			<result column="editTime" property="editTime" />
+			<result column="isDoor" property="isDoor" />
 			<result column="editor" property="editor" />
 			<result column="orgName" property="orgName" />
 			<result column="staCode" property="staCode" />
@@ -35,6 +36,7 @@
 			staIcon,
 			staLongitude,
 			staLatitude,
+			isDoor,
 			crateTime,
 			editTime,
 			editor
@@ -76,6 +78,9 @@
 					</if>
 					<if test="staLatitude != null and staLatitude != ''" >
 				   		and staLatitude = #{staLatitude}
+					</if>
+					<if test="isDoor != null" >
+				   		and isDoor = #{isDoor}
 					</if>
 					<if test="crateTime != null and crateTime != ''" >
 				   		and crateTime = #{crateTime}
@@ -178,6 +183,7 @@
 		staLongitude,
 		staLatitude,
 		crateTime,
+		isDoor,
 		staCode,
 		editTime
 		) values(
@@ -192,6 +198,7 @@
 		#{staLongitude},
 		#{staLatitude},
 		#{crateTime},
+		#{isDoor},
 		'3',
 		#{editTime}
 		)
@@ -230,6 +237,9 @@
 			</if>
 			<if test="staLatitude != null and staLatitude != ''" >
 			staLatitude=#{staLatitude},
+			</if>
+			<if test="isDoor != null" >
+		   	 isDoor = #{isDoor},
 			</if>
 			<if test="crateTime != null and crateTime != ''" >
 			crateTime=#{crateTime},

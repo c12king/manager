@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.manage.app.dao.BusinessRoleFunctionDao" >
+	<!-- 返回结构集 -->
+	<resultMap id="BusinessRoleFunctionResult" type="BusinessRoleFunction">
+			<result column="rofuId" property="rofuId" />
+			<result column="romeId" property="romeId" />
+			<result column="functionId" property="functionId" />
+	</resultMap>
+	
+	<!-- 所有字段 -->
+	<sql id="Base_Column_List" >
+			rofuId,
+			romeId,
+			functionId
+	</sql>
+	
+	<!-- 所有字段查询条件 -->
+	<sql id="Base_Where_Clause">
+		<where>
+			<trim  suffixOverrides="," >
+					<if test="rofuId != null and rofuId != ''" >
+				   		and rofuId = #{rofuId}
+					</if>
+					<if test="romeId != null and romeId != ''" >
+				   		and romeId = #{romeId}
+					</if>
+					<if test="functionId != null and functionId != ''" >
+				   		and functionId = #{functionId}
+					</if>
+			</trim>
+		</where>
+	</sql>
+	
+	<!-- 根据id查询 BusinessRoleFunction -->
+	<select id="findById"  resultMap="BusinessRoleFunctionResult" parameterType="java.lang.Integer">
+		select <include refid="Base_Column_List" /> from business_role_function where rofuId = #{id}
+	</select>
+	
+	<!-- 无条件查询所有BusinessRoleFunction -->
+	<select id="findAll" resultMap="BusinessRoleFunctionResult">
+		select <include refid="Base_Column_List" /> from business_role_function 
+	</select>
+	
+	<!-- 按Map对象条件查询所有BusinessRoleFunction -->
+	<select id="findByMap" resultMap="BusinessRoleFunctionResult" parameterType="java.util.Map">
+		select <include refid="Base_Column_List" /> from business_role_function <include refid="Base_Where_Clause" />
+	</select>
+	
+	<!-- 按VO对象条件查询所有BusinessRoleFunction -->
+	<select id="findByExample" resultMap="BusinessRoleFunctionResult" parameterType="com.manage.app.vo.BusinessRoleFunctionQuery">
+		select <include refid="Base_Column_List" /> from business_role_function <include refid="Base_Where_Clause" />
+	</select>
+	
+	<!-- BusinessRoleFunction根据搜索条件，搜索分页数据 -->
+	<select id="findAllPage" resultMap="BusinessRoleFunctionResult" parameterType="Object">
+		select <include refid="Base_Column_List" /> from business_role_function  
+		<include refid="Base_Where_Clause" />
+		<if test="pager.orderCondition != null and pager.orderCondition != ''" >
+      	${pager.orderCondition}
+	    </if>
+	    <if test="pager.mysqlQueryCondition != null and pager.mysqlQueryCondition != ''" >
+	    ${pager.mysqlQueryCondition}
+	    </if>
+	</select>
+	
+	<!-- BusinessRoleFunction列表总数-->
+	<select id="selectCount" resultType="java.lang.Integer"  parameterType="Object">
+		select count(1) from business_role_function 
+		<include refid="Base_Where_Clause" />
+	</select>
+	
+	<!-- BusinessRoleFunction保存数据 -->
+	<insert id="save" parameterType="BusinessRoleFunction">
+		<selectKey resultType="java.lang.Integer" order="AFTER" keyProperty="rofuId">
+			SELECT LAST_INSERT_ID()
+  		</selectKey>
+		insert into business_role_function(
+		
+		romeId,
+		functionId
+		) values(
+				#{romeId},
+		#{functionId}
+		)
+	</insert>
+	
+	<!-- BusinessRoleFunction修改数据 -->
+	<update id="update" parameterType="BusinessRoleFunction">
+		update business_role_function 
+		<set>
+			<if test="romeId != null and romeId != ''" >
+			romeId=#{romeId},
+			</if>
+			<if test="functionId != null and functionId != ''" >
+			functionId=#{functionId}
+			</if>
+		</set> 
+		where 
+		rofuId=#{rofuId}
+		
+		
+	</update>
+	
+	<!-- BusinessRoleFunction删除数据 -->
+	<delete id="delete" parameterType="java.lang.Integer">
+		delete from business_role_function where 
+		rofuId=#{rofuId}
+					</delete>
+	
+	<!-- BusinessRoleFunction根据搜索条件，搜索分页所需的数据 -->
+	<select id="findAllPageByField" resultMap="BusinessRoleFunctionResult" parameterType="Object">
+		select 
+		<if test="fieldMap != null and fieldMap != ''" >
+			<foreach collection="fieldMap" item="field" separator=",">  
+	    	#{field}
+	    	</foreach>
+		</if>
+		<if test="fieldMap == null"> * </if>
+		from business_role_function  
+		<include refid="Base_Where_Clause" />
+		<if test="pager.orderCondition != null and pager.orderCondition != ''" >
+      	${pager.orderCondition}
+	    </if>
+	    <if test="pager.mysqlQueryCondition != null and pager.mysqlQueryCondition != ''" >
+	    ${pager.mysqlQueryCondition}
+	    </if>
+	</select>
+	
+	<!-- BusinessRoleFunction根据条件查询所需字段，返回列表 -->
+	<select id="findListByField" resultMap="BusinessRoleFunctionResult" parameterType="Object">
+		select 
+		<if test="fieldMap != null and fieldMap != ''" >
+			<foreach collection="fieldMap" item="field" separator=",">  
+	    	#{field}
+	    	</foreach>
+		</if>
+		<if test="fieldMap == null"> * </if>
+		from business_role_function  
+		<include refid="Base_Where_Clause" />
+		<if test="pager.orderCondition != null and pager.orderCondition != ''" >
+      	${pager.orderCondition}
+	    </if>
+	</select>
+	
+	<!-- 根据id查询 BusinessRoleFunction -->
+	<select id="findByField"  resultMap="BusinessRoleFunctionResult" parameterType="Object">
+		select 
+		<if test="fieldMap != null and fieldMap != ''" >
+			<foreach collection="fieldMap" item="field" separator=",">  
+	    	#{field}
+	    	</foreach>
+		</if>
+		<if test="fieldMap == null"> * </if>
+		from business_role_function where rofuId = #{id}
+	</select>
+	
+</mapper>
+	

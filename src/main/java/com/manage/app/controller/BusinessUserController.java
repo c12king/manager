@@ -3,33 +3,36 @@ package com.manage.app.controller;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sf.json.JSONObject;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.manage.app.bean.BusinessCommunity;
+import com.manage.app.bean.BusinessRoleGroup;
 import com.manage.app.bean.BusinessUser;
 import com.manage.app.bean.BusinessUserResource;
+import com.manage.app.bean.BusinessUserRole;
 import com.manage.app.bean.ManageEstate;
-import com.manage.app.bean.ManagePositionUser;
 import com.manage.app.common.ModuleConst;
 import com.manage.app.service.BusinessCommunityService;
+import com.manage.app.service.BusinessRoleCommunityService;
+import com.manage.app.service.BusinessRoleEstateService;
+import com.manage.app.service.BusinessRoleGroupService;
+import com.manage.app.service.BusinessRoleService;
+import com.manage.app.service.BusinessUserCommunityService;
 import com.manage.app.service.BusinessUserResourceService;
+import com.manage.app.service.BusinessUserRoleService;
 import com.manage.app.service.BusinessUserService;
 import com.manage.app.service.ManageEstateService;
 import com.manage.app.vo.BusinessUserResourceQuery;
@@ -52,6 +55,23 @@ public class BusinessUserController {
 	private BusinessCommunityService businessCommunityService;
 	@Autowired
 	private BusinessUserResourceService businessUserResourceService;
+	@Autowired
+	private BusinessRoleGroupService businessRoleGroupService;
+	
+	@Autowired
+	private BusinessRoleService businessRoleService;
+	@Autowired
+	private BusinessUserRoleService businessUserRoleService;
+	@Autowired
+	private BusinessUserCommunityService businessUserCommunityService;
+	
+	@Autowired
+	private BusinessRoleCommunityService businessRoleCommunityService;
+	
+	@Autowired
+	private BusinessRoleEstateService businessRoleEstateService;
+	
+	
 	
 	private final String LIST_ACTION = "redirect:/business/businessUser/list.do";
 	
@@ -125,24 +145,81 @@ public class BusinessUserController {
 	}
 	
 	/**
-	 * 进入添加权限页
+	 * 进入添加资源页
 	 * @return
 	 */
 	@RequestMapping(value="resources")
 	public ModelAndView resources(BusinessUser businessUser) {
 		List<ManageEstate> estateList = new ArrayList<ManageEstate>();
 		List<BusinessCommunity> communityList = new ArrayList<BusinessCommunity>();
-		List<BusinessUserResource> reList = new ArrayList<BusinessUserResource>();
-		BusinessUserResourceQuery BusinessUserResourceQuery = new BusinessUserResourceQuery();
-		BusinessUserResourceQuery.setUserId(businessUser.getUserId());
+		List<BusinessUserResource> estateValueList = new ArrayList<BusinessUserResource>();
+		BusinessUserResourceQuery businessUserResourceQuery = new BusinessUserResourceQuery();
+		businessUserResourceQuery.setUserId(businessUser.getUserId());
+		List comValueList = new ArrayList();
+		List resourceList = new ArrayList();
+		List selectedCommunityList = new ArrayList();
+		List selectedResourceList = new ArrayList();
+		List userResoruceList = new ArrayList();
 		try{
-			if(ModuleConst.PROPERTY_CODE.equals(businessUser.getOrgType()) || ModuleConst.STATION_CODE.equals(businessUser.getOrgType())){
+			/*if(ModuleConst.PROPERTY_CODE.equals(businessUser.getOrgType()) || ModuleConst.STATION_CODE.equals(businessUser.getOrgType())){
 				estateList=manageEstateService.findAll();
 				reList=businessUserResourceService.findByExample(BusinessUserResourceQuery);
 			}else if (ModuleConst.COMMUNITY_CODE.equals(businessUser.getOrgType())) {
 				communityList=businessCommunityService.findAll();
 				reList=businessUserResourceService.findByExample(BusinessUserResourceQuery);
+			}*/
+			//estateList=manageEstateService.findAll();
+			//communityList=businessCommunityService.findAll();
+			//businessUserResourceQuery.setUserId(businessUser.getUserId());
+			//estateValueList=businessUserResourceService.findByExample(businessUserResourceQuery);
+			//BusinessUserResource businessUserResource = new BusinessUserResource();
+			/*for(int i=0;i<estateValueList.size();i++) {
+				businessUserResource = estateValueList.get(i);
+				Integer comId = businessUserResource.getComId();
+				if(comId != null && comId > 0) { //社区ID
+					boolean has = false;
+					for(int j=0; j<comValueList.size();j++) {
+						if(comValueList.get(j) == comId) {
+							has = true;
+						}
+					}
+					if(!has) comValueList.add(comId);
+				}else{//小区ID
+					estateValueList.add(businessUserResource);
+				}
+			}*/
+			//Map paramMap = new HashMap();
+			//paramMap.put("userId", businessUser.getUserId());
+			//comValueList = businessUserCommunityService.findByMap(paramMap);
+			
+			//新的
+			Map comMap = new HashMap();
+			List<BusinessCommunity> comList = businessCommunityService.findAll();
+			for (BusinessCommunity businessCommunity : comList) {
+				comMap = new HashMap();
+				comMap.put("comId",businessCommunity.getComId());
+				comMap.put("comName",businessCommunity.getComName());
+				List<ManageEstate> manageEstateList=manageEstateService.selectManageEstateByComId(businessCommunity.getComId());
+				comMap.put("manageEstateList", manageEstateList);
+				resourceList.add(comMap);
 			}
+			//已选
+			Map userResourceMap = new HashMap();
+			userResourceMap.put("userId", businessUser.getUserId());
+			userResoruceList = businessUserResourceService.findByMap(userResourceMap);
+			/*for (int i=0;i<selectedResourceList.size();i++) {
+				BusinessRoleCommunity businessRoleCommunity = (BusinessRoleCommunity) selectedCommunityList.get(i);
+				selectedCommunityList.add(businessRoleCommunity);
+				Map roleEstateMap = new HashMap();
+				roleEstateMap.put("rocoId", businessRoleCommunity.getRocoId());
+				List businessRoleEstateList = businessRoleEstateService.findByMap(roleEstateMap);
+				//selectedFuntionList.retainAll(roleFunctionList);
+				for(int j=0;j<businessRoleEstateList.size();j++) {
+					BusinessRoleEstate businessRoleEstate = (BusinessRoleEstate) businessRoleEstateList.get(j);
+					selectedEstateList.add(businessRoleEstate);
+				}
+			}*/
+			
 		}catch(Exception e){
 			GSLogger.error("进入businessUser管理页时发生错误", e);
 			e.printStackTrace();
@@ -151,7 +228,10 @@ public class BusinessUserController {
 		mav.addObject("userId", businessUser.getUserId());
 		mav.addObject("estateList", estateList);
 		mav.addObject("communityList",communityList);
-		mav.addObject("reList",reList);
+		mav.addObject("estateValueList",estateValueList);
+		mav.addObject("comValueList",comValueList);
+		mav.addObject("resourceList",resourceList);
+		mav.addObject("userResoruceList",userResoruceList);
 		return mav;
 	}
 	
@@ -173,8 +253,18 @@ public class BusinessUserController {
 			.append("\"rows\":[");
 			for(int i=0;i<pageData.getList().size();i++) {
 				BusinessUser businessUser = (BusinessUser) pageData.getList().get(i);
+				String roleName = "";
+				Map paramMap = new HashMap();
+				paramMap.put("userId", businessUser.getUserId());
+				List userRoleList = businessUserRoleService.findByMap(paramMap);
+				for(int j=0;j<userRoleList.size();j++) {
+					BusinessUserRole role = (BusinessUserRole) userRoleList.get(j);
+					roleName += role.getRoleName()+"<br />";
+				}
+				System.out.println(businessUser.getUserId());
 				result.append("{")
 				.append("\"userId\":\"").append(businessUser.getUserId()).append("\"").append(",")
+				.append("\"roleId\":\"").append(roleName).append("\"").append(",")
 			    .append("\"userName\":\"").append(businessUser.getUserName()).append("\"").append(",")
 			    .append("\"userTel\":\"").append(businessUser.getUserTel()).append("\"").append(",")
 			    .append("\"userPassword\":\"").append(businessUser.getUserPassword()).append("\"").append(",")
@@ -188,7 +278,7 @@ public class BusinessUserController {
 			    .append("\"editTime\":\"").append(businessUser.getEditTime()).append("\"").append(",")
 			    .append("\"editor\":\"").append(businessUser.getEditor()).append("\"").append(",")
 			    .append("\"positionId\":\"").append(businessUser.getPositionId()).append("\"").append(",")
-			    .append("\"posName\":\"").append(businessUser.getPosName()).append("\"").append(",")
+			    .append("\"posName\":\"").append(businessUser.getPosName()==null?"":businessUser.getPosName()).append("\"").append(",")
 			    .append("\"modules\":\"").append(businessUser.getModules()).append("\"").append(",")
 			    .append("\"orgType\":\"").append(businessUser.getOrgType()).append("\"").append(",")
 			    .append("\"isCharge\":\"").append(businessUser.getIsCharge()).append("\"")
@@ -281,13 +371,32 @@ public class BusinessUserController {
 	 * @return
 	 */
 	@RequestMapping(value="posAdd")
-	public ModelAndView posAdd() {		
-		try{
+	public ModelAndView posAdd() {	
+		List roleList = new ArrayList();
+		List groupList = new ArrayList();
+		Map roleGroupMap = new HashMap();
+		try{			
+			List roleGroupList = businessRoleGroupService.findAll();
+			for(int i=0;i<roleGroupList.size();i++) {
+				BusinessRoleGroup roleGroup = (BusinessRoleGroup) roleGroupList.get(i);
+				roleGroupMap = new HashMap();
+				roleGroupMap.put("groupId", roleGroup.getGroupId());
+				roleGroupMap.put("groupName", roleGroup.getGroupName());
+				
+				Map roleParamMap = new HashMap();
+				roleParamMap.put("groupId", roleGroup.getGroupId());
+				roleParamMap.put("isSpecial", 0);
+				roleList = businessRoleService.findByMap(roleParamMap);
+				roleGroupMap.put("roleList", roleList);
+				groupList.add(roleGroupMap);
+			}
+			
 		}catch(Exception e){
 			GSLogger.error("进入businessUser新增页时发生错误", e);
 			e.printStackTrace();
 		}
 		ModelAndView mav = new ModelAndView("/manage/businessUser/posAdd");
+		mav.addObject("groupList", groupList);
 		return mav;
 	}
 	
@@ -377,10 +486,24 @@ public class BusinessUserController {
 			}else{
 				entity.setModules(entity.getOrgType());
 			}
+			 
 			Timestamp  ts=new Timestamp(new Date().getTime());
 			entity.setCreateTime(ts);
 			entity.setEditTime(ts);
 			businessUserService.save(entity);
+			
+			//保存角色
+			String[] roleIds = request.getParameterValues("roleId");
+			if(roleIds != null && roleIds.length > 0) {
+				BusinessUserRole userRole = new BusinessUserRole();
+				for(int i=0;i<roleIds.length;i++) {
+					userRole = new BusinessUserRole();
+					userRole.setRoleId(new Integer(roleIds[i]));
+					userRole.setUserId(entity.getUserId());
+					businessUserRoleService.save(userRole);
+				}
+			}
+			
 			json = "{\"success\":\"true\"}";
 			response.setHeader("Cache-Control", "no-cache");
 			response.setCharacterEncoding("utf-8");
@@ -420,16 +543,40 @@ public class BusinessUserController {
 	public ModelAndView posModify(HttpServletRequest request) {	
 		int id= Integer.parseInt(request.getParameter("id"));
 		BusinessUser entity=new BusinessUser();
-		entity.setUserId(id);
-		
+		//entity.setUserId(id);
+		List groupList = new ArrayList();
+		Map roleGroupMap = new HashMap();
+		List roleList = new ArrayList();
+		List userRoleList = new ArrayList();
 		try{
-			entity= businessUserService.findById(entity);
+			entity= businessUserService.findBusinessUserById(id);
+			List roleGroupList = businessRoleGroupService.findAll();
+			for(int i=0;i<roleGroupList.size();i++) {
+				BusinessRoleGroup roleGroup = (BusinessRoleGroup) roleGroupList.get(i);
+				roleGroupMap = new HashMap();
+				roleGroupMap.put("groupId", roleGroup.getGroupId());
+				roleGroupMap.put("groupName", roleGroup.getGroupName());
+				
+				Map roleParamMap = new HashMap();
+				roleParamMap.put("groupId", roleGroup.getGroupId());
+				roleParamMap.put("isSpecial", 0);
+				roleList = businessRoleService.findByMap(roleParamMap);
+				roleGroupMap.put("roleList", roleList);
+				groupList.add(roleGroupMap);
+			}
+			
+			//已选角色
+			Map paramMap = new HashMap();
+			paramMap.put("userId", id);
+			userRoleList = businessUserRoleService.findByMap(paramMap);
 		}catch(Exception e){
 			GSLogger.error("进入businessUser修改页时发生错误", e);
 			e.printStackTrace();
 		}
 		ModelAndView mav = new ModelAndView("/manage/businessUser/posModify");
 		mav.addObject("businessUser", entity);
+		mav.addObject("groupList", groupList);
+		mav.addObject("userRoleList", userRoleList);		
 		return mav;
 	}
 	
@@ -451,6 +598,28 @@ public class BusinessUserController {
 			Timestamp  ts=new Timestamp(new Date().getTime());
 			entity.setEditTime(ts);
 			businessUserService.Update(entity);
+			
+			//删除角色
+			Map paramMap = new HashMap();
+			paramMap.put("userId", entity.getUserId());
+			List userRoleList = businessUserRoleService.findByMap(paramMap);
+			for(int i=0;i<userRoleList.size();i++) {
+				BusinessUserRole userRole = (BusinessUserRole) userRoleList.get(i);
+				businessUserRoleService.delete(userRole.getUsroId());
+			}
+			
+			//更新角色
+			String[] roleIds = request.getParameterValues("roleId");
+			if(roleIds != null && roleIds.length > 0) {
+				BusinessUserRole userRole = new BusinessUserRole();
+				for(int i=0;i<roleIds.length;i++) {
+					userRole = new BusinessUserRole();
+					userRole.setRoleId(new Integer(roleIds[i]));
+					userRole.setUserId(entity.getUserId());
+					businessUserRoleService.save(userRole);
+				}
+			}
+			
 			json = "{\"success\":\"true\"}";
 			response.setHeader("Cache-Control", "no-cache");
 			response.setCharacterEncoding("utf-8");

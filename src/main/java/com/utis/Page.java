@@ -12,17 +12,17 @@ import java.util.List;
 
 
 /**
- * ·ÖÒ³±êÇ©¹¤¾ßÀà
+ * åˆ†é¡µæ ‡ç­¾å·¥å…·ç±»
  */
 public class Page{
-	private int start;  //ÆôÊ¼Î»ÖÃ
-	private int end;    //½áÊøÒ³
-	private int totalPage;  //×ÜÒ³Êı
-	private int cpage=1;     //µ±Ç°Ò³
-	private int totalRow;    //×ÜĞÅÏ¢Êı
-	private int pageSize=5;    //·ÖÒ³µ¥Î»
-    private String link;     //²ÎÊı
-    private String id;     //²ÎÊı
+	private int start;  //å¯å§‹ä½ç½®
+	private int end;    //ç»“æŸé¡µ
+	private int totalPage;  //æ€»é¡µæ•°
+	private int cpage=1;     //å½“å‰é¡µ
+	private int totalRow;    //æ€»ä¿¡æ¯æ•°
+	private int pageSize=5;    //åˆ†é¡µå•ä½
+    private String link;     //å‚æ•°
+    private String id;     //å‚æ•°
     private  List list;  
     
     public Page(int cpage,int pageSize,String like) {

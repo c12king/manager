@@ -11,13 +11,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.manage.app.vo.BaseBean;
-import com.manage.framework.exception.ServiceException;
-import com.manage.framework.exception.DaoException;
-import com.manage.app.vo.ManageSendMsgQuery;
-import com.manage.app.bean.ManageHouse;
 import com.manage.app.bean.ManageSendMsg;
 import com.manage.app.dao.ManageSendMsgDao;
+import com.manage.app.vo.BaseBean;
+import com.manage.app.vo.ManageSendMsgQuery;
+import com.manage.framework.exception.DaoException;
+import com.manage.framework.exception.ServiceException;
 import com.utis.Page;
 
 @Service("ManageSendMsgService")

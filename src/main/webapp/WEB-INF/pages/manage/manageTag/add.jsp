@@ -68,7 +68,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			        <tr>
 			          <td>标签图片：</td>
 			          <td>
-			          	<input name="tagPic" id="moduleIconImage" type="hidden" style="width: 150px;" value="" class="easyui-validatebox"/>
+			          	<input name=tagPic id="moduleIconImage" type="hidden" style="width: 150px;" value="" class="easyui-validatebox"/>
 			          <form:hidden path="picPath" id="picPath"></form:hidden>  
 									      <span id="moduleIconImage-statusPic" style="color: #666;">  
 									      <a href="javascript:void(0)" onclick="Preview('moduleIconImage')">预览</a></span>  

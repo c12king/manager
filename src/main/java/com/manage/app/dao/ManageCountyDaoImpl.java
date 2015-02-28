@@ -9,8 +9,6 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.manage.app.bean.BusinessMenu;
-import com.manage.app.bean.ManageCity;
 import com.manage.app.bean.ManageCounty;
 import com.utis.Page;
 

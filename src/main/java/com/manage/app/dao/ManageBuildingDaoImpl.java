@@ -11,7 +11,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.manage.app.bean.ManageBuilding;
-import com.manage.app.bean.BusinessPosition;
+import com.manage.framework.exception.ServiceException;
 import com.utis.Page;
 
 @Repository("ManageBuildingDao")

@@ -1,20 +1,14 @@
 package com.manage.app.service;
 
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-
-import net.sf.json.JSONArray;
-import net.sf.json.JSONObject;
 
 import org.ietf.jgss.GSSException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Isolation;
-import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.manage.app.bean.BusinessUser;
@@ -67,6 +61,18 @@ public class BusinessUserServiceImpl implements BusinessUserService {
 			e.printStackTrace();
 		}
 		return false;
+	}
+	
+	@Transactional(readOnly = true)
+	public BusinessUser findBusinessUserById(Integer userId) throws GSSException {
+		BusinessUser entity = null;
+		try {
+			entity = businessUserDao.findBusinessUserById(userId);
+		} catch (GSSException e) {
+			logger.debug("BusinessUserServiceImpl：查询单个BusinessUser发生错误！", e);
+			e.printStackTrace();
+		}
+		return entity;
 	}
 	
 	@Transactional(readOnly = true)

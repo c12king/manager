@@ -69,6 +69,12 @@ public class BusinessUserDaoImpl implements BusinessUserDao {
 		return list.get(0);
 	}
 	
+	
+	public BusinessUser findBusinessUserById(Integer userId) throws GSSException {
+		BusinessUser businessUser =(BusinessUser) this.sqlSessionTemplate.selectOne("findBusinessUserById",userId);
+		return businessUser;
+	}
+	
 	/**
 	 * 根据搜索条件，搜索分页数据
 	 * @param pageSize

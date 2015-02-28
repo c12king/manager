@@ -14,7 +14,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.manage.app.bean.BusinessTelGroup;
-import com.manage.app.bean.ManageEstate;
 import com.manage.app.dao.BusinessTelGroupDao;
 import com.manage.app.vo.BaseBean;
 import com.manage.app.vo.BusinessTelGroupQuery;

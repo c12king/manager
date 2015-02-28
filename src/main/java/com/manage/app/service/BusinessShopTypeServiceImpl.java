@@ -10,13 +10,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.manage.app.vo.BaseBean;
-import com.manage.framework.exception.ServiceException;
-import com.manage.framework.exception.DaoException;
-
-import com.manage.app.vo.BusinessShopTypeQuery;
 import com.manage.app.bean.BusinessShopType;
 import com.manage.app.dao.BusinessShopTypeDao;
+import com.manage.app.vo.BaseBean;
+import com.manage.app.vo.BusinessShopTypeQuery;
+import com.manage.framework.exception.DaoException;
+import com.manage.framework.exception.ServiceException;
 
 @Service("BusinessShopTypeService")
 @Transactional

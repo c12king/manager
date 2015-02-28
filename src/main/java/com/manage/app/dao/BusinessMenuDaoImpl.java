@@ -13,7 +13,6 @@ import org.springframework.stereotype.Repository;
 import com.manage.app.bean.BusinessMenu;
 import com.manage.framework.exception.DaoException;
 import com.manage.framework.exception.ServiceException;
-import com.utis.Page;
 @Repository("BusinessMenuDao")
 public class BusinessMenuDaoImpl implements BusinessMenuDao{
 	@Resource(name="SqlSessionTemplate") 
@@ -70,6 +69,24 @@ public class BusinessMenuDaoImpl implements BusinessMenuDao{
 	public List<BusinessMenu> findFarentById(Integer id) throws DaoException {
 		List<BusinessMenu> list =this.sqlSessionTemplate.selectList("BusinessMenuFindFarentById",id);
 		return list;
+	}
+	
+	/**
+	 * 获取所有菜单
+	 */
+	public List<BusinessMenu> findAllMenu() throws DaoException {
+		List<BusinessMenu> list =this.sqlSessionTemplate.selectList("findAllMenu");
+		return list;
+	}
+	
+	/**
+	 * 获取单个菜单
+	 */
+	public BusinessMenu findMenuById(Integer menuId) throws DaoException {
+		Map map = new HashMap();
+		map.put("menuId", menuId);
+		BusinessMenu businessMenu =this.sqlSessionTemplate.selectOne("findMenuById", map);
+		return businessMenu;
 	}
 	
 }

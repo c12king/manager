@@ -5,7 +5,6 @@ import java.util.List;
 import org.apache.commons.lang.StringUtils;
 
 import com.manage.framework.utils.Pager;
-import com.manage.framework.utils.StringUtil;
 
 public class BaseBean {
 

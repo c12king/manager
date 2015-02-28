@@ -3,15 +3,10 @@ package com.manage.app.service;
 import java.util.List;
 import java.util.Map;
 
-
-
-
-
-
-import com.manage.app.vo.BaseBean;
-import com.manage.framework.exception.ServiceException;
 import com.manage.app.bean.BusinessShop;
+import com.manage.app.vo.BaseBean;
 import com.manage.app.vo.BusinessShopQuery;
+import com.manage.framework.exception.ServiceException;
 
 
 public interface BusinessShopService {

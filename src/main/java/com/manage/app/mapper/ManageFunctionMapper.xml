@@ -80,5 +80,9 @@
 		functionId='${functionId}'
 															</delete>
 	
+	<select id="findFunctionByMenu"  resultMap="ManageFunction" parameterType="java.lang.Integer">
+		select functionId,functionName,menuId from manage_function where menuId = #{menuId}
+	</select>
+	
 </mapper>
 	

@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.manage.app.dao.BusinessSpecialFunctionDao" >
+	<!-- 返回结构集 -->
+	<resultMap id="BusinessSpecialFunctionResult" type="BusinessSpecialFunction">
+			<result column="spfuId" property="spfuId" />
+			<result column="spmeId" property="spmeId" />
+			<result column="functionId" property="functionId" />
+			<result column="functionName" property="functionName" />
+	</resultMap>
+	
+	<!-- 所有字段 -->
+	<sql id="Base_Column_List" >
+			sf.spfuId,
+			sf.spmeId,
+			sf.functionId
+	</sql>
+	
+	<!-- 所有字段查询条件 -->
+	<sql id="Base_Where_Clause">
+		<where>
+			<trim  suffixOverrides="," >
+					<if test="spfuId != null and spfuId != ''" >
+				   		and sf.spfuId = #{spfuId}
+					</if>
+					<if test="spmeId != null and spmeId != ''" >
+				   		and sf.spmeId = #{spmeId}
+					</if>
+					<if test="functionId != null and functionId != ''" >
+				   		and sf.functionId = #{functionId}
+					</if>
+			</trim>
+		</where>
+	</sql>
+	
+	<!-- 根据id查询 BusinessSpecialFunction -->
+	<select id="findById"  resultMap="BusinessSpecialFunctionResult" parameterType="java.lang.Integer">
+		select <include refid="Base_Column_List" /> from business_special_function sf where sf.spfuId = #{id}
+	</select>
+	
+	<!-- 无条件查询所有BusinessSpecialFunction -->
+	<select id="findAll" resultMap="BusinessSpecialFunctionResult">
+		select <include refid="Base_Column_List" /> from business_special_function sf
+	</select>
+	
+	<!-- 按Map对象条件查询所有BusinessSpecialFunction -->
+	<select id="findByMap" resultMap="BusinessSpecialFunctionResult" parameterType="java.util.Map">
+		select <include refid="Base_Column_List" />, fun.functionName from business_special_function sf 
+				left join manage_function fun on fun.functionId = sf.functionId 
+				<include refid="Base_Where_Clause" />
+	</select>
+	
+	<!-- 按VO对象条件查询所有BusinessSpecialFunction -->
+	<select id="findByExample" resultMap="BusinessSpecialFunctionResult" parameterType="com.manage.app.vo.BusinessSpecialFunctionQuery">
+		select <include refid="Base_Column_List" /> from business_special_function sf <include refid="Base_Where_Clause" />
+	</select>
+	
+	<!-- BusinessSpecialFunction根据搜索条件，搜索分页数据 -->
+	<select id="findAllPage" resultMap="BusinessSpecialFunctionResult" parameterType="Object">
+		select <include refid="Base_Column_List" /> from business_special_function sf  
+		<include refid="Base_Where_Clause" />
+		<if test="pager.orderCondition != null and pager.orderCondition != ''" >
+      	${pager.orderCondition}
+	    </if>
+	    <if test="pager.mysqlQueryCondition != null and pager.mysqlQueryCondition != ''" >
+	    ${pager.mysqlQueryCondition}
+	    </if>
+	</select>
+	
+	<!-- BusinessSpecialFunction列表总数-->
+	<select id="selectCount" resultType="java.lang.Integer"  parameterType="Object">
+		select count(1) from business_special_function sf
+		<include refid="Base_Where_Clause" />
+	</select>
+	
+	<!-- BusinessSpecialFunction保存数据 -->
+	<insert id="save" parameterType="BusinessSpecialFunction">
+		<selectKey resultType="java.lang.Integer" order="AFTER" keyProperty="spfuId">
+			SELECT LAST_INSERT_ID()
+  		</selectKey>
+		insert into business_special_function(
+		
+		spmeId,
+		functionId
+		) values(
+				#{spmeId},
+		#{functionId}
+		)
+	</insert>
+	
+	<!-- BusinessSpecialFunction修改数据 -->
+	<update id="update" parameterType="BusinessSpecialFunction">
+		update business_special_function 
+		<set>
+			<if test="spmeId != null and spmeId != ''" >
+			spmeId=#{spmeId},
+			</if>
+			<if test="functionId != null and functionId != ''" >
+			functionId=#{functionId}
+			</if>
+		</set> 
+		where 
+		spfuId=#{spfuId}
+		
+		
+	</update>
+	
+	<!-- BusinessSpecialFunction删除数据 -->
+	<delete id="delete" parameterType="java.lang.Integer">
+		delete from business_special_function where 
+		spfuId=#{spfuId}
+					</delete>
+	
+	<!-- BusinessSpecialFunction根据搜索条件，搜索分页所需的数据 -->
+	<select id="findAllPageByField" resultMap="BusinessSpecialFunctionResult" parameterType="Object">
+		select 
+		<if test="fieldMap != null and fieldMap != ''" >
+			<foreach collection="fieldMap" item="field" separator=",">  
+	    	#{field}
+	    	</foreach>
+		</if>
+		<if test="fieldMap == null"> * </if>
+		from business_special_function  
+		<include refid="Base_Where_Clause" />
+		<if test="pager.orderCondition != null and pager.orderCondition != ''" >
+      	${pager.orderCondition}
+	    </if>
+	    <if test="pager.mysqlQueryCondition != null and pager.mysqlQueryCondition != ''" >
+	    ${pager.mysqlQueryCondition}
+	    </if>
+	</select>
+	
+	<!-- BusinessSpecialFunction根据条件查询所需字段，返回列表 -->
+	<select id="findListByField" resultMap="BusinessSpecialFunctionResult" parameterType="Object">
+		select 
+		<if test="fieldMap != null and fieldMap != ''" >
+			<foreach collection="fieldMap" item="field" separator=",">  
+	    	#{field}
+	    	</foreach>
+		</if>
+		<if test="fieldMap == null"> * </if>
+		from business_special_function  
+		<include refid="Base_Where_Clause" />
+		<if test="pager.orderCondition != null and pager.orderCondition != ''" >
+      	${pager.orderCondition}
+	    </if>
+	</select>
+	
+	<!-- 根据id查询 BusinessSpecialFunction -->
+	<select id="findByField"  resultMap="BusinessSpecialFunctionResult" parameterType="Object">
+		select 
+		<if test="fieldMap != null and fieldMap != ''" >
+			<foreach collection="fieldMap" item="field" separator=",">  
+	    	#{field}
+	    	</foreach>
+		</if>
+		<if test="fieldMap == null"> * </if>
+		from business_special_function where spfuId = #{id}
+	</select>
+	
+</mapper>
+	

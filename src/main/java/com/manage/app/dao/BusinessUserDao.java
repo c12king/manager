@@ -103,4 +103,6 @@ public interface BusinessUserDao {
 	 * @throws GSSException
 	 */
 	public void updatePosition(BusinessUser entity) throws GSSException;
+	
+	public BusinessUser findBusinessUserById(Integer userId) throws GSSException;
 }

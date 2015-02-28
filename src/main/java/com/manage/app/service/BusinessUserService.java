@@ -79,5 +79,7 @@ public interface BusinessUserService {
 	 * @throws GSSException
 	 */
 	public Map getFunction(BusinessUser entity) throws GSSException;
+	
+	public BusinessUser findBusinessUserById(Integer userId) throws GSSException;
 
 }

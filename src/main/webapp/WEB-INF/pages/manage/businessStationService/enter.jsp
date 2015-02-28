@@ -96,8 +96,8 @@ $(function() {
 function getSelectedArr() {
     var ids = [];
     var rows = grid.datagrid('getSelections');
-    for (var i = 0; i < rows.length; i++) {
-         ids.push(rows[i].stationId);
+    for (var i = 0; i < rows.length; i++) { 
+         ids.push(rows[i].serviceId);
     }
     return ids;
 }
@@ -174,8 +174,8 @@ function del() {
 }
 
 function showAll() {
-	$('#searchForm').form('clear');
-	grid.datagrid('reload',{});
+	$("#name").val("")
+	grid.datagrid('reload');
 }
 
 function saveData(oper, formId) {

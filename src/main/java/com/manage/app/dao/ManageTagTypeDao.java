@@ -3,16 +3,11 @@ package com.manage.app.dao;
 import java.util.List;
 import java.util.Map;
 
-
-
-
-
 import org.springframework.stereotype.Repository;
-
-import com.manage.framework.exception.DaoException;
 
 import com.manage.app.bean.ManageTagType;
 import com.manage.app.vo.ManageTagTypeQuery;
+import com.manage.framework.exception.DaoException;
 
 @Repository
 public interface ManageTagTypeDao {

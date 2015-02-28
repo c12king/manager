@@ -3,12 +3,9 @@ package com.manage.app.controller;
 import java.io.IOException;
 import java.sql.Timestamp;
 import java.util.Date;
-import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import net.sf.json.JSONArray;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,12 +16,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.manage.app.bean.BusinessShop;
-import com.manage.app.bean.ManageExpress;
 import com.manage.app.service.BusinessShopService;
 import com.manage.app.vo.BaseBean;
 import com.manage.app.vo.BusinessShopQuery;
-import com.manage.app.vo.ManageExpressQuery;
-import com.utis.TreeNode;
 
 
 @Controller
@@ -107,13 +101,14 @@ public class BusinessShopController {
 	 * @return
 	 */
 	@RequestMapping(value="add")
-	public ModelAndView add(BusinessShopQuery query) {		
+	public ModelAndView add(HttpServletRequest request,BusinessShopQuery query) {		
 		try{
 		}catch(Exception e){
 			GSLogger.error("进入businessShop新增页时发生错误：/manage/businessShop/add", e);
 			e.printStackTrace();
 		}
 		ModelAndView mav = new ModelAndView("/manage/businessShop/add");
+		mav.addObject("typeId", request.getParameter("typeId"));
 		return mav;
 	}
 	

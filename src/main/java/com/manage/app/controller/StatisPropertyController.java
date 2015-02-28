@@ -16,7 +16,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.manage.app.common.ResultBean;
 import com.manage.app.service.StatisService;
-import com.manage.framework.log.GSLogger;
 
 /**
  * 物业统计

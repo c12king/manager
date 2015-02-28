@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.manage.app.dao.BusinessRoleEstateDao" >
+	<!-- 返回结构集 -->
+	<resultMap id="BusinessRoleEstateResult" type="BusinessRoleEstate">
+			<result column="roesId" property="roesId" />
+			<result column="rocoId" property="rocoId" />
+			<result column="estateId" property="estateId" />
+			<result column="estateName" property="estateName" />
+	</resultMap>
+	
+	<!-- 所有字段 -->
+	<sql id="Base_Column_List" >
+			re.roesId,
+			re.rocoId,
+			re.estateId
+	</sql>
+	
+	<!-- 所有字段查询条件 -->
+	<sql id="Base_Where_Clause">
+		<where>
+			<trim  suffixOverrides="," >
+					<if test="roesId != null and roesId != ''" >
+				   		and re.roesId = #{roesId}
+					</if>
+					<if test="rocoId != null and rocoId != ''" >
+				   		and re.rocoId = #{rocoId}
+					</if>
+					<if test="estateId != null and estateId != ''" >
+				   		and re.estateId = #{estateId}
+					</if>
+			</trim>
+		</where>
+	</sql>
+	
+	<!-- 根据id查询 BusinessRoleEstate -->
+	<select id="findById"  resultMap="BusinessRoleEstateResult" parameterType="java.lang.Integer">
+		select <include refid="Base_Column_List" /> from business_role_estate re where re.roesId = #{id}
+	</select>
+	
+	<!-- 无条件查询所有BusinessRoleEstate -->
+	<select id="findAll" resultMap="BusinessRoleEstateResult">
+		select <include refid="Base_Column_List" /> from business_role_estate re
+	</select>
+	
+	<!-- 按Map对象条件查询所有BusinessRoleEstate -->
+	<select id="findByMap" resultMap="BusinessRoleEstateResult" parameterType="java.util.Map">
+		select <include refid="Base_Column_List" />, e.estateName from business_role_estate re 
+		left join manage_estate e on e.estateId = re.estateId  
+		<include refid="Base_Where_Clause" />
+	</select>
+	
+	<!-- 按VO对象条件查询所有BusinessRoleEstate -->
+	<select id="findByExample" resultMap="BusinessRoleEstateResult" parameterType="com.manage.app.vo.BusinessRoleEstateQuery">
+		select <include refid="Base_Column_List" /> from business_role_estate re <include refid="Base_Where_Clause" />
+	</select>
+	
+	<!-- BusinessRoleEstate根据搜索条件，搜索分页数据 -->
+	<select id="findAllPage" resultMap="BusinessRoleEstateResult" parameterType="Object">
+		select <include refid="Base_Column_List" /> from business_role_estate re 
+		
+		<include refid="Base_Where_Clause" />
+		<if test="pager.orderCondition != null and pager.orderCondition != ''" >
+      	${pager.orderCondition}
+	    </if>
+	    <if test="pager.mysqlQueryCondition != null and pager.mysqlQueryCondition != ''" >
+	    ${pager.mysqlQueryCondition}
+	    </if>
+	</select>
+	
+	<!-- BusinessRoleEstate列表总数-->
+	<select id="selectCount" resultType="java.lang.Integer"  parameterType="Object">
+		select count(1) from business_role_estate re
+		<include refid="Base_Where_Clause" />
+	</select>
+	
+	<!-- BusinessRoleEstate保存数据 -->
+	<insert id="save" parameterType="BusinessRoleEstate">
+		<selectKey resultType="java.lang.Integer" order="AFTER" keyProperty="roesId">
+			SELECT LAST_INSERT_ID()
+  		</selectKey>
+		insert into business_role_estate(
+		
+		rocoId,
+		estateId
+		) values(
+				#{rocoId},
+		#{estateId}
+		)
+	</insert>
+	
+	<!-- BusinessRoleEstate修改数据 -->
+	<update id="update" parameterType="BusinessRoleEstate">
+		update business_role_estate 
+		<set>
+			<if test="rocoId != null and rocoId != ''" >
+			rocoId=#{rocoId},
+			</if>
+			<if test="estateId != null and estateId != ''" >
+			estateId=#{estateId}
+			</if>
+		</set> 
+		where 
+		roesId=#{roesId}
+		
+		
+	</update>
+	
+	<!-- BusinessRoleEstate删除数据 -->
+	<delete id="delete" parameterType="java.lang.Integer">
+		delete from business_role_estate where 
+		roesId=#{roesId}
+					</delete>
+	
+	<!-- BusinessRoleEstate根据搜索条件，搜索分页所需的数据 -->
+	<select id="findAllPageByField" resultMap="BusinessRoleEstateResult" parameterType="Object">
+		select 
+		<if test="fieldMap != null and fieldMap != ''" >
+			<foreach collection="fieldMap" item="field" separator=",">  
+	    	#{field}
+	    	</foreach>
+		</if>
+		<if test="fieldMap == null"> * </if>
+		from business_role_estate  
+		<include refid="Base_Where_Clause" />
+		<if test="pager.orderCondition != null and pager.orderCondition != ''" >
+      	${pager.orderCondition}
+	    </if>
+	    <if test="pager.mysqlQueryCondition != null and pager.mysqlQueryCondition != ''" >
+	    ${pager.mysqlQueryCondition}
+	    </if>
+	</select>
+	
+	<!-- BusinessRoleEstate根据条件查询所需字段，返回列表 -->
+	<select id="findListByField" resultMap="BusinessRoleEstateResult" parameterType="Object">
+		select 
+		<if test="fieldMap != null and fieldMap != ''" >
+			<foreach collection="fieldMap" item="field" separator=",">  
+	    	#{field}
+	    	</foreach>
+		</if>
+		<if test="fieldMap == null"> * </if>
+		from business_role_estate  
+		<include refid="Base_Where_Clause" />
+		<if test="pager.orderCondition != null and pager.orderCondition != ''" >
+      	${pager.orderCondition}
+	    </if>
+	</select>
+	
+	<!-- 根据id查询 BusinessRoleEstate -->
+	<select id="findByField"  resultMap="BusinessRoleEstateResult" parameterType="Object">
+		select 
+		<if test="fieldMap != null and fieldMap != ''" >
+			<foreach collection="fieldMap" item="field" separator=",">  
+	    	#{field}
+	    	</foreach>
+		</if>
+		<if test="fieldMap == null"> * </if>
+		from business_role_estate where roesId = #{id}
+	</select>
+	
+</mapper>
+	

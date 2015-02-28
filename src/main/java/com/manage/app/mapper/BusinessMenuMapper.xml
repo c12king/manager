@@ -14,7 +14,9 @@
 		<result column="ord" property="ord" />		
 		<result column="leaf" property="leaf" />
 		<result column="unSelectedIcon" property="unSelectedIcon" />	
-		<result column="selectedIcon" property="selectedIcon" />	
+		<result column="selectedIcon" property="selectedIcon" />
+		<result column="isCom" property="isCom" />
+		<result column="isEstate" property="isEstate" />	
 	</resultMap>
 	<select id="selectTree" resultMap="BusinessMenuResult">
 		SELECT menuId,NAME,url,parentId,leaf  FROM business_menu where  parentId = '${menuId}' ORDER BY ORD,modifyTime DESC 
@@ -23,7 +25,7 @@
 		select menuId,NAME from business_menu where parentId = #{id}
 	</select>
 	<select id="selectMenuId" resultMap="BusinessMenuResult" parameterType="businessMenu">
-		SELECT menuId,NAME,url,parentId,ord,unSelectedIcon,selectedIcon,code  FROM business_menu where menuId = '${menuId}' ORDER BY modifyTime DESC 
+		SELECT menuId,NAME,url,parentId,ord,unSelectedIcon,selectedIcon,code,isCom,isEstate  FROM business_menu where menuId = '${menuId}' ORDER BY modifyTime DESC 
 	</select>
 	<insert id="addMenu" parameterType="businessMenu">
 		insert into business_menu(parentId,leaf,name) values('${parentId}','0','新节点')
@@ -32,7 +34,7 @@
 		</selectKey> 
 	</insert>
 	<update id="updateMenu" parameterType="businessMenu">
-		update business_menu set name='${name}',ord='${ord}',url='${url}',selectedIcon='${selectedIcon}',unSelectedIcon='${unSelectedIcon}',code='${code}' where menuId='${menuId}'
+		update business_menu set name='${name}',ord='${ord}',url='${url}',selectedIcon='${selectedIcon}',unSelectedIcon='${unSelectedIcon}',code='${code}',isCom='${isCom}',isEstate='${isEstate}' where menuId='${menuId}'
 	</update>
 	<update id="updateMenuLeaf" parameterType="businessMenu">
 		update business_menu set leaf=1 where menuId='${parentId}'
@@ -46,5 +48,14 @@
 	<select id="selectMenuComboboxData" resultType="int" >
 		SELECT menuId,NAME  FROM business_menu where  parentId = 0
 	</select>
+	
+	<select id="findAllMenu" resultMap="BusinessMenuResult">
+		SELECT menuId,NAME,ord FROM business_menu ORDER BY ord asc 
+	</select>
+	
+	<select id="findMenuById" resultMap="BusinessMenuResult" parameterType="java.util.Map">
+		SELECT menuId,NAME,ord FROM business_menu where menuId = ${menuId} 
+	</select>
+	
 </mapper>
 	

@@ -20,8 +20,6 @@ import com.manage.app.bean.ManageAdmin;
 import com.manage.app.service.ManageAdminService;
 import com.manage.app.vo.ManageAdminQuery;
 import com.manage.framework.utils.MD5;
-import com.manage.app.controller.IndexController;
-import com.manage.app.service.ManageAdminService;
 
 @Controller
 @RequestMapping(value = "/index")

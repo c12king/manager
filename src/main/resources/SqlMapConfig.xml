@@ -24,8 +24,22 @@
 		<typeAlias alias="ManageOrgExpress" type="com.manage.app.bean.ManageOrgExpress"/>
 		<typeAlias alias="ManageTag" type="com.manage.app.bean.ManageTag"/>
 		<typeAlias alias="ManageTagType" type="com.manage.app.bean.ManageTagType"/>
-		<typeAlias alias="BusinessShop" type="com.manage.app.bean.BusinessShop"/>
-		<typeAlias alias="BusinessShopType" type="com.manage.app.bean.BusinessShopType"/>
+		<typeAlias alias="ManageAdmin" type="com.manage.app.bean.ManageAdmin"/>
+		<typeAlias alias="BusinessRole" type="com.manage.app.bean.BusinessRole"/>
+		<typeAlias alias="BusinessRoleGroup" type="com.manage.app.bean.BusinessRoleGroup"/>
+		
+		<typeAlias alias="BusinessRoleMenu" type="com.manage.app.bean.BusinessRoleMenu"/>
+		<typeAlias alias="BusinessRoleFunction" type="com.manage.app.bean.BusinessRoleFunction"/>
+		
+		<typeAlias alias="BusinessUserRole" type="com.manage.app.bean.BusinessUserRole"/>
+		
+		<typeAlias alias="BusinessUserCommunity" type="com.manage.app.bean.BusinessUserCommunity"/>
+		
+		<typeAlias alias="BusinessRoleCommunity" type="com.manage.app.bean.BusinessRoleCommunity"/>
+		<typeAlias alias="BusinessRoleEstate" type="com.manage.app.bean.BusinessRoleEstate"/>
+		<typeAlias alias="BusinessRoleRefu" type="com.manage.app.bean.BusinessRoleRefu"/>
+		<typeAlias alias="BusinessSpecialMenu" type="com.manage.app.bean.BusinessSpecialMenu"/>
+		<typeAlias alias="BusinessSpecialFunction" type="com.manage.app.bean.BusinessSpecialFunction"/>
 		
 		<!-- manage -->
 	</typeAliases>
@@ -57,6 +71,11 @@
 		<mapper resource="com/manage/app/mapper/BusinessUserResourceMapper.xml" />
 		<mapper resource="com/manage/app/mapper/StatisMapper.xml" />
 		<mapper resource="com/manage/app/mapper/ManageAdminMapper.xml" />
+		<mapper resource="com/manage/app/mapper/BusinessRoleMapper.xml" />
+		<mapper resource="com/manage/app/mapper/BusinessRoleGroupMapper.xml" />
+		<mapper resource="com/manage/app/mapper/BusinessRoleMenuMapper.xml" />
+		<mapper resource="com/manage/app/mapper/BusinessRoleFunctionMapper.xml" />
+		<mapper resource="com/manage/app/mapper/ManageAdminMapper.xml" />
 		<mapper resource="com/manage/app/mapper/BusinessTelGroupMapper.xml" />
 		<mapper resource="com/manage/app/mapper/BuseinessTelMapper.xml" />
 		<mapper resource="com/manage/app/mapper/ManageSendMsgMapper.xml" />
@@ -65,9 +84,15 @@
 		<mapper resource="com/manage/app/mapper/ManageExpressFeeMapper.xml" />
 		<mapper resource="com/manage/app/mapper/ManageOrgExpressMapper.xml" />
 		<mapper resource="com/manage/app/mapper/ManageTagTypeMapper.xml" />
-		<mapper resource="com/manage/app/mapper/ManageTagMapper.xml" />
-		<mapper resource="com/manage/app/mapper/BusinessShopMapper.xml" />
-		<mapper resource="com/manage/app/mapper/BusinessShopTypeMapper.xml" />
+		<mapper resource="/com/manage/app/mapper/ManageTagMapper.xml" />
+		<mapper resource="/com/manage/app/mapper/BusinessUserRoleMapper.xml" />
+		<mapper resource="/com/manage/app/mapper/BusinessUserCommunityMapper.xml" />
+		
+		<mapper resource="/com/manage/app/mapper/BusinessRoleCommunityMapper.xml" />
+		<mapper resource="/com/manage/app/mapper/BusinessRoleEstateMapper.xml" />
+		<mapper resource="/com/manage/app/mapper/BusinessRoleRefuMapper.xml" />
+		<mapper resource="/com/manage/app/mapper/BusinessSpecialMenuMapper.xml" />
+		<mapper resource="/com/manage/app/mapper/BusinessSpecialFunctionMapper.xml" />
 		
 	</mappers>
 </configuration>

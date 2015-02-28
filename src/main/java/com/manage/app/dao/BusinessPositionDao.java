@@ -5,7 +5,6 @@ import java.util.List;
 import org.ietf.jgss.GSSException;
 import org.springframework.stereotype.Repository;
 
-import com.manage.app.bean.ManageOrg;
 import com.manage.app.bean.BusinessPosition;
 import com.utis.Page;
 

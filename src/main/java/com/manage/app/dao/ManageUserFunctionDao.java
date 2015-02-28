@@ -3,16 +3,11 @@ package com.manage.app.dao;
 import java.util.List;
 import java.util.Map;
 
-
-
-
-
 import org.springframework.stereotype.Repository;
-
-import com.manage.framework.exception.DaoException;
 
 import com.manage.app.bean.ManageUserFunction;
 import com.manage.app.vo.ManageUserFunctionQuery;
+import com.manage.framework.exception.DaoException;
 
 @Repository
 public interface ManageUserFunctionDao {

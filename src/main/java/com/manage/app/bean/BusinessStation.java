@@ -5,8 +5,6 @@ import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
 
-import java.util.*;
-
 
 public class BusinessStation implements java.io.Serializable{
 	
@@ -29,7 +27,8 @@ public class BusinessStation implements java.io.Serializable{
 	private java.lang.String editor;
 	private java.lang.String orgName;
 	private java.lang.String staCode;
-
+	private java.lang.Integer isDoor;
+	
 	public java.lang.String getOrgName() {
 		return orgName;
 	}
@@ -159,6 +158,7 @@ public class BusinessStation implements java.io.Serializable{
 			.append("StaIcon",getStaIcon())
 			.append("StaLongitude",getStaLongitude())
 			.append("StaLatitude",getStaLatitude())
+			.append("isDoor",getIsDoor())
 			.append("CrateTime",getCrateTime())
 			.append("EditTime",getEditTime())
 			.append("Editor",getEditor())
@@ -186,6 +186,14 @@ public class BusinessStation implements java.io.Serializable{
 
 	public void setStaCode(java.lang.String staCode) {
 		this.staCode = staCode;
+	}
+
+	public java.lang.Integer getIsDoor() {
+		return isDoor;
+	}
+
+	public void setIsDoor(java.lang.Integer isDoor) {
+		this.isDoor = isDoor;
 	}
 	
 }

@@ -2,7 +2,6 @@ package com.manage.app.service;
 
 import org.ietf.jgss.GSSException;
 
-import com.manage.app.bean.ManageOrg;
 import com.manage.app.bean.BusinessPosition;
 import com.utis.Page;
 

@@ -3,20 +3,12 @@ package com.manage.app.service;
 import java.util.List;
 import java.util.Map;
 
-
-
-
-
-
-
-
 import org.ietf.jgss.GSSException;
 
-import com.manage.app.vo.BaseBean;
-import com.manage.framework.exception.ServiceException;
 import com.manage.app.bean.BusinessCommunity;
-import com.manage.app.bean.ManageCounty;
+import com.manage.app.vo.BaseBean;
 import com.manage.app.vo.BusinessCommunityQuery;
+import com.manage.framework.exception.ServiceException;
 
 
 public interface BusinessCommunityService {

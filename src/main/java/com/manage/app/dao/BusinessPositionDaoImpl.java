@@ -9,7 +9,6 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.manage.app.bean.ManageOrg;
 import com.manage.app.bean.BusinessPosition;
 import com.utis.Page;
 

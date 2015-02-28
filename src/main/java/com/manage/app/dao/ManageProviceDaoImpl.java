@@ -10,7 +10,6 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.manage.app.bean.ManageProvice;
-import com.manage.app.bean.ManageUnit;
 import com.utis.Page;
 
 @Repository("ManageProviceDao")

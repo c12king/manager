@@ -16,13 +16,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.manage.app.bean.BusinessShop;
 import com.manage.app.bean.BusinessShopType;
-import com.manage.app.bean.ManageExpress;
 import com.manage.app.service.BusinessShopTypeService;
 import com.manage.app.vo.BaseBean;
 import com.manage.app.vo.BusinessShopTypeQuery;
-import com.manage.app.vo.ManageExpressQuery;
 import com.utis.TreeNode;
 
 

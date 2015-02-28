@@ -1,14 +1,11 @@
 package com.manage.app.vo;
 
-import org.apache.commons.lang.builder.EqualsBuilder;
-import org.apache.commons.lang.builder.HashCodeBuilder;
+import java.util.Map;
+
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
 
-import java.util.Map;
-import java.io.Serializable;
 import com.manage.app.bean.ManageAdmin;
-import com.manage.app.vo.BaseBean;
 
 public class ManageAdminQuery extends BaseBean {
 	

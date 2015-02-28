@@ -6,7 +6,6 @@ import org.ietf.jgss.GSSException;
 import org.springframework.stereotype.Repository;
 
 import com.manage.app.bean.ManageProvice;
-import com.manage.app.bean.ManageUnit;
 import com.utis.Page;
 
 

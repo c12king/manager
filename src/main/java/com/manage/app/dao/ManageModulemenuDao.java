@@ -3,17 +3,12 @@ package com.manage.app.dao;
 import java.util.List;
 import java.util.Map;
 
-
-
-
-
-
 import org.springframework.stereotype.Repository;
 
-import com.manage.framework.exception.DaoException;
-import com.manage.framework.exception.ServiceException;
 import com.manage.app.bean.ManageModulemenu;
 import com.manage.app.vo.ManageModulemenuQuery;
+import com.manage.framework.exception.DaoException;
+import com.manage.framework.exception.ServiceException;
 
 @Repository
 public interface ManageModulemenuDao {

@@ -1,13 +1,9 @@
 package com.manage.app.vo;
 
-import org.apache.commons.lang.builder.EqualsBuilder;
-import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
 
-import java.io.Serializable;
 import com.manage.app.bean.BusinessStation;
-import com.manage.app.vo.BaseBean;
 
 public class BusinessStationQuery extends BaseBean {
 	
@@ -26,7 +22,8 @@ public class BusinessStationQuery extends BaseBean {
 	private java.sql.Timestamp crateTime;
 	private java.sql.Timestamp editTime;
 	private java.lang.String editor;
-
+	private java.lang.Integer isDoor;
+	
 	public BusinessStationQuery(BusinessStation businessStation) {
 		this.stationId = businessStation.getStationId();
 		this.orgId = businessStation.getOrgId();
@@ -39,6 +36,7 @@ public class BusinessStationQuery extends BaseBean {
 		this.staIcon = businessStation.getStaIcon();
 		this.staLongitude = businessStation.getStaLongitude();
 		this.staLatitude = businessStation.getStaLatitude();
+		this.isDoor = businessStation.getIsDoor();
 		this.crateTime = businessStation.getCrateTime();
 		this.editTime = businessStation.getEditTime();
 		this.editor = businessStation.getEditor();
@@ -162,6 +160,14 @@ public class BusinessStationQuery extends BaseBean {
 		
 	public String toString() {
 		return ToStringBuilder.reflectionToString(this,ToStringStyle.MULTI_LINE_STYLE);
+	}
+
+	public java.lang.Integer getIsDoor() {
+		return isDoor;
+	}
+
+	public void setIsDoor(java.lang.Integer isDoor) {
+		this.isDoor = isDoor;
 	}
 	
 }

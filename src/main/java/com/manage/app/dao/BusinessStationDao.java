@@ -3,17 +3,11 @@ package com.manage.app.dao;
 import java.util.List;
 import java.util.Map;
 
-
-
-
-
-
 import org.springframework.stereotype.Repository;
 
-import com.manage.framework.exception.DaoException;
-import com.manage.app.bean.BusinessProperty;
 import com.manage.app.bean.BusinessStation;
 import com.manage.app.vo.BusinessStationQuery;
+import com.manage.framework.exception.DaoException;
 
 @Repository
 public interface BusinessStationDao {

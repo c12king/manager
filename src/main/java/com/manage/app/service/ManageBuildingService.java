@@ -6,7 +6,7 @@ import java.util.Map;
 import org.ietf.jgss.GSSException;
 
 import com.manage.app.bean.ManageBuilding;
-import com.manage.app.bean.BusinessPosition;
+import com.manage.framework.exception.ServiceException;
 import com.utis.Page;
 
 

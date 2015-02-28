@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.manage.app.dao.BusinessUserRoleDao" >
+	<!-- 返回结构集 -->
+	<resultMap id="BusinessUserRoleResult" type="BusinessUserRole">
+			<result column="usroId" property="usroId" />
+			<result column="roleId" property="roleId" />
+			<result column="userId" property="userId" />
+			
+			<result column="roleName" property="roleName" />
+			<result column="userName" property="userName" />
+			
+	</resultMap>
+	
+	<!-- 所有字段 -->
+	<sql id="Base_Column_List" >
+			ur.usroId,
+			ur.roleId,
+			ur.userId
+	</sql>
+	
+	<!-- 所有字段查询条件 -->
+	<sql id="Base_Where_Clause">
+		<where>
+			<trim  suffixOverrides="," >
+					<if test="usroId != null and usroId != ''" >
+				   		and ur.usroId = #{usroId}
+					</if>
+					<if test="roleId != null and roleId != ''" >
+				   		and ur.roleId = #{roleId}
+					</if>
+					<if test="userId != null and userId != ''" >
+				   		and ur.userId = #{userId}
+					</if>
+			</trim>
+		</where>
+	</sql>
+	
+	<!-- 根据id查询 BusinessUserRole -->
+	<select id="findById"  resultMap="BusinessUserRoleResult" parameterType="java.lang.Integer">
+		select <include refid="Base_Column_List" /> from business_user_role ur where ur.usroId = #{id}
+	</select>
+	
+	<!-- 无条件查询所有BusinessUserRole -->
+	<select id="findAll" resultMap="BusinessUserRoleResult">
+		select <include refid="Base_Column_List" /> from business_user_role ur
+	</select>
+	
+	<!-- 按Map对象条件查询所有BusinessUserRole -->
+	<select id="findByMap" resultMap="BusinessUserRoleResult" parameterType="java.util.Map">
+		select <include refid="Base_Column_List" />, role.roleName, u.userName from business_user_role ur 
+		inner join business_user u on u.userId = ur.userId   
+		inner join business_role role on role.roleId = ur.roleId 
+		<include refid="Base_Where_Clause" />
+	</select>
+	
+	<!-- 按VO对象条件查询所有BusinessUserRole -->
+	<select id="findByExample" resultMap="BusinessUserRoleResult" parameterType="com.manage.app.vo.BusinessUserRoleQuery">
+		select <include refid="Base_Column_List" /> from business_user_role ur <include refid="Base_Where_Clause" />
+	</select>
+	
+	<!-- BusinessUserRole根据搜索条件，搜索分页数据 -->
+	<select id="findAllPage" resultMap="BusinessUserRoleResult" parameterType="Object">
+		select <include refid="Base_Column_List" />, role.roleName, u.userName from business_user_role ur
+		inner join business_user u on u.userId = ur.userId   
+		inner join business_role role on role.roleId = ur.roleId 
+		<include refid="Base_Where_Clause" />
+		<if test="pager.orderCondition != null and pager.orderCondition != ''" >
+      	${pager.orderCondition}
+	    </if>
+	    <if test="pager.mysqlQueryCondition != null and pager.mysqlQueryCondition != ''" >
+	    ${pager.mysqlQueryCondition}
+	    </if>
+	</select>
+	
+	<!-- BusinessUserRole列表总数-->
+	<select id="selectCount" resultType="java.lang.Integer"  parameterType="Object">
+		select count(1) from business_user_role 
+		<include refid="Base_Where_Clause" />
+	</select>
+	
+	<!-- BusinessUserRole保存数据 -->
+	<insert id="save" parameterType="BusinessUserRole">
+		<selectKey resultType="java.lang.Integer" order="AFTER" keyProperty="usroId">
+			SELECT LAST_INSERT_ID()
+  		</selectKey>
+		insert into business_user_role(
+		
+		roleId,
+		userId
+		) values(
+				#{roleId},
+		#{userId}
+		)
+	</insert>
+	
+	<!-- BusinessUserRole修改数据 -->
+	<update id="update" parameterType="BusinessUserRole">
+		update business_user_role 
+		<set>
+			<if test="roleId != null and roleId != ''" >
+			roleId=#{roleId},
+			</if>
+			<if test="userId != null and userId != ''" >
+			userId=#{userId}
+			</if>
+		</set> 
+		where 
+		usroId=#{usroId}
+		
+		
+	</update>
+	
+	<!-- BusinessUserRole删除数据 -->
+	<delete id="delete" parameterType="java.lang.Integer">
+		delete from business_user_role where 
+		usroId=#{usroId}
+					</delete>
+	
+	<!-- BusinessUserRole根据搜索条件，搜索分页所需的数据 -->
+	<select id="findAllPageByField" resultMap="BusinessUserRoleResult" parameterType="Object">
+		select 
+		<if test="fieldMap != null and fieldMap != ''" >
+			<foreach collection="fieldMap" item="field" separator=",">  
+	    	#{field}
+	    	</foreach>
+		</if>
+		<if test="fieldMap == null"> * </if>
+		from business_user_role  
+		<include refid="Base_Where_Clause" />
+		<if test="pager.orderCondition != null and pager.orderCondition != ''" >
+      	${pager.orderCondition}
+	    </if>
+	    <if test="pager.mysqlQueryCondition != null and pager.mysqlQueryCondition != ''" >
+	    ${pager.mysqlQueryCondition}
+	    </if>
+	</select>
+	
+	<!-- BusinessUserRole根据条件查询所需字段，返回列表 -->
+	<select id="findListByField" resultMap="BusinessUserRoleResult" parameterType="Object">
+		select 
+		<if test="fieldMap != null and fieldMap != ''" >
+			<foreach collection="fieldMap" item="field" separator=",">  
+	    	#{field}
+	    	</foreach>
+		</if>
+		<if test="fieldMap == null"> * </if>
+		from business_user_role  
+		<include refid="Base_Where_Clause" />
+		<if test="pager.orderCondition != null and pager.orderCondition != ''" >
+      	${pager.orderCondition}
+	    </if>
+	</select>
+	
+	<!-- 根据id查询 BusinessUserRole -->
+	<select id="findByField"  resultMap="BusinessUserRoleResult" parameterType="Object">
+		select 
+		<if test="fieldMap != null and fieldMap != ''" >
+			<foreach collection="fieldMap" item="field" separator=",">  
+	    	#{field}
+	    	</foreach>
+		</if>
+		<if test="fieldMap == null"> * </if>
+		from business_user_role where usroId = #{id}
+	</select>
+	
+</mapper>
+	

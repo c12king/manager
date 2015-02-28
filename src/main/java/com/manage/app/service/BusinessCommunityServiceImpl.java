@@ -13,14 +13,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.manage.app.vo.BaseBean;
-import com.manage.framework.exception.ServiceException;
-import com.manage.framework.exception.DaoException;
-import com.manage.app.vo.BusinessCommunityQuery;
 import com.manage.app.bean.BusinessCommunity;
-import com.manage.app.bean.ManageCounty;
-import com.manage.app.bean.ManageEstate;
 import com.manage.app.dao.BusinessCommunityDao;
+import com.manage.app.vo.BaseBean;
+import com.manage.app.vo.BusinessCommunityQuery;
+import com.manage.framework.exception.DaoException;
+import com.manage.framework.exception.ServiceException;
 import com.utis.TreeNode;
 
 @Service("BusinessCommunityService")

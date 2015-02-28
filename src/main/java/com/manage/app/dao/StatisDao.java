@@ -3,6 +3,7 @@ package com.manage.app.dao;
 import java.util.List;
 
 import com.manage.framework.exception.DaoException;
+import com.manage.framework.exception.ServiceException;
 
 public interface StatisDao {
 

@@ -23,6 +23,8 @@
 			<result column="modules" property="modules" />
 			<result column="fullPosName" property="fullPosName" />
 			<result column="orgType" property="orgType" />
+			
+			
 	</resultMap>
 	<select id="selectBusinessUser" resultMap="BusinessUser">
 		select * from business_user ORDER BY editTime DESC
@@ -38,15 +40,23 @@
 	   </trim>
 	</select>
 	<select id="selectBusinessUserId" resultMap="BusinessUser" parameterType="com.manage.app.bean.BusinessUser">
-				SELECT u.userId,u.positionId,u.userName,u.userTel,u.userPassword,u.userEmail,u.userPhoto,u.userBrief,u.userService,u.posName,u.isCharge,p.orgName,p.depName,p.positionName,u.orgType ,CONCAT(p.orgName,"-",p.depName,"-",p.positionName)  AS fullPosName FROM business_user u,business_position p WHERE u.positionId=p.positionId and userId='${userId}'
+				SELECT u.userId,u.positionId,u.userName,u.userTel,u.userPassword,u.userEmail,u.userPhoto,u.userBrief,u.userService,u.posName,u.isCharge,p.orgName,p.depName,p.positionName,u.orgType ,CONCAT(p.orgName,"-",p.depName,"-",p.positionName)  AS fullPosName FROM business_user u left join business_position p on u.positionId=p.positionId and userId='${userId}'
 	</select>
+	
+	<select id="findBusinessUserById" resultMap="BusinessUser" parameterType="Integer">
+				SELECT u.userId,u.positionId,u.userName,u.userTel,u.userPassword,u.userEmail,u.userPhoto,u.userBrief,u.userService,u.posName,u.isCharge,p.orgName,p.depName,p.positionName,u.orgType ,CONCAT(p.orgName,"-",p.depName,"-",p.positionName)  AS fullPosName FROM 
+				business_user u 
+				left join business_position p on u.positionId=p.positionId 
+				where u.userId=#{userId}
+	</select>
+	
 	<select id="BusinessUserListData" resultMap="BusinessUser" parameterType="com.utis.Page">
 		<trim  suffixOverrides="," >
 			<if test="id != null">
-				SELECT u.userId,u.positionId,u.userName,u.userTel,u.userPassword,u.userEmail,u.userPhoto,u.userBrief,u.userService,u.isCharge,p.orgName,p.depName,p.positionName,CONCAT(p.orgName,"-",p.depName,"-",p.positionName)   AS posName,u.createTime,u.editTime,u.editor,u.orgType FROM business_user u,business_position p WHERE u.positionId=p.positionId and  p.positionId='${id}' ORDER BY u.editTime DESC LIMIT ${start},${end}
+				SELECT u.userId,u.positionId,u.userName,u.userTel,u.userPassword,u.userEmail,u.userPhoto,u.userBrief,u.userService,u.isCharge,p.orgName,p.depName,p.positionName,CONCAT(p.orgName,"-",p.depName,"-",p.positionName)   AS posName,u.createTime,u.editTime,u.editor,u.orgType FROM business_user u left join business_position p on u.positionId=p.positionId and  p.positionId='${id}' ORDER BY u.editTime DESC LIMIT ${start},${end}
 			</if>
 			<if test="id == null">
-				SELECT u.userId,u.positionId,u.userName,u.userTel,u.userPassword,u.userEmail,u.userPhoto,u.userBrief,u.userService,u.isCharge,p.orgName,p.depName,p.positionName,CONCAT(p.orgName,"-",p.depName,"-",p.positionName)   AS posName,u.createTime,u.editTime,u.editor,u.orgType FROM business_user u,business_position p WHERE u.positionId=p.positionId and userName like '%${link}%' ORDER BY u.editTime DESC LIMIT ${start},${end}
+				SELECT u.userId,u.positionId,u.userName,u.userTel,u.userPassword,u.userEmail,u.userPhoto,u.userBrief,u.userService,u.isCharge,p.orgName,p.depName,p.positionName,CONCAT(p.orgName,"-",p.depName,"-",p.positionName)   AS posName,u.createTime,u.editTime,u.editor,u.orgType FROM business_user u left join business_position p on u.positionId=p.positionId where userName like '%${link}%' ORDER BY u.editTime DESC LIMIT ${start},${end}
 			</if>
 	   </trim>
 	</select>
@@ -66,8 +76,8 @@
 		<if test="positionId != null">
 		positionId,
 		posName,
-		orgType,
 		</if>
+		orgType,
 		isCharge
 		) values(
 				'${userName}',
@@ -83,8 +93,8 @@
 		<if test="positionId != null">
 		'${positionId}',
 		'${posName}',
-		'${orgType}',
 		</if>
+		'${orgType}',
 		'1'
 		)
 		<selectKey resultType="int" keyProperty="userId" order="AFTER">    

@@ -1,5 +1,7 @@
 package com.manage.app.service;
 
+import java.util.List;
+
 import org.ietf.jgss.GSSException;
 
 import com.manage.app.bean.ManageFunction;
@@ -38,4 +40,12 @@ public interface ManageFunctionService {
 	public ManageFunction findById(ManageFunction entity) throws GSSException;
 
 	public Page findAllPage(Page page) throws GSSException;
+	
+	/**
+	 * 获取菜单下的功能
+	 * @param menuId
+	 * @return
+	 * @throws GSSException
+	 */
+	public List findFunctionByMenu(Integer menuId) throws GSSException;
 }

@@ -3,8 +3,6 @@ package com.manage.app.controller;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
-import java.sql.Timestamp;
-import java.util.Date;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -17,12 +15,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
-import com.manage.app.common.MessageChannelClient;
+
 //import com.community.app.module.bean.AppVerify;
 //import com.community.app.module.vo.AppVerifyQuery;
 //import com.community.framework.utils.MessageChannelClient;
 //import com.community.framework.utils.StringUtil;
 import com.manage.app.bean.ManageSendMsg;
+import com.manage.app.common.MessageChannelClient;
 import com.manage.app.common.WSRetConfig;
 import com.manage.app.service.ManageSendMsgService;
 import com.manage.app.vo.ManageSendMsgQuery;
@@ -319,7 +318,7 @@ public class ManageSendMsgController {
 	    	if( StringUtils.isBlank(id) )
 	    		return;
 	    	ManageSendMsg sMsg = manageSendMsgService.findById(Integer.parseInt(id));
-			String returnMessage = returnMessageRrid(sMsg.getSendTel(), URLEncoder.encode( sMsg.getSendContent(), "utf8"));
+			String returnMessage = returnMessageRrid(sMsg.getSendTel(), sMsg.getSendContent());
 			if(!returnMessage.contains("-")) {
 				json += "{";
 				json += "\"errorCode\":\"200\",";
@@ -369,4 +368,10 @@ public class ManageSendMsgController {
 		return result_mt;
 	}
 	
+	public static void main(String[] args) throws UnsupportedEncodingException {
+		String messageContent = "【罗马嘉园西区驿站】尊贵的主人，我是您的快件。现已到达社区服务驿站，请您快来社区服务驿站接我吧！驿站电话:58627223取件签收码：382634请妥善保管；为了让尊贵的主人享受更便捷的服务，驿站专属手机社区服务平台“OK家”已经发布了，猛戳后边链接，也把他接回家吧：http://www.bqsqcm.com/community/download/index.html?id=11【OK家】";
+		String xx = returnMessageRrid("18610583510",messageContent);
+		
+		System.out.println(xx);
+	}
 }

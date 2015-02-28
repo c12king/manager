@@ -10,13 +10,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.manage.app.vo.BaseBean;
-import com.manage.framework.exception.ServiceException;
-import com.manage.framework.exception.DaoException;
-
-import com.manage.app.vo.ManageModuleQuery;
 import com.manage.app.bean.ManageModule;
 import com.manage.app.dao.ManageModuleDao;
+import com.manage.app.vo.BaseBean;
+import com.manage.app.vo.ManageModuleQuery;
+import com.manage.framework.exception.DaoException;
+import com.manage.framework.exception.ServiceException;
 
 @Service("ManageModuleService")
 @Transactional

@@ -29,7 +29,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <body>
 <script type="text/javascript">
 $(function(){
-	init("modifyUserPhotoImage");
+	//init("modifyUserPhotoImage");
 })
 </script>
 	<div style="padding: 20px 20px 40px 30px;">
@@ -70,22 +70,22 @@ $(function(){
 			          <td>照片：</td>
 			          <td>
 			          	<input name="userPhoto" id="modifyUserPhotoImage" type="hidden" style="width: 150px;" value="${businessUser.userPhoto}" class="easyui-validatebox" />
-			          	<form:hidden path="picPath" id="picPath"></form:hidden>  
+			          	<!-- <form:hidden path="picPath" id="picPath"></form:hidden>  
 									      <span id="modifyUserPhotoImage-statusPic" style="color: #666;">  
 									      <a href="javascript:void(0)" onclick="Preview('modifyUserPhotoImage')">预览</a></span>  
-									      <a class="easyui-linkbutton" onclick="$('#modifyUserPhotoImage-uploadWindow').window('open')">修改</a>  
+									      <a class="easyui-linkbutton" onclick="$('#modifyUserPhotoImage-uploadWindow').window('open')">修改</a>   -->
 					 	</td> 
 			        </tr>
 					<tr>
 			          <td>个人介绍：</td>
 			          <td>
-			          	<textarea name="userBrief"  id="userBrief" rows="5" cols="18" class="easyui-validatebox" required="true" missingMessage="请输入个人介绍" validType="reDes">${businessUser.userBrief}</textarea>
+			          	<textarea name="userBrief"  id="userBrief" rows="5" cols="18" class="easyui-validatebox" >${businessUser.userBrief}</textarea>
 			          </td>
 			        </tr>
 					<tr>
 			          <td>服务内容：</td>
 			          <td>
-			          	<textarea name="userService"  id="userService" rows="5" cols="18" class="easyui-validatebox" required="true" missingMessage="请输入服务内容" validType="reDes">${businessUser.userService}</textarea>
+			          	<textarea name="userService"  id="userService" rows="5" cols="18" class="easyui-validatebox" >${businessUser.userService}</textarea>
 			          </td>
 			        </tr>
             </table>
@@ -95,7 +95,7 @@ $(function(){
             <a href="javascript:void(0)" onclick="saveData('edit', 'modifyForm')" id="btn-save" class="easyui-linkbutton" data-options='iconCls:"icon-ok"'>保存</a>
             <a href="javascript:void(0)" onclick="closeWindow()" id="btn-cancel" class="easyui-linkbutton" data-options='iconCls:"icon-cancel"'>取消</a>
         </div>
-        <div id="modifyUserPhotoImage-uploadWindow" class="easyui-window" title="图片上传" modal="true" resizable="false" collapsible="false" minimizable="false" maximizable="false" closed="true" style="width:520px;height:100px;padding:5px;background: #fafafa;">  
+        <%-- <div id="modifyUserPhotoImage-uploadWindow" class="easyui-window" title="图片上传" modal="true" resizable="false" collapsible="false" minimizable="false" maximizable="false" closed="true" style="width:520px;height:100px;padding:5px;background: #fafafa;">  
         <div class="easyui-layout  with iframe" fit="true">  
             <div region="center" border="false" style="padding:10px;background:#fff;border:1px solid #ccc;">  
                 <form action="<%=path %>/manage/loadImage/uploadFile.do" method="post" enctype="multipart/form-data" style="color: #666;" id="modifyUserPhotoImage-tforma">  
@@ -104,6 +104,6 @@ $(function(){
                  </form>  
             </div>  
         </div>  
-    </div> 
+    </div>  --%>
 </body>
 </html>

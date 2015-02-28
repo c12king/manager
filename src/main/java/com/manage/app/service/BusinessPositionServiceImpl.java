@@ -1,7 +1,6 @@
 package com.manage.app.service;
 
 import java.util.List;
-import java.util.Map;
 
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
@@ -11,11 +10,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Isolation;
-import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.manage.app.bean.ManageOrg;
 import com.manage.app.bean.BusinessPosition;
 import com.manage.app.dao.BusinessPositionDao;
 import com.utis.Page;

@@ -5,7 +5,6 @@ import java.util.List;
 import org.ietf.jgss.GSSException;
 import org.springframework.stereotype.Repository;
 
-import com.manage.app.bean.BusinessCommunity;
 import com.manage.app.bean.ManageFunction;
 import com.manage.framework.exception.DaoException;
 import com.utis.Page;
@@ -77,5 +76,14 @@ public interface ManageFunctionDao {
 	 * @throws DaoException
 	 */
 	public ManageFunction findByFunctionId(final Integer id) throws DaoException;
+	
+	/**
+	 * 获取菜单下的功能
+	 * @param pageSize
+	 * @param pageNo
+	 * @return
+	 * @throws GSServiceException
+	 */
+	public List<ManageFunction> findFunctionByMenu(Integer menuId) throws GSSException;
 	
 }

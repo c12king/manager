@@ -97,6 +97,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			          	<input name="staLatitude" id="staLatitude" type="text" style="width: 150px;" value="" class="easyui-validatebox" />
 			          </td>
 			        </tr>
+			        <tr>
+			          <td>是否上门取件：</td>
+			          <td>
+			               <input class="radiostyle" type="radio" name="isDoor" value="0"  checked>是
+                           <input class="radiostyle" type="radio" name="isDoor" value="1">否
+			          </td>
+			        </tr>
             </table>
             </form>
         </div>
