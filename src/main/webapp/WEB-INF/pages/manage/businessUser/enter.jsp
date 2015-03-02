@@ -377,15 +377,22 @@ function resources() {
         return;
     }
     else{
-		win = $('#resource-window').window({
-	        closed: true,
-	        modal: true,
-	        shadow: false,
-	        cache: false,
-	        maximized:true,
-	        href: '<%=path %>/manage/businessUser/resources.do?orgType='+rows[0].orgType+'&userId='+rows[0].userId
-	    });
-	    $('#resource-window').window('open');
+    	
+    	
+// 		win = $('#resource-window').window({
+// 	        closed: true,
+// 	        modal: true,
+// 	        shadow: false,
+// 	        cache: false,
+// 	        maximized:true,
+<%-- 	        href: '<%=path %>/manage/businessUser/editResource.do?orgType='+rows[0].orgType+'&userId='+rows[0].userId --%>
+// 	    });
+// 	    $('#resource-window').window('open');
+	    
+	    
+   	 var url='<%=path %>/manage/businessUser/editResource.do?orgType='+rows[0].orgType+'&userId='+rows[0].userId ;
+     var title="资源管理" ;
+     window.parent.addTab(title, url);
     }
 }
 

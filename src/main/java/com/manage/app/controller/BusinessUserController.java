@@ -1,5 +1,6 @@
 package com.manage.app.controller;
 
+import java.io.IOException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
@@ -10,6 +11,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +26,7 @@ import com.manage.app.bean.BusinessUser;
 import com.manage.app.bean.BusinessUserResource;
 import com.manage.app.bean.BusinessUserRole;
 import com.manage.app.bean.ManageEstate;
+import com.manage.app.bean.ManageTag;
 import com.manage.app.common.ModuleConst;
 import com.manage.app.service.BusinessCommunityService;
 import com.manage.app.service.BusinessRoleCommunityService;
@@ -35,7 +38,10 @@ import com.manage.app.service.BusinessUserResourceService;
 import com.manage.app.service.BusinessUserRoleService;
 import com.manage.app.service.BusinessUserService;
 import com.manage.app.service.ManageEstateService;
+import com.manage.app.vo.BaseBean;
+import com.manage.app.vo.BusinessCommunityQuery;
 import com.manage.app.vo.BusinessUserResourceQuery;
+import com.manage.app.vo.ManageTagQuery;
 import com.utis.Page;
 
 /**
@@ -148,17 +154,17 @@ public class BusinessUserController {
 	 * 进入添加资源页
 	 * @return
 	 */
-	@RequestMapping(value="resources")
-	public ModelAndView resources(BusinessUser businessUser) {
-		List<ManageEstate> estateList = new ArrayList<ManageEstate>();
+	@RequestMapping(value="resourcesx")
+	public ModelAndView resourcesx(BusinessUser businessUser) {
+//		List<ManageEstate> estateList = new ArrayList<ManageEstate>();
 		List<BusinessCommunity> communityList = new ArrayList<BusinessCommunity>();
-		List<BusinessUserResource> estateValueList = new ArrayList<BusinessUserResource>();
+//		List<BusinessUserResource> estateValueList = new ArrayList<BusinessUserResource>();
 		BusinessUserResourceQuery businessUserResourceQuery = new BusinessUserResourceQuery();
 		businessUserResourceQuery.setUserId(businessUser.getUserId());
 		List comValueList = new ArrayList();
 		List resourceList = new ArrayList();
-		List selectedCommunityList = new ArrayList();
-		List selectedResourceList = new ArrayList();
+//		List selectedCommunityList = new ArrayList();
+//		List selectedResourceList = new ArrayList();
 		List userResoruceList = new ArrayList();
 		try{
 			/*if(ModuleConst.PROPERTY_CODE.equals(businessUser.getOrgType()) || ModuleConst.STATION_CODE.equals(businessUser.getOrgType())){
@@ -194,11 +200,13 @@ public class BusinessUserController {
 			
 			//新的
 			Map comMap = new HashMap();
+			//查询所有社区
 			List<BusinessCommunity> comList = businessCommunityService.findAll();
 			for (BusinessCommunity businessCommunity : comList) {
 				comMap = new HashMap();
 				comMap.put("comId",businessCommunity.getComId());
 				comMap.put("comName",businessCommunity.getComName());
+				// 查询当前社区的小区ID 
 				List<ManageEstate> manageEstateList=manageEstateService.selectManageEstateByComId(businessCommunity.getComId());
 				comMap.put("manageEstateList", manageEstateList);
 				resourceList.add(comMap);
@@ -206,6 +214,7 @@ public class BusinessUserController {
 			//已选
 			Map userResourceMap = new HashMap();
 			userResourceMap.put("userId", businessUser.getUserId());
+			//查询 用户 小区资源
 			userResoruceList = businessUserResourceService.findByMap(userResourceMap);
 			/*for (int i=0;i<selectedResourceList.size();i++) {
 				BusinessRoleCommunity businessRoleCommunity = (BusinessRoleCommunity) selectedCommunityList.get(i);
@@ -226,13 +235,180 @@ public class BusinessUserController {
 		}
 		ModelAndView mav = new ModelAndView("/manage/businessUser/resources");
 		mav.addObject("userId", businessUser.getUserId());
-		mav.addObject("estateList", estateList);
-		mav.addObject("communityList",communityList);
-		mav.addObject("estateValueList",estateValueList);
-		mav.addObject("comValueList",comValueList);
+//		mav.addObject("estateList", estateList);
+//		mav.addObject("communityList",communityList);
+//		mav.addObject("estateValueList",estateValueList);
+//		mav.addObject("comValueList",comValueList);
 		mav.addObject("resourceList",resourceList);
 		mav.addObject("userResoruceList",userResoruceList);
 		return mav;
+	}
+	
+	
+	@RequestMapping(value="resources")
+	public ModelAndView resources(BusinessUser businessUser) {
+		BusinessUserResourceQuery businessUserResourceQuery = new BusinessUserResourceQuery();
+		businessUserResourceQuery.setUserId(businessUser.getUserId());
+		List resourceList = new ArrayList();
+		List userResoruceList = new ArrayList();
+		try{
+
+			
+			//新的
+			Map comMap = new HashMap();
+			//查询所有社区
+			List<BusinessCommunity> comList = businessCommunityService.findAll();
+		/*
+			for (BusinessCommunity businessCommunity : comList) {
+				comMap = new HashMap();
+				comMap.put("comId",businessCommunity.getComId());
+				comMap.put("comName",businessCommunity.getComName());
+				// 查询当前社区的小区ID 
+				List<ManageEstate> manageEstateList=manageEstateService.selectManageEstateByComId(businessCommunity.getComId());
+				comMap.put("manageEstateList", manageEstateList);
+				resourceList.add(comMap);
+			}
+			//已选
+			Map userResourceMap = new HashMap();
+			userResourceMap.put("userId", businessUser.getUserId());
+			//查询 用户 小区资源
+			userResoruceList = businessUserResourceService.findByMap(userResourceMap);
+		*/
+			
+		}catch(Exception e){
+			GSLogger.error("进入businessUser管理页时发生错误", e);
+			e.printStackTrace();
+		}
+		ModelAndView mav = new ModelAndView("/manage/businessUser/resources");
+		mav.addObject("userId", businessUser.getUserId());
+		mav.addObject("comList",resourceList);
+//		mav.addObject("resourceList",resourceList);
+//		mav.addObject("userResoruceList",userResoruceList);
+		return mav;
+	}
+	
+	
+	
+	@RequestMapping(value="editResource")
+	public ModelAndView editResource(BusinessUser businessUser) {
+		try{
+		}catch(Exception e){
+			GSLogger.error("进入businessUser管理页时发生错误", e);
+			e.printStackTrace();
+		}
+		ModelAndView mav = new ModelAndView("/manage/businessUser/resources");
+		return mav;
+	}
+	
+	
+	/*
+	 * 
+@RequestMapping(value="list")
+	public void list(HttpServletRequest request, ManageTagQuery query, HttpServletResponse response) {
+		
+		int cpage = 1;
+		if (StringUtils.isNotBlank(request.getParameter("page")))
+		    cpage=Integer.parseInt(request.getParameter("page"));
+		if (StringUtils.isNotBlank(request.getParameter("pageNo")))
+			cpage=Integer.parseInt(request.getParameter("pageNo"));
+		int size = 10;
+		if (StringUtils.isNotBlank(request.getParameter("rows")))
+			size=Integer.parseInt(request.getParameter("rows"));
+		if (StringUtils.isNotBlank(request.getParameter("pageSize")))  
+			size = Integer.parseInt(request.getParameter("pageSize"));
+		query.setPage(cpage);
+		query.setRows(size);
+		
+		
+		String json = "";
+		StringBuilder result = new StringBuilder();
+		try{
+			BaseBean baseBean = manageTagService.findAllPage(query);
+			result.append("{\"total\":").append(baseBean.getCount()).append(",")
+			.append("\"rows\":[");
+			for(int i=0;i<baseBean.getList().size();i++) {
+				ManageTag manageTag = (ManageTag) baseBean.getList().get(i);
+				result.append("{")
+			    .append("\"tagId\":\"").append(manageTag.getTagId()).append("\"").append(",")
+			    .append("\"title\":\"").append(manageTag.getTitle()).append("\"").append(",")
+			    .append("\"tagDesc\":\"").append(manageTag.getTagDesc()).append("\"").append(",")
+			    .append("\"tagPic\":\"").append(manageTag.getTagPic()).append("\"").append(",")
+			    .append("\"typeId\":\"").append(manageTag.getTypeId()).append("\"").append(",")
+			    .append("\"tagType\":\"").append(manageTag.getTagType()).append("\"").append(",")
+			    .append("\"createTime\":\"").append(manageTag.getCreateTime()).append("\"").append(",")
+			    .append("\"editTime\":\"").append(manageTag.getEditTime()).append("\"").append(",")
+			    .append("\"editor\":\"").append(manageTag.getEditor()).append("\"")
+				.append("}").append(",");
+			}
+			json = result.toString();
+			if(baseBean.getList().size() > 0) {
+				json = json.substring(0, json.length()-1);
+			}
+			json += "]}";
+			
+			response.setHeader("Cache-Control", "no-cache");
+			response.setCharacterEncoding("utf-8");
+			try {
+				response.getWriter().write(json);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}catch(Exception e){
+			GSLogger.error("显示manageTag列表时发生错误：/manage/manageTag/list", e);
+			e.printStackTrace();
+		}
+	}
+	 */
+	@RequestMapping(value="comList")
+	public void comList(HttpServletRequest request, BusinessCommunityQuery query , HttpServletResponse response) {
+		
+		int cpage = 1;
+		if (StringUtils.isNotBlank(request.getParameter("page")))
+		    cpage=Integer.parseInt(request.getParameter("page"));
+		if (StringUtils.isNotBlank(request.getParameter("pageNo")))
+			cpage=Integer.parseInt(request.getParameter("pageNo"));
+		int size = 10;
+		if (StringUtils.isNotBlank(request.getParameter("rows")))
+			size=Integer.parseInt(request.getParameter("rows"));
+		if (StringUtils.isNotBlank(request.getParameter("pageSize")))  
+			size = Integer.parseInt(request.getParameter("pageSize"));
+		query.setPage(cpage);
+		query.setRows(size);
+		
+		
+
+		String json = "";
+		StringBuilder result = new StringBuilder();
+		try{
+			BaseBean baseBean = businessCommunityService.findAllPage(query) ;// 
+			result.append("{\"total\":").append(baseBean.getCount()).append(",")
+			.append("\"rows\":[");
+			for(int i=0;i<baseBean.getList().size();i++) {
+				BusinessCommunity businessCommunity = (BusinessCommunity) baseBean.getList().get(i);
+				result.append("{")
+			    .append("\"comId\":\"").append(businessCommunity.getComId()).append("\"").append(",")
+			    .append("\"comName\":\"").append(businessCommunity.getComName()).append("\"")
+				.append("}").append(",");
+			}
+			json = result.toString();
+			if(baseBean.getList().size() > 0) {
+				json = json.substring(0, json.length()-1);
+			}
+			json += "]}";
+			response.setHeader("Cache-Control", "no-cache");
+			response.setCharacterEncoding("utf-8");
+			try {
+				response.getWriter().write(json);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+		}catch(Exception e){
+			GSLogger.error("显示businessUser列表时发生错误", e);
+			e.printStackTrace();
+		}
 	}
 	
 	/**
