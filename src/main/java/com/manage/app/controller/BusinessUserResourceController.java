@@ -3,10 +3,15 @@ package com.manage.app.controller;
 import java.io.IOException;
 import java.sql.Timestamp;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -304,6 +309,48 @@ public class BusinessUserResourceController {
 			e.printStackTrace();
 		}
 	}
+	
+	@RequestMapping(value="grantAllEst")
+	public void grantAllEst(HttpServletRequest request, HttpServletResponse response) {
+		
+		String json = "";
+		try{
+			
+			Map<String, Object> map = new HashMap<String, Object>();
+			if (StringUtils.isNotBlank(request.getParameter("userId")) && StringUtils.isNotBlank(request.getParameter("comId")))
+			{
+				map.put("userId", request.getParameter("userId")); 
+				map.put("comId", request.getParameter("comId"));
+			}
+			else
+			{
+				json = "{\"success\":\"false\",\"message\":\"分配所有小区失败！\"}";
+			}
+			
+			List<BusinessUserResource> chckList = businessUserResourceService.findByMap(map);
+			
+			if (CollectionUtils.isEmpty(chckList))
+			{
+				businessUserResourceService.saveUserResource(map);
+				json = "{\"success\":\"true\",\"message\":\"分配该社区所有小区成功！\"}";
+			}
+			else
+				json = "{\"success\":\"false\",\"message\":\"该社区下已有小区分配！\"}";
+		}catch(Exception e){
+			json = "{\"success\":\"false\",\"message\":\"分配该社区所有小区失败\"}";
+			GSLogger.error("删除AppStatisticsClick时发生错误：/app/appStatisticsClick/delete", e);
+			e.printStackTrace();
+		}
+		response.setHeader("Cache-Control", "no-cache");
+		response.setCharacterEncoding("utf-8");
+		try {
+			response.getWriter().write(json);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
 	
 	/**
 	 * 进入修改页

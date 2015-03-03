@@ -197,7 +197,13 @@
 	<delete id="delete" parameterType="java.lang.Integer">
 		delete from business_user_resource where 
 		userId=#{id}
-																					</delete>
-	
+	</delete>
+	<!-- 批量保存BusinessUserResource数据 -->
+	<insert id="saveUserResource" parameterType="java.util.Map">
+	<if test="userId != null and userId != '' and comId != null and comId != ''" >
+		INSERT INTO business_user_resource (userId, estateId, estateName, createTime, editTime, comId) 
+		SELECT #{userId} userId,estateid,EstateName,NOW(),NOW(),comid FROM manage_estate WHERE comid = #{comId}
+		</if>
+	</insert>
 </mapper>
 	

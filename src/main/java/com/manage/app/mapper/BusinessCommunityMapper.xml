@@ -149,6 +149,21 @@
 	    </if>
 	</select>
 	
+	
+   <select id="findComListPage" resultType="hashmap" parameterType="java.util.Map">
+		SELECT comId,comName , (MAX(flag)+ MIN(flag) ) state  /*SIGN( COUNT(cnt_) - SUM(cnt_)) */ FROM 
+		(
+		SELECT bc.comId, bc.comName, IF(bur.usreId IS NULL, 0, 1)  flag FROM business_community bc 
+		LEFT JOIN   manage_estate me ON bc.comId = me.comId LEFT JOIN  
+		(SELECT  usreId,estateid  FROM business_user_resource WHERE userid = ${userId} )  bur ON me.estateid = bur.estateid
+		<if test="comName != null and comName != ''" >
+		where bc.comName like '%${comName}%'
+		</if>
+		) aa
+		GROUP BY aa.comId,comName
+	    LIMIT ${start},${end}	
+	</select>
+	
 	<!-- BusinessCommunity列表总数-->
 	<select id="selectCount" resultType="java.lang.Integer"  parameterType="Object">
 		select count(1) from business_community 

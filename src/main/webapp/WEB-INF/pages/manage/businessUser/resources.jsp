@@ -28,8 +28,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <script type="text/javascript">
 var win;
 var grid;
+var userId = ${userId};
 $(function() {
-	
+// 	var userId = ${userId};
 	grid = $('#grid').datagrid({
 		title: '资源编辑窗口' ,
         iconCls: 'icon-save',
@@ -37,6 +38,7 @@ $(function() {
         fit: true,
         fitColumns: true,
         queryParams:{
+        	userId:userId,
         	comName:function(){
         		return $("#comName").val();
         	}
@@ -51,33 +53,18 @@ $(function() {
         		]],
         columns: [[
 // 						{ field: 'comId', title: '社区ID', width: 150, align:'center' },
-						{ field: 'comName', title: '社区名称', width: 150, align:'center' },
+						{ field: 'comName', title: '社区名称', width: 150, align:'center', },
 						{ field: 'grantAll', title: '分配小区', width: 150, align:'center',
 							  //添加超级链 
 	                        formatter:function(value,rowData,rowIndex){
 	                            //function里面的三个参数代表当前字段值，当前行数据对象，行号（行号从0开始）
-	                            return "<a href='javacript:;' onclick='grantAll("+rowData.comId+");'>分配该社区下所有小区</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+
-	                           	"<a href='javacript:;' onclick='revokeAll("+rowData.comId+");'>取消该社区下所有小区</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+
-	                           	"<a href='javacript:;' onclick='customEst("+rowData.comId+");'>自定义分配小区</a>";
+	                            return rowData.htmlStr;    
+// 	                            "<a href='javacript:;' onclick='grantAll("+rowData.comId+");'>分配该社区下所有小区</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+
+// 	                           	"<a href='javacript:;' onclick='revokeAll("+rowData.comId+");'>取消该社区下所有小区</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+
+// 	                           	"<a href='javacript:;' onclick='customEst("+rowData.comId+");'>自定义分配小区</a>";
 	                       }
-						}, 
-						/*
-						{ field: 'revokeAll', title: '取消该社区下所有小区', width: 150, align:'center',
-							  //添加超级链 
-	                        formatter:function(value,rowData,rowIndex){
-	                            //function里面的三个参数代表当前字段值，当前行数据对象，行号（行号从0开始）
-	                            return "<a href='javacript:;' onclick='grantAll("+rowData.sendId+");'>重新发送</a>"; 
-	                       }  
-						},
+						}
 						
-						{ field: 'customEst', title: '自定义分配小区', width: 150, align:'center',
-							  //添加超级链 
-	                        formatter:function(value,rowData,rowIndex){
-	                            //function里面的三个参数代表当前字段值，当前行数据对象，行号（行号从0开始）
-	                            return "<a href='javacript:;' onclick='grantAll("+rowData.sendId+");'>重新发送</a>"; 
-	                       }  
-						},
-						*/
                 ]],
         pagination: true,
         pageNumber: 1,
@@ -99,11 +86,11 @@ $(function() {
         }, '-', */{
             text: '查找',
             iconCls: 'icon-search',
-            handler: OpensearchWin
+            handler: OpensearchWin,
         }, '-', {
             text: '所有',
             iconCls: 'icon-search',
-            handler: showAll
+            handler: showAll,
         }]
     });
 
@@ -111,6 +98,89 @@ $(function() {
     $('#btn-search, #btn-search-cancel').linkbutton();
     $('body').layout();
 });
+
+function grantAll(comId) {
+	
+	alert('<%=path %>/business/businessUserResource/grantAllEst.do?comId='+comId+'&userId='+userId)
+	$.ajax({   
+	    type: "get",
+	    url: '<%=path %>/business/businessUserResource/grantAllEst.do?comId='+comId+'&userId='+userId,	    
+	    success: function(data){
+	    	data=JSON.parse(data);
+	        alert(data.message);  
+	    },
+	    error:function(error){
+	    	//alert(data.message);
+//		    	alert("发送失败！");
+			alert('系统提示', error, 'warning');
+	    }
+	});
+      
+//    $.ajax({
+<%--         url: '<%=path %>/business/businessUserResource/grantAllEst.do?comId='+comId+'&userId='+userId, --%>
+//         dataType: 'json',
+//         cache: false,
+//         success: function (data) {
+//             if(data.success == true){
+//             	  alert('分配该社区下所有小区成功！');
+//             }else{
+//             	  alert('分配该社区下所有小区失败！');
+//             }
+//         },
+//         error: function () {
+//             alert('分配该社区下所有小区失败！');
+//         }
+//     });
+      
+// 	$.ajax({
+<%-- 	  url: '<%=path %>/business/businessUserResource/grantAllEst.do', --%>
+// 	  data: {comId: comId, userId: userId},
+// 	  method: 'post',
+// 	  dataType: 'json',
+// 	  success: function(data) {
+		   
+// 		  if(data.success == 'true') {
+// 			  alert(data.message);
+// // 			  $('#publishState_'+annoId).text('未通过');
+// // 			  $(".busswi5").fadeOut("slow");
+// 		  }else{
+// 			  alert(data.message);
+// 		  }
+// 	  }
+// 	});
+	
+
+	
+
+}
+function revokeAll() {
+    var ids = [];
+    var rows = grid.datagrid('getSelections');
+    for (var i = 0; i < rows.length; i++) {
+         ids.push(rows[i].userId);
+    }
+    return ids;
+}
+
+function customEst() {
+    var ids = [];
+    var rows = grid.datagrid('getSelections');
+    for (var i = 0; i < rows.length; i++) {
+         ids.push(rows[i].userId);
+    }
+    return ids;
+}
+
+function getSelectedArr() {
+    var ids = [];
+    var rows = grid.datagrid('getSelections');
+    for (var i = 0; i < rows.length; i++) {
+         ids.push(rows[i].userId);
+    }
+    return ids;
+}
+
+
 
 function getSelectedArr() {
     var ids = [];
@@ -218,8 +288,8 @@ function del() {
 }
 
 function showAll() {
-	$("#name").val("")
-	grid.datagrid('reload');
+	$("#comName").val(""); 
+	grid.datagrid('reload'); 
 }
 
 function saveData(oper, formId) {
@@ -451,7 +521,7 @@ function selectEstate(comId, comName, estateId, estateName) {
     <div id="edit-window2" title="编辑窗口" style="width: 1000px; height: 550px;"></div>
     <div id="search-window" title="查询窗口" style="width: 500px; height: 500px;">
         <div style="padding: 20px 20px 40px 80px;">
-            <form id="searchForm" method="post" action="<%=path %>/manage/businessUser/list.do">
+            <form id="searchForm" method="post" action="<%=path %>/manage/businessUser/comList.do">
             <table>
 					<tr>
 			          <td>社区名称：</td>

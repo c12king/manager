@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.manage.app.bean.BusinessCommunity;
 import com.manage.app.vo.BusinessCommunityQuery;
 import com.manage.framework.exception.DaoException;
+import com.manage.framework.exception.ServiceException;
 
 @Repository("BusinessCommunityDao")
 @Transactional
@@ -151,4 +152,16 @@ public class BusinessCommunityDaoImpl implements BusinessCommunityDao {
 		return list;
 	}
 	
+	
+	/**
+	 * 根据搜索条件,查询社区列表
+	 * @param query
+	 * @param pageData
+	 * @return
+	 * @throws ServiceException
+	 */
+	public List<Map<String,Object>> findComListPage(Map<String,Object> con) throws DaoException {
+		List<Map<String,Object>> list = this.sqlSessionTemplate.selectList("com.manage.app.dao.BusinessCommunityDao.findComListPage",con);
+		return list;
+	}
 }

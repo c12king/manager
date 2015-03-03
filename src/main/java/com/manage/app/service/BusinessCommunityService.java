@@ -113,4 +113,15 @@ public interface BusinessCommunityService {
 	 * @throws GSSException
 	 */
 	public String treeData() throws GSSException;
+	
+	
+	
+	/**
+	 * 根据搜索条件,查询社区列表
+	 * @param query
+	 * @param pageData
+	 * @return
+	 * @throws ServiceException
+	 */
+	public BaseBean findComListPage(final Map<String, Object> con) throws ServiceException;
 }

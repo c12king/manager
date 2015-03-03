@@ -275,5 +275,21 @@ public class BusinessUserResourceServiceImpl implements BusinessUserResourceServ
 		}
 		return false;
 	}
+
+
+	/*
+	 * 批量保存 传来的社区下的所有小区
+	 * (non-Javadoc)
+	 * @see com.manage.app.service.BusinessUserResourceService#saveUserResource(java.util.Map)
+	 */
+	@Transactional("transactionManager")
+	public void saveUserResource(Map<String, Object> map) throws ServiceException {
+		try {
+			businessUserResourceDao.saveUserResource(map);
+		} catch (DaoException e) {
+			logger.debug("BusinessUserResourceServiceImpl delete()：删除BusinessUserResource发生错误！", e);
+			e.printStackTrace();
+		}	
+	}
 	
 }

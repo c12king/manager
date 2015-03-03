@@ -138,5 +138,11 @@ public class BusinessUserResourceDaoImpl implements BusinessUserResourceDao {
 			return false;
 		}
 	}
+
+	@Override
+	public void saveUserResource(Map<String, Object> map) throws DaoException {
+		// TODO Auto-generated method stub
+		this.sqlSessionTemplate.insert("com.manage.app.dao.BusinessUserResourceDao.saveUserResource",map);
+	}
 	
 }

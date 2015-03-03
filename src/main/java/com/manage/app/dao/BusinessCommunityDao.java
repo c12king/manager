@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 import com.manage.app.bean.BusinessCommunity;
 import com.manage.app.vo.BusinessCommunityQuery;
 import com.manage.framework.exception.DaoException;
+import com.manage.framework.exception.ServiceException;
 
 @Repository
 public interface BusinessCommunityDao {
@@ -104,6 +105,15 @@ public interface BusinessCommunityDao {
 	 * @return
 	 */
 	public List<BusinessCommunity> getComboboxData(final Integer countyId) throws DaoException;
+
+	/**
+	 * 根据搜索条件,查询社区列表
+	 * @param query
+	 * @param pageData
+	 * @return
+	 * @throws ServiceException
+	 */
+	public List<Map<String, Object>> findComListPage(Map<String, Object> con) throws DaoException;
 
 
 }

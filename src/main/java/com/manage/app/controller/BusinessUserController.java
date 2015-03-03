@@ -297,8 +297,22 @@ public class BusinessUserController {
 			e.printStackTrace();
 		}
 		ModelAndView mav = new ModelAndView("/manage/businessUser/resources");
+		mav.addObject("userId",businessUser.getUserId());
 		return mav;
-	}
+	} 
+	
+//	@RequestMapping(value="editResource")
+//	public ModelAndView editResource(HttpServletRequest request, HttpServletResponse response) {
+//		try{
+//		}catch(Exception e){
+//			GSLogger.error("进入editResource管理页时发生错误", e);
+//			e.printStackTrace();
+//		}
+//		ModelAndView mav = new ModelAndView("/manage/businessUser/editResource");
+//		if (StringUtils.isNotBlank(request.getParameter("userId")))
+//			mav.addObject("userId", request.getParameter("userId"));
+//		return mav;
+//	}
 	
 	
 	/*
@@ -363,32 +377,80 @@ public class BusinessUserController {
 	@RequestMapping(value="comList")
 	public void comList(HttpServletRequest request, BusinessCommunityQuery query , HttpServletResponse response) {
 		
-		int cpage = 1;
+		int pageNo = 1;
 		if (StringUtils.isNotBlank(request.getParameter("page")))
-		    cpage=Integer.parseInt(request.getParameter("page"));
+		    pageNo=Integer.parseInt(request.getParameter("page"));
 		if (StringUtils.isNotBlank(request.getParameter("pageNo")))
-			cpage=Integer.parseInt(request.getParameter("pageNo"));
-		int size = 10;
+			pageNo=Integer.parseInt(request.getParameter("pageNo"));
+		int pageSize = 10;
 		if (StringUtils.isNotBlank(request.getParameter("rows")))
-			size=Integer.parseInt(request.getParameter("rows"));
+			pageSize=Integer.parseInt(request.getParameter("rows"));
 		if (StringUtils.isNotBlank(request.getParameter("pageSize")))  
-			size = Integer.parseInt(request.getParameter("pageSize"));
-		query.setPage(cpage);
-		query.setRows(size);
+			pageSize = Integer.parseInt(request.getParameter("pageSize"));
+		String userId = "";
+		if (StringUtils.isNotBlank(request.getParameter("userId")))  
+			userId = request.getParameter("userId");
+		String comName = "";
+		if (StringUtils.isNotBlank(request.getParameter("comName")))
+			comName = request.getParameter("comName");
+//		query.setPage(pageNo);
+//		query.setRows(pageSize);
 		
+		int start = (pageNo-1)*pageSize;
+		int end = pageNo*pageSize;
+//    	this.pageSize=pageSize;
+//    	this.start=(cpage-1)*pageSize;
+//    	this.end=cpage*pageSize;
 		
-
+		Map<String,Object> con = new HashMap<String, Object>();
+		con.put("start", start);
+		con.put("end", end);
+		con.put("userId", userId);
+		con.put("comName", comName);
 		String json = "";
+		/*
+		 *  max_ == min_  == 0 	全未选  自定义分配小区
+			max_ <> min_  		部分选	自定义选
+			max_ == min_  == 1 	全选	全部取消
+			
+			分配全部小区  取消所有分配小区  自定义分配小区
+			
+			max_ + min_ = 0
+			max_ + min_ = 1
+			max_ + min_ = 2
+			
+			"<a href='javacript:;' onclick='grantAll("+rowData.comId+");'>分配全部小区  </a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+
+           	"<a href='javacript:;' onclick='revokeAll("+rowData.comId+");'>取消所有分配小区</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+
+           	"<a href='javacript:;' onclick='customEst("+rowData.comId+");'>自定义分配小区</a>";
+           	
+           	
+		 */
 		StringBuilder result = new StringBuilder();
 		try{
-			BaseBean baseBean = businessCommunityService.findAllPage(query) ;// 
+			BaseBean baseBean = businessCommunityService.findComListPage(con);//findAllPage(query) ;// 
 			result.append("{\"total\":").append(baseBean.getCount()).append(",")
 			.append("\"rows\":[");
 			for(int i=0;i<baseBean.getList().size();i++) {
-				BusinessCommunity businessCommunity = (BusinessCommunity) baseBean.getList().get(i);
+				
+				Map<String, Object> businessCommunity = (Map<String, Object>) baseBean.getList().get(i); 
+				String htmlStr = "";
+				if ("0".equals(businessCommunity.get("state").toString()))
+					htmlStr = "<a href='javacript:;' onclick='grantAll("+businessCommunity.get("comId")+");'>分配全部小区  </a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+
+				           	"取消所有分配小区&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+
+				           	"<a href='javacript:;' onclick='customEst("+businessCommunity.get("comId")+");'>自定义分配小区</a>";
+				else if ("1".equals(businessCommunity.get("state").toString()))
+					htmlStr = "分配全部小区&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+
+				           	"<a href='javacript:;' onclick='revokeAll("+businessCommunity.get("comId")+");'>取消所有分配小区</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+
+				           	"<a href='javacript:;' onclick='customEst("+businessCommunity.get("comId")+");'>自定义分配小区</a>";
+				else if ("2".equals(businessCommunity.get("state").toString()))
+					htmlStr = "分配全部小区&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+
+				           	"<a href='javacript:;' onclick='revokeAll("+businessCommunity.get("comId")+");'>取消所有分配小区</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+
+				           	"<a href='javacript:;' onclick='customEst("+businessCommunity.get("comId")+");'>自定义分配小区</a>";
+					System.out.println(htmlStr);
 				result.append("{")
-			    .append("\"comId\":\"").append(businessCommunity.getComId()).append("\"").append(",")
-			    .append("\"comName\":\"").append(businessCommunity.getComName()).append("\"")
+			    .append("\"comId\":\"").append(businessCommunity.get("comId")).append("\"").append(",")
+			    .append("\"htmlStr\":\"").append(htmlStr).append("\"").append(",")
+			    .append("\"comName\":\"").append(businessCommunity.get("comName")).append("\"")
 				.append("}").append(",");
 			}
 			json = result.toString();
@@ -410,6 +472,10 @@ public class BusinessUserController {
 			e.printStackTrace();
 		}
 	}
+	
+	
+	
+
 	
 	/**
 	 * 列示或者查询所有数据

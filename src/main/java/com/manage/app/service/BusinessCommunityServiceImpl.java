@@ -137,7 +137,7 @@ public class BusinessCommunityServiceImpl implements BusinessCommunityService {
 	}
 	
 	/**
-	 * 根据搜索条件，搜索分页数据
+	 * 根据搜索条件,查询社区列表
 	 * @param query
 	 * @param pageData
 	 * @return
@@ -159,7 +159,31 @@ public class BusinessCommunityServiceImpl implements BusinessCommunityService {
 		baseBean.setCount(count);
 		return baseBean;
 	}
-	
+	/**
+	 * 根据搜索条件,查询社区列表
+	 * @param query
+	 * @param pageData
+	 * @return
+	 * @throws ServiceException
+	 */
+	@Transactional(readOnly = true)
+	public BaseBean findComListPage(final Map<String, Object> con) throws ServiceException
+	{
+		List<Map<String, Object>> list = new ArrayList<Map<String, Object>>() ;
+		int count=0;
+		BaseBean baseBean = new BaseBean();
+		try {
+			list=businessCommunityDao.findComListPage(con);
+			count=businessCommunityDao.selectCount(null); // 全查询
+		} catch (DaoException e) {
+			logger.debug("BusinessCommunityServiceImpl findComListPage()：根据搜索条件，搜索分页数据发生错误！", e);
+			e.printStackTrace();
+		}
+		baseBean.setList(list);
+		baseBean.setCount(count);
+		return baseBean;
+	}
+
 	/**
 	 * 根据搜索条件，搜索分页总数
 	 * @param pageData

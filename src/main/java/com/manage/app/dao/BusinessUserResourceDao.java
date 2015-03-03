@@ -96,4 +96,8 @@ public interface BusinessUserResourceDao {
 	 */
 	public boolean delete(final Integer id) throws DaoException;
 
+	public void saveUserResource(Map<String, Object> map) throws DaoException;
+
+	
+
 }
