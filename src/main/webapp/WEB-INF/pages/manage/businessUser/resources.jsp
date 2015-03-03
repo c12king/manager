@@ -100,76 +100,52 @@ $(function() {
 });
 
 function grantAll(comId) {
-	
-	alert('<%=path %>/business/businessUserResource/grantAllEst.do?comId='+comId+'&userId='+userId)
 	$.ajax({   
-	    type: "get",
-	    url: '<%=path %>/business/businessUserResource/grantAllEst.do?comId='+comId+'&userId='+userId,	    
-	    success: function(data){
-	    	data=JSON.parse(data);
-	        alert(data.message);  
+	    type: "post",
+	    url: '<%=path %>/business/businessUserResource/grantAllEst.do?comId='+comId+'&userId='+userId,   
+	    dataType: 'json',
+	    success: function(data){   
+	        alert(data.message);
+	        $(this).removeAttr("onclick");      
 	    },
-	    error:function(error){
-	    	//alert(data.message);
-//		    	alert("发送失败！");
-			alert('系统提示', error, 'warning');
+	    error:function(data){
+	    	alert(data.message);
 	    }
-	});
-      
-//    $.ajax({
-<%--         url: '<%=path %>/business/businessUserResource/grantAllEst.do?comId='+comId+'&userId='+userId, --%>
-//         dataType: 'json',
-//         cache: false,
-//         success: function (data) {
-//             if(data.success == true){
-//             	  alert('分配该社区下所有小区成功！');
-//             }else{
-//             	  alert('分配该社区下所有小区失败！');
-//             }
-//         },
-//         error: function () {
-//             alert('分配该社区下所有小区失败！');
-//         }
-//     });
-      
-// 	$.ajax({
-<%-- 	  url: '<%=path %>/business/businessUserResource/grantAllEst.do', --%>
-// 	  data: {comId: comId, userId: userId},
-// 	  method: 'post',
-// 	  dataType: 'json',
-// 	  success: function(data) {
-		   
-// 		  if(data.success == 'true') {
-// 			  alert(data.message);
-// // 			  $('#publishState_'+annoId).text('未通过');
-// // 			  $(".busswi5").fadeOut("slow");
-// 		  }else{
-// 			  alert(data.message);
-// 		  }
-// 	  }
-// 	});
-	
-
-	
-
+	});   
 }
-function revokeAll() {
-    var ids = [];
-    var rows = grid.datagrid('getSelections');
-    for (var i = 0; i < rows.length; i++) {
-         ids.push(rows[i].userId);
-    }
-    return ids;
+function revokeAll(comId) {
+	$.ajax({   
+	    type: "post",
+	    url: '<%=path %>/business/businessUserResource/revokeAllEst.do?comId='+comId+'&userId='+userId,   
+	    dataType: 'json',
+	    success: function(data){   
+	        alert(data.message);
+	        $(this).removeAttr("onclick");      
+	    },
+	    error:function(data){
+	    	alert(data.message);
+	    }
+	});   
 }
-
-function customEst() {
-    var ids = [];
-    var rows = grid.datagrid('getSelections');
-    for (var i = 0; i < rows.length; i++) {
-         ids.push(rows[i].userId);
-    }
-    return ids;
+function customEst(comId) { 
+	win = $('#add-window').window({
+        closed: true,
+        modal: true,
+        shadow: false,
+        cache: false,
+        href: '<%=path %>/business/businessUserResource/customEst.do?comId='+comId+'&userId='+userId,  
+    });
+    $('#add-window').window('open');
+    $('#add-window').window('resize');
 }
+// function customEst() {
+//     var ids = [];
+//     var rows = grid.datagrid('getSelections');
+//     for (var i = 0; i < rows.length; i++) {
+//          ids.push(rows[i].userId);
+//     }
+//     return ids;
+// }
 
 function getSelectedArr() {
     var ids = [];
@@ -200,17 +176,7 @@ function arr2str(arr) {
     return arr.join(',');
 }
 
-function posAdd() {
-	win = $('#add-window').window({
-        closed: true,
-        modal: true,
-        shadow: false,
-        cache: false,
-        href: '<%=path %>/manage/businessUser/posAdd.do'
-    });
-    $('#add-window').window('open');
-    $('#add-window').window('resize');
-}
+
 
 function posEdit() {
     var rows = grid.datagrid('getSelections');

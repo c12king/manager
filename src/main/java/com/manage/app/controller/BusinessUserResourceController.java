@@ -315,7 +315,6 @@ public class BusinessUserResourceController {
 		
 		String json = "";
 		try{
-			
 			Map<String, Object> map = new HashMap<String, Object>();
 			if (StringUtils.isNotBlank(request.getParameter("userId")) && StringUtils.isNotBlank(request.getParameter("comId")))
 			{
@@ -326,7 +325,6 @@ public class BusinessUserResourceController {
 			{
 				json = "{\"success\":\"false\",\"message\":\"分配所有小区失败！\"}";
 			}
-			
 			List<BusinessUserResource> chckList = businessUserResourceService.findByMap(map);
 			
 			if (CollectionUtils.isEmpty(chckList))
@@ -335,7 +333,12 @@ public class BusinessUserResourceController {
 				json = "{\"success\":\"true\",\"message\":\"分配该社区所有小区成功！\"}";
 			}
 			else
-				json = "{\"success\":\"false\",\"message\":\"该社区下已有小区分配！\"}";
+			{
+				businessUserResourceService.deleteByCon(map);
+				businessUserResourceService.saveUserResource(map);
+				//json = "{\"success\":\"false\",\"message\":\"该社区下已有小区分配！\"}";
+			}
+			
 		}catch(Exception e){
 			json = "{\"success\":\"false\",\"message\":\"分配该社区所有小区失败\"}";
 			GSLogger.error("删除AppStatisticsClick时发生错误：/app/appStatisticsClick/delete", e);
@@ -352,25 +355,89 @@ public class BusinessUserResourceController {
 	}
 	
 	
+	@RequestMapping(value="revokeAllEst")
+	public void revokeAllEst(HttpServletRequest request, HttpServletResponse response) {
+		
+		String json = "";
+		try{
+			
+			Map<String, Object> map = new HashMap<String, Object>();
+			if (StringUtils.isNotBlank(request.getParameter("userId")) && StringUtils.isNotBlank(request.getParameter("comId")))
+			{
+				map.put("userId", request.getParameter("userId")); 
+				map.put("comId", request.getParameter("comId"));
+			}
+			else
+			{
+				json = "{\"success\":\"false\",\"message\":\"取消分配所有小区 失败！userId 或 comId 为空\"}";
+			}
+			boolean ret =  businessUserResourceService.deleteByCon(map);
+			
+			if (ret)
+			{
+//				businessUserResourceService.saveUserResource(map); 
+				json = "{\"success\":\"true\",\"message\":\"取消分配所有小区 成功！\"}";
+			}
+			else
+				json = "{\"success\":\"false\",\"message\":\"取消分配所有小区 失败！\"}";
+		}catch(Exception e){
+			json = "{\"success\":\"false\",\"message\":\"取消分配所有小区 失败！\"}";
+			GSLogger.error("删除AppStatisticsClick时发生错误：/app/appStatisticsClick/delete", e);
+			e.printStackTrace();
+		}
+		response.setHeader("Cache-Control", "no-cache");
+		response.setCharacterEncoding("utf-8");
+		try {
+			response.getWriter().write(json);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
 	/**
 	 * 进入修改页
 	 * @return
 	 */
 	@RequestMapping(value="modify")
-	public ModelAndView modify(BusinessUserResourceQuery query) {	
-		BusinessUserResource businessUserResource=new BusinessUserResource();
-		
+	public ModelAndView modify(HttpServletRequest request, HttpServletResponse response) {	
+			
 		try{
-			businessUserResource = businessUserResourceService.findById(query.getUsreId());
 		}catch(Exception e){
 			GSLogger.error("进入businessUserResource修改页时发生错误：/business/businessUserResource/modify", e);
 			e.printStackTrace();
 		}
 		ModelAndView mav = new ModelAndView("/business/businessUserResource/modify");
-		mav.addObject("businessUserResource", businessUserResource);
+		if (StringUtils.isNotBlank(request.getParameter("userId")) && StringUtils.isNotBlank(request.getParameter("comId")))
+		{
+			mav.addObject("userId", request.getParameter("userId")); 
+			mav.addObject("comId", request.getParameter("comId"));
+		}	
 		return mav;
 	}
 	
+	
+	
+	@RequestMapping(value="customEst")
+	public ModelAndView customEst(BusinessUserResourceQuery query) {			
+		try{
+		}catch(Exception e){
+			GSLogger.error("进入businessUserResource修改页时发生错误：/business/businessUserResource/modify", e);
+			e.printStackTrace();
+		}
+		ModelAndView mav = new ModelAndView("/business/businessUserResource/modify");
+		Map<String, Object> paramMap = new HashMap<String, Object>();
+		if (query.getUserId() != null && query.getComId() != null)
+		{
+			mav.addObject("userId", query.getUserId());//request.getParameter("userId")); 
+			mav.addObject("comId", query.getComId());//request.getParameter("comId"));
+			paramMap.put("userId", query.getUserId());//request.getParameter("userId"));
+			paramMap.put("comId", query.getComId());//request.getParameter("comId"));  
+		}
+		List<Map<String,Object>> checkBoxList  = businessUserResourceService.findByCon(paramMap);
+		mav.addObject("checkBoxList", checkBoxList);
+		return mav;
+	}
 	/**
 	 * 更新对象
 	 * @param request

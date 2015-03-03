@@ -291,5 +291,32 @@ public class BusinessUserResourceServiceImpl implements BusinessUserResourceServ
 			e.printStackTrace();
 		}	
 	}
+
+
+
+	@Transactional("transactionManager")
+	public boolean deleteByCon(Map<String, Object> map) throws ServiceException {
+		// TODO Auto-generated method stub
+		try {
+			return businessUserResourceDao.deleteByCon(map);
+		} catch (DaoException e) {
+			logger.debug("BusinessUserResourceServiceImpl deleteByCon()：删除BusinessUserResource发生错误！", e);
+			e.printStackTrace();
+		}
+		return false;
+	}
+
+	
+	@Transactional(readOnly = true)
+	public List<Map<String, Object>> findByCon(Map<String, Object> paramMap)
+			throws ServiceException {
+		try{
+			return businessUserResourceDao.findByCon(paramMap);
+		} catch (DaoException e) {
+			logger.debug("BusinessUserResourceServiceImpl findByCon()：根据搜索条件，搜索发生错误！", e);
+			e.printStackTrace();
+		}
+		return null;
+	}
 	
 }

@@ -11,6 +11,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -434,19 +435,19 @@ public class BusinessUserController {
 				
 				Map<String, Object> businessCommunity = (Map<String, Object>) baseBean.getList().get(i); 
 				String htmlStr = "";
-				if ("0".equals(businessCommunity.get("state").toString()))
-					htmlStr = "<a href='javacript:;' onclick='grantAll("+businessCommunity.get("comId")+");'>分配全部小区  </a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+
-				           	"取消所有分配小区&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+
-				           	"<a href='javacript:;' onclick='customEst("+businessCommunity.get("comId")+");'>自定义分配小区</a>";
+				if ("0".equals(businessCommunity.get("state").toString()))   
+					htmlStr = "<a href='javascript:void(0);' onclick='grantAll("+businessCommunity.get("comId")+");'>全分配  </a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+
+				           	"全取消&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+
+				           	"<a href='javascript:void(0);' onclick='customEst("+businessCommunity.get("comId")+");'>自定义</a>";
 				else if ("1".equals(businessCommunity.get("state").toString()))
-					htmlStr = "分配全部小区&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+
-				           	"<a href='javacript:;' onclick='revokeAll("+businessCommunity.get("comId")+");'>取消所有分配小区</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+
-				           	"<a href='javacript:;' onclick='customEst("+businessCommunity.get("comId")+");'>自定义分配小区</a>";
+					htmlStr = "全分配&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+
+				           	"<a href='javascript:void(0);' onclick='revokeAll("+businessCommunity.get("comId")+");'>全取消</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+
+				           	"<a href='javascript:void(0);' onclick='customEst("+businessCommunity.get("comId")+");'>自定义</a>";
 				else if ("2".equals(businessCommunity.get("state").toString()))
-					htmlStr = "分配全部小区&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+
-				           	"<a href='javacript:;' onclick='revokeAll("+businessCommunity.get("comId")+");'>取消所有分配小区</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+
-				           	"<a href='javacript:;' onclick='customEst("+businessCommunity.get("comId")+");'>自定义分配小区</a>";
-					System.out.println(htmlStr);
+					htmlStr = "全分配&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+
+				           	"<a href='javascript:void(0);' onclick='revokeAll("+businessCommunity.get("comId")+");'>全取消</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+
+				           	"<a href='javascript:void(0);' onclick='customEst("+businessCommunity.get("comId")+");'>自定义</a>";
+					System.out.println(htmlStr); 
 				result.append("{")
 			    .append("\"comId\":\"").append(businessCommunity.get("comId")).append("\"").append(",")
 			    .append("\"htmlStr\":\"").append(htmlStr).append("\"").append(",")
@@ -901,6 +902,46 @@ public class BusinessUserController {
 			response.getWriter().write(json);
 		}catch(Exception e){
 			GSLogger.error("删除BusinessUser时发生错误", e);
+			e.printStackTrace();
+		}
+	}
+	@RequestMapping(value="grantAllEst")
+	public void grantAllEst(HttpServletRequest request, HttpServletResponse response) {
+		
+		String json = "";
+		try{
+			
+			Map<String, Object> map = new HashMap<String, Object>();
+			if (StringUtils.isNotBlank(request.getParameter("userId")) && StringUtils.isNotBlank(request.getParameter("comId")))
+			{
+				map.put("userId", request.getParameter("userId")); 
+				map.put("comId", request.getParameter("comId"));
+			}
+			else
+			{
+				json = "{\"success\":\"false\",\"message\":\"分配所有小区失败！\"}";
+			}
+			
+			List<BusinessUserResource> chckList = businessUserResourceService.findByMap(map);
+			
+			if (CollectionUtils.isEmpty(chckList))
+			{
+				businessUserResourceService.saveUserResource(map);
+				json = "{\"success\":\"true\",\"message\":\"分配该社区所有小区成功！\"}";
+			}
+			else
+				json = "{\"success\":\"false\",\"message\":\"该社区下已有小区分配！\"}";
+		}catch(Exception e){
+			json = "{\"success\":\"false\",\"message\":\"分配该社区所有小区失败\"}";
+			GSLogger.error("删除AppStatisticsClick时发生错误：/app/appStatisticsClick/delete", e);
+			e.printStackTrace();
+		}
+		response.setHeader("Cache-Control", "no-cache");
+		response.setCharacterEncoding("utf-8");
+		try {
+			response.getWriter().write(json);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

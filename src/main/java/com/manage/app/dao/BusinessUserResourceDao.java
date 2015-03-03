@@ -98,6 +98,10 @@ public interface BusinessUserResourceDao {
 
 	public void saveUserResource(Map<String, Object> map) throws DaoException;
 
+	public boolean deleteByCon(Map<String, Object> map)  throws DaoException;
+
+	public List<Map<String, Object>> findByCon(Map<String, Object> paramMap) throws DaoException;
+
 	
 
 }

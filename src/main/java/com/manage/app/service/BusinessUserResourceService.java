@@ -103,6 +103,10 @@ public interface BusinessUserResourceService {
 	 */
 	public boolean delete(final Integer id) throws ServiceException;
 
-	public void saveUserResource(Map<String, Object> map)  throws ServiceException;;
+	public void saveUserResource(Map<String, Object> map)  throws ServiceException;
+
+	public boolean deleteByCon(Map<String, Object> map) throws ServiceException;
+
+	public List<Map<String, Object>> findByCon(Map<String, Object> paramMap) throws ServiceException;
 
 }

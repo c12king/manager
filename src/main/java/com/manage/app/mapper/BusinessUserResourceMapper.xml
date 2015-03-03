@@ -205,5 +205,24 @@
 		SELECT #{userId} userId,estateid,EstateName,NOW(),NOW(),comid FROM manage_estate WHERE comid = #{comId}
 		</if>
 	</insert>
+	
+	
+	
+		<delete id="deleteByCon" parameterType="java.util.Map">
+			<if test="userId != null and userId != '' and comId != null and comId != ''" >
+			delete from business_user_resource 
+			where userId=#{userId} and comId = #{comId}
+		</if>
+	
+	</delete>
+
+		<select id="findByCon" resultType="hashmap"  parameterType="java.util.Map">
+				<if test="userId != null and userId != '' and comId != null and comId != ''" >
+			select me.estateName,me.estateId,if(bur.usreId is null ,0,1) state from manage_estate me left join
+			(select estateid,usreid from business_user_resource where userid = #{userId} and comid = #{comId}) bur on me.estateId = bur.estateId
+			where me.comid = #{comId}
+		</if>
+	</select>
+	
 </mapper>
 	
