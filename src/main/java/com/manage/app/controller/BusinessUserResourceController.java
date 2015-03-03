@@ -419,20 +419,20 @@ public class BusinessUserResourceController {
 	
 	
 	@RequestMapping(value="customEst")
-	public ModelAndView customEst(BusinessUserResourceQuery query) {			
+	public ModelAndView customEst(HttpServletRequest request, HttpServletResponse response) {			
 		try{
 		}catch(Exception e){
-			GSLogger.error("进入businessUserResource修改页时发生错误：/business/businessUserResource/modify", e);
+			GSLogger.error("进入businessUserResource修改页时发生错误：/manage/businessUser/custEst", e);
 			e.printStackTrace();
 		}
-		ModelAndView mav = new ModelAndView("/business/businessUserResource/modify");
+		ModelAndView mav = new ModelAndView("/manage/businessUser/custEst");     
 		Map<String, Object> paramMap = new HashMap<String, Object>();
-		if (query.getUserId() != null && query.getComId() != null)
+		if (StringUtils.isNotBlank(request.getParameter("userId")) && StringUtils.isNotBlank(request.getParameter("comId")))
 		{
-			mav.addObject("userId", query.getUserId());//request.getParameter("userId")); 
-			mav.addObject("comId", query.getComId());//request.getParameter("comId"));
-			paramMap.put("userId", query.getUserId());//request.getParameter("userId"));
-			paramMap.put("comId", query.getComId());//request.getParameter("comId"));  
+			mav.addObject("userId", request.getParameter("userId")); 
+			mav.addObject("comId", request.getParameter("comId"));
+			paramMap.put("userId", request.getParameter("userId"));
+			paramMap.put("comId", request.getParameter("comId"));
 		}
 		List<Map<String,Object>> checkBoxList  = businessUserResourceService.findByCon(paramMap);
 		mav.addObject("checkBoxList", checkBoxList);

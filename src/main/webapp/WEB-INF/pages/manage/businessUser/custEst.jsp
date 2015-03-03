@@ -41,13 +41,14 @@ $(function(){
             <tr>
             <td>
             <c:forEach items="${checkBoxList}" var="estate">
+            										${estate.estateName } 
             											<input type="checkbox" class="estateId_${resource.comId}" id="estateId_${estate.estateId}_${estate.estateName}" name="estateId" value="${estate.estateId }" onclick="selectEstate(${resource.comId},'${resource.comName}', ${estate.estateId}, '${estate.estateName}')"
 											
 					            				 <c:if test="${estate.state == 1}">
 					            				  checked 
 					            				 </c:if>
 											
-											/>
+											/>&nbsp;&nbsp;&nbsp;&nbsp; 
             </c:forEach>
             </td>
             </tr>
