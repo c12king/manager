@@ -377,20 +377,8 @@ function resources() {
         return;
     }
     else{
-    	
-    	
-// 		win = $('#resource-window').window({
-// 	        closed: true,
-// 	        modal: true,
-// 	        shadow: false,
-// 	        cache: false,
-// 	        maximized:true,
-// 	    });
-// 	    $('#resource-window').window('open');
-	    
-
    	 var url='<%=path %>/manage/businessUser/resources.do?orgType='+rows[0].orgType+'&userId='+rows[0].userId ;
-     var title="资源管理" ;
+     var title= '为 '+rows[0].userName+' 分配小区';//rows[0].userName+"资源管理" ;  
      window.parent.addTab(title, url);
     }
 }

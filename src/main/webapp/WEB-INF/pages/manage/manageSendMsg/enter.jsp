@@ -62,7 +62,7 @@ $(function() {
 						  //添加超级链 
                         formatter:function(value,rowData,rowIndex){
                             //function里面的三个参数代表当前字段值，当前行数据对象，行号（行号从0开始）
-                            return "<a href='javacript:;' onclick='resend("+rowData.sendId+");'>重新发送</a>"; 
+                            return "<a href='javascript:;' onclick='resend("+rowData.sendId+");'>重新发送</a>"; 
                        }  
 					
 					},

@@ -28,6 +28,7 @@ import com.manage.app.service.BusinessUserService;
 import com.manage.app.service.ManageBuildingService;
 import com.manage.app.service.ManageEstateService;
 import com.manage.app.vo.BusinessUserResourceQuery;
+import com.utis.CommonData;
 
 
 @Controller
@@ -315,6 +316,7 @@ public class BusinessUserResourceController {
 		
 		String json = "";
 		try{
+			json = "{\"success\":\"true\",\"message\":\"分配该社区所有小区成功！\"}";
 			Map<String, Object> map = new HashMap<String, Object>();
 			if (StringUtils.isNotBlank(request.getParameter("userId")) && StringUtils.isNotBlank(request.getParameter("comId")))
 			{
@@ -330,7 +332,7 @@ public class BusinessUserResourceController {
 			if (CollectionUtils.isEmpty(chckList))
 			{
 				businessUserResourceService.saveUserResource(map);
-				json = "{\"success\":\"true\",\"message\":\"分配该社区所有小区成功！\"}";
+				
 			}
 			else
 			{
@@ -395,24 +397,75 @@ public class BusinessUserResourceController {
 		}
 	}
 	
+	
+	
+	@RequestMapping(value="saveEst")
+	public void saveEst(HttpServletRequest request, HttpServletResponse response) {
+		
+		String json = "";
+		try{
+			Map<String, Object> map = new HashMap<String, Object>();
+			if (StringUtils.isNotBlank(request.getParameter("userId")) && StringUtils.isNotBlank(request.getParameter("comId")))
+			{
+				map.put("userId", request.getParameter("userId")); 
+				map.put("comId", request.getParameter("comId"));
+			}
+			else
+			{
+				json = "{\"success\":\"false\",\"message\":\"配置失败！\"}";
+			}
+			businessUserResourceService.deleteByCon(map);
+			String ids[] = request.getParameterValues("estateId");
+			if (ids != null)
+			{
+				for(String str:ids)
+				{
+					BusinessUserResource  bur = new BusinessUserResource(); 
+					bur.setComId(Integer.valueOf(request.getParameter("comId")));
+					bur.setUserId(Integer.valueOf(request.getParameter("userId")));
+					String idName[] = str.split(CommonData.SpiltStr.ESTID_ESTNAME_SPILT);
+					
+					bur.setEstateId(Integer.valueOf(idName[0]));
+					bur.setEstateName(idName[1]);
+			        Timestamp  ts=new Timestamp(new Date().getTime());
+			        bur.setCreateTime(ts);
+			        bur.setEditTime(ts);
+			        businessUserResourceService.save(bur);
+			        
+				}
+			}
+			json = "{\"success\":\"false\",\"message\":\"配置成功！\"}";     
+		}catch(Exception e){
+			json = "{\"success\":\"false\",\"message\":\"配置失败！\"}";
+			GSLogger.error("删除AppStatisticsClick时发生错误：/app/appStatisticsClick/saveEst", e);
+			e.printStackTrace();
+		}
+		response.setHeader("Cache-Control", "no-cache");
+		response.setCharacterEncoding("utf-8");
+		try {
+			response.getWriter().write(json);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
 	/**
 	 * 进入修改页
 	 * @return
 	 */
 	@RequestMapping(value="modify")
-	public ModelAndView modify(HttpServletRequest request, HttpServletResponse response) {	
-			
+	public ModelAndView modify(BusinessUserResourceQuery query) {	
+		BusinessUserResource businessUserResource=new BusinessUserResource();
+		
 		try{
+			businessUserResource = businessUserResourceService.findById(query.getUsreId());
 		}catch(Exception e){
 			GSLogger.error("进入businessUserResource修改页时发生错误：/business/businessUserResource/modify", e);
 			e.printStackTrace();
 		}
 		ModelAndView mav = new ModelAndView("/business/businessUserResource/modify");
-		if (StringUtils.isNotBlank(request.getParameter("userId")) && StringUtils.isNotBlank(request.getParameter("comId")))
-		{
-			mav.addObject("userId", request.getParameter("userId")); 
-			mav.addObject("comId", request.getParameter("comId"));
-		}	
+		mav.addObject("businessUserResource", businessUserResource);
 		return mav;
 	}
 	

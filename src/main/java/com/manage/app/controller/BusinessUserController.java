@@ -27,7 +27,6 @@ import com.manage.app.bean.BusinessUser;
 import com.manage.app.bean.BusinessUserResource;
 import com.manage.app.bean.BusinessUserRole;
 import com.manage.app.bean.ManageEstate;
-import com.manage.app.bean.ManageTag;
 import com.manage.app.common.ModuleConst;
 import com.manage.app.service.BusinessCommunityService;
 import com.manage.app.service.BusinessRoleCommunityService;
@@ -42,7 +41,6 @@ import com.manage.app.service.ManageEstateService;
 import com.manage.app.vo.BaseBean;
 import com.manage.app.vo.BusinessCommunityQuery;
 import com.manage.app.vo.BusinessUserResourceQuery;
-import com.manage.app.vo.ManageTagQuery;
 import com.utis.Page;
 
 /**
@@ -405,7 +403,8 @@ public class BusinessUserController {
 		
 		Map<String,Object> con = new HashMap<String, Object>();
 		con.put("start", start);
-		con.put("end", end);
+		//con.put("end", end);
+		con.put("end", pageSize);
 		con.put("userId", userId);
 		con.put("comName", comName);
 		String json = "";
@@ -423,7 +422,9 @@ public class BusinessUserController {
 			"<a href='javacript:;' onclick='grantAll("+rowData.comId+");'>分配全部小区  </a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+
            	"<a href='javacript:;' onclick='revokeAll("+rowData.comId+");'>取消所有分配小区</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+
            	"<a href='javacript:;' onclick='customEst("+rowData.comId+");'>自定义分配小区</a>";
-           	
+           	"全分配&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+
+           	"<a href='javascript:void(0);' onclick='revokeAll("+businessCommunity.get("comId")+");'>全取消</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+
+           	"<a href='javascript:void(0);' onclick='customEst("+businessCommunity.get("comId")+");'>自定义</a>";
            	
 		 */
 		StringBuilder result = new StringBuilder();
@@ -436,22 +437,28 @@ public class BusinessUserController {
 				Map<String, Object> businessCommunity = (Map<String, Object>) baseBean.getList().get(i); 
 				String htmlStr = "";
 				if ("0".equals(businessCommunity.get("state").toString()))   
-					htmlStr = "<a href='javascript:void(0);' onclick='grantAll("+businessCommunity.get("comId")+");'>全分配  </a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+
-				           	"全取消&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+
-				           	"<a href='javascript:void(0);' onclick='customEst("+businessCommunity.get("comId")+");'>自定义</a>";
+					htmlStr = "<input type='button' id='"+businessCommunity.get("comId")+"_a' onclick='grantAll("+businessCommunity.get("comId")+");' value ='全分配' />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+
+				           	"<input type='button'  id='"+businessCommunity.get("comId")+"_b' onclick='grantAll("+businessCommunity.get("comId")+");' value='全取消 ' disabled />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+
+				           	"<input type='button'   id='"+businessCommunity.get("comId")+"_c'onclick='customEst("+businessCommunity.get("comId")+");' value ='自定义'/>";
 				else if ("1".equals(businessCommunity.get("state").toString()))
-					htmlStr = "全分配&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+
-				           	"<a href='javascript:void(0);' onclick='revokeAll("+businessCommunity.get("comId")+");'>全取消</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+
-				           	"<a href='javascript:void(0);' onclick='customEst("+businessCommunity.get("comId")+");'>自定义</a>";
+					htmlStr = "<input type='button' id='"+businessCommunity.get("comId")+"_a' onclick='grantAll("+businessCommunity.get("comId")+");' value ='全分配' />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+
+				           	"<input type='button'  id='"+businessCommunity.get("comId")+"_b' onclick='revokeAll("+businessCommunity.get("comId")+");' value='全取消 '  />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+
+				           	"<input type='button'   id='"+businessCommunity.get("comId")+"_c'onclick='customEst("+businessCommunity.get("comId")+");' value ='自定义'/>";
+//					htmlStr = "全分配&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+
+//				           	"<a href='javascript:void(0);' onclick='revokeAll("+businessCommunity.get("comId")+");'>全取消</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+
+//				           	"<a href='javascript:void(0);' onclick='customEst("+businessCommunity.get("comId")+");'>自定义</a>";
 				else if ("2".equals(businessCommunity.get("state").toString()))
-					htmlStr = "全分配&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+
-				           	"<a href='javascript:void(0);' onclick='revokeAll("+businessCommunity.get("comId")+");'>全取消</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+
-				           	"<a href='javascript:void(0);' onclick='customEst("+businessCommunity.get("comId")+");'>自定义</a>";
+					htmlStr =  "<input type='button' id='"+businessCommunity.get("comId")+"_a' onclick='grantAll("+businessCommunity.get("comId")+");' value ='全分配' disabled  />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+
+				           	"<input type='button'  id='"+businessCommunity.get("comId")+"_b' onclick='revokeAll("+businessCommunity.get("comId")+");' value='全取消 '  />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+
+				           	"<input type='button'   id='"+businessCommunity.get("comId")+"_c'onclick='customEst("+businessCommunity.get("comId")+");' value ='自定义'/>";
+//					"全分配&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+
+//				           	"<a href='javascript:void(0);' onclick='revokeAll("+businessCommunity.get("comId")+");'>全取消</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+
+//				           	"<a href='javascript:void(0);' onclick='customEst("+businessCommunity.get("comId")+");'>自定义</a>";
 					System.out.println(htmlStr); 
 				result.append("{")
 			    .append("\"comId\":\"").append(businessCommunity.get("comId")).append("\"").append(",")
 			    .append("\"htmlStr\":\"").append(htmlStr).append("\"").append(",")
-			    .append("\"comName\":\"").append(businessCommunity.get("comName")).append("\"")
+			    .append("\"comName\":\"").append(businessCommunity.get("comName")).append("\"") 
 				.append("}").append(",");
 			}
 			json = result.toString();

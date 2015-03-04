@@ -30,7 +30,8 @@ public class Page{
     	this.cpage=cpage;
     	this.pageSize=pageSize;
     	this.start=(cpage-1)*pageSize;
-    	this.end=cpage*pageSize;
+    	//this.end=cpage*pageSize;
+    	this.end = pageSize;
 	}
     public Page(int cpage,int pageSize,String like,String id) {
     	this.link=like;

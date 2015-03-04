@@ -141,13 +141,11 @@ public class BusinessUserResourceDaoImpl implements BusinessUserResourceDao {
 
 	@Override
 	public void saveUserResource(Map<String, Object> map) throws DaoException {
-		// TODO Auto-generated method stub
 		this.sqlSessionTemplate.insert("com.manage.app.dao.BusinessUserResourceDao.saveUserResource",map);
 	}
 
 	@Override
 	public boolean deleteByCon(Map<String, Object> map) throws DaoException {
-		// TODO Auto-generated method stub
 		int count=this.sqlSessionTemplate.delete("com.manage.app.dao.BusinessUserResourceDao.deleteByCon", map);
 		if(count>0){
 			return true;
@@ -159,7 +157,6 @@ public class BusinessUserResourceDaoImpl implements BusinessUserResourceDao {
 	@Override
 	public List<Map<String, Object>> findByCon(Map<String, Object> paramMap)
 			throws DaoException {
-		// TODO Auto-generated method stub
 		return  this.sqlSessionTemplate.selectList("com.manage.app.dao.BusinessUserResourceDao.findByCon", paramMap);
 	}
 	

@@ -30,7 +30,6 @@ var win;
 var grid;
 var userId = ${userId};
 $(function() {
-// 	var userId = ${userId};
 	grid = $('#grid').datagrid({
 		title: '资源编辑窗口' ,
         iconCls: 'icon-save',
@@ -47,12 +46,11 @@ $(function() {
 		sortName: 'comId',
         sortOrder: 'desc',
         idField: 'comId',
-        pageSize:30,
-        frozenColumns: [[
-                         { field: 'comId', checkbox: true }
-        		]],
+        pageSize:10,
+//         frozenColumns: [[
+//                          { field: 'comId', checkbox: false }
+//         		]], 
         columns: [[
-// 						{ field: 'comId', title: '社区ID', width: 150, align:'center' },
 						{ field: 'comName', title: '社区名称', width: 150, align:'center', },
 						{ field: 'grantAll', title: '分配小区', width: 150, align:'center',
 							  //添加超级链 
@@ -75,15 +73,7 @@ $(function() {
         loadMsg:'数据装载中......',
         rownumbers: true,
         singleSelect: true,
-        toolbar: [/* {
-            text: '修改',
-            iconCls: 'icon-edit',
-            handler: posEdit
-        }, '-', {
-            text: '分配小区',
-            iconCls: 'icon-edit',
-            handler: resources
-        }, '-', */{
+        toolbar: [{
             text: '查找',
             iconCls: 'icon-search',
             handler: OpensearchWin,
@@ -100,13 +90,16 @@ $(function() {
 });
 
 function grantAll(comId) {
+	var elIdA = comId+'_a';
+	var elIdB = comId+'_b';
 	$.ajax({   
 	    type: "post",
 	    url: '<%=path %>/business/businessUserResource/grantAllEst.do?comId='+comId+'&userId='+userId,   
 	    dataType: 'json',
 	    success: function(data){   
 	        alert(data.message);
-	        $(this).removeAttr("onclick");      
+	        $("#"+elIdA).attr('disabled',"true");
+	        $("#"+elIdB).removeAttr("disabled");//attr('disabled',"true");//
 	    },
 	    error:function(data){
 	    	alert(data.message);
@@ -114,13 +107,16 @@ function grantAll(comId) {
 	});   
 }
 function revokeAll(comId) {
+	var elIdA = comId+'_a';
+	var elIdB = comId+'_b';
 	$.ajax({   
 	    type: "post",
 	    url: '<%=path %>/business/businessUserResource/revokeAllEst.do?comId='+comId+'&userId='+userId,   
 	    dataType: 'json',
-	    success: function(data){   
+	    success: function(data){
 	        alert(data.message);
-	        $(this).removeAttr("onclick");      
+	        $("#"+elIdA).removeAttr("disabled");
+	        $("#"+elIdB).attr('disabled',"true");
 	    },
 	    error:function(data){
 	    	alert(data.message);
@@ -265,6 +261,7 @@ function saveData(oper, formId) {
     		return $(this).form('validate');  
 	 	},
         success: function (data) {
+//         	alert("dddd");    
             eval('data=' + data);
             if (data.success) {
                 grid.datagrid('reload');
@@ -426,49 +423,7 @@ function resources() {
 }
 
 
-function selectPos() {
-	$('#selectPos-window').window({
-        closed: true,
-        modal: true,
-        shadow: false,
-        cache: false,
-        href: '<%=path %>/manage/businessUser/org.do?id=0'
-    });
-    $('#selectPos-window').window('open');
-}
-function updatePosId(){
-	var node = $('#treeul').tree('getSelected');
-	$("#orgId").val(node.id)
-	$("#orgName").val(node.text)
-	$("#orgId1").val(node.id)
-	$("#orgName1").val(node.text)
-	$('#selectOrg-window').window('close');
-}
 
-//选择社区
-function selectCom(comId, comName) {
-	if($('#comId_'+comId+'_'+comName).is(':checked')) {
-		$(".estateId_"+comId).each(function(index, item) {
-			$(item).prop("checked",true);
-		});
-	}else{
-		$(".estateId_"+comId).each(function(index, item) {
-			$(item).prop("checked",false);
-		});
-	}
-}
-
-//选择小区
-function selectEstate(comId, comName, estateId, estateName) {
-	if($('#estateId_'+estateId+'_'+estateName).is(':checked')) {
-		$('#comId_'+comId+'_'+comName).prop("checked",true);
-	}else{
-		var ll = $(".estateId_"+comId+" :checked").length;
-		if(ll == 0) {
-			$('#comId_'+comId+'_'+comName).prop("checked",false);
-		}
-	}
-}
 
 </script>
 </head>

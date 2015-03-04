@@ -1,16 +1,13 @@
-
 <%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
 %>
-
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" >
 <html>
   <head>
     <base href="<%=basePath%>">
-    
     <title>自定义分配小区</title>
     <meta http-equiv="Content-Type" content="textml;charset=UTF-8"/>
 	<meta http-equiv="pragma" content="no-cache">
@@ -26,32 +23,59 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	$(function() {
 		$( "#tabs" ).tabs();
 	});
-	
 	</script>
 </head>
 <body>
 <script type="text/javascript">
 $(function(){
+	    $("#selectAll").click(function(){
+	    	 $("#chkBox :checkbox").prop("checked", true);  
+        });
+  		$("#deSelect").click(function(){
+  			$("#chkBox :checkbox").each(function () {  
+                $(this).prop("checked", !$(this).prop("checked"));    
+            });  
+  		});
+  		
+  		 $("#unSelect").click(function(){
+             $("#chkBox :checkbox").prop("checked", false);      
 
+         });
 })
-</script>
+</script> 
 	<div style="padding: 20px 20px 40px 30px;">
-            <form id="addForm" method="post" action="<%=path %>/manage/businessUser/save.do">
-            <table>
+            <form id="addForm" method="post" action="<%=path %>/business/businessUserResource/saveEst.do">
+            <input name="userId"   type="hidden" 	value="${userId}" />
+            <input name="comId"    type="hidden" 	value="${comId}"  /> 
+            <table id="chkBox">
             <tr>
-            <td>
-            <c:forEach items="${checkBoxList}" var="estate">
-            										${estate.estateName } 
-            											<input type="checkbox" class="estateId_${resource.comId}" id="estateId_${estate.estateId}_${estate.estateName}" name="estateId" value="${estate.estateId }" onclick="selectEstate(${resource.comId},'${resource.comName}', ${estate.estateId}, '${estate.estateName}')"
-											
-					            				 <c:if test="${estate.state == 1}">
-					            				  checked 
-					            				 </c:if>
-											
-											/>&nbsp;&nbsp;&nbsp;&nbsp; 
-            </c:forEach>
-            </td>
+	            <td>
+	            	&nbsp;&nbsp;&nbsp;&nbsp;<input name="hi1" id="selectAll"  type="button" value="全选">
+	       
+	             	&nbsp;&nbsp;&nbsp;&nbsp;<input name="hi2" id="deSelect" type="button" value="反选">    
+	    
+	             	&nbsp;&nbsp;&nbsp;&nbsp;<input name="hi3" id="unSelect" type="button" value="全不选 ">  
+	            </td> 
             </tr>
+            <tr>
+            	<td>
+            	</td>
+            </tr>   
+            <tr>
+            <c:forEach items="${checkBoxList}" var="estate" varStatus="status">
+	            	<td>
+	            		&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox"  name="estateId" value="${estate.estateId }_#_${estate.estateName}" 
+						            				 <c:if test="${estate.state == 1}">
+						            				  checked 
+						            				 </c:if>  
+						            			/> ${estate.estateName }
+	            										
+					</td>
+				<c:if test="${(status.index+1)%3 == 0}"> 
+					</tr><tr>
+	            </c:if>     
+            </c:forEach>
+            </tr> 
             </table>
             </form>
         </div>
